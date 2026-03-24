@@ -1,0 +1,21 @@
+# Base de datos local (cada quien tiene la suya)
+db.sqlite3
+
+# Python genera estas carpetas automáticamente al ejecutar
+__pycache__/
+*.pyc
+
+# Django genera esta carpeta con "collectstatic" (no es código tuyo)
+staticfiles/
+
+# Carpeta de imágenes subidas (muy pesada para el repo)
+media/
+
+# Archivos de log
+*.log
+
+# Windows
+Thumbs.db
+
+# Mac (por si algún compañero usa Mac)
+.DS_Store

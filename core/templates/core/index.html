@@ -1,0 +1,530 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WayneTech Industries — Advanced Defense & Security Solutions | Gotham City</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>▸ WAYNETECH INDUSTRIES — ADVANCED DEFENSE & SECURITY SOLUTIONS — GOTHAM CITY — EST. 1939</span>
+    <span>▸ CLOUD CENTER OF EXCELLENCE (CCoE) OPERATIVO — MODELO HÍBRIDO ACTIVO</span>
+    <span>▸ DIVISIÓN TECNOLÓGICA DE WAYNE ENTERPRISES — 6 LÍNEAS DE PRODUCTO — 14.200 EMPLEADOS GLOBALES</span>
+    <span>▸ FASE 2 DE MIGRACIÓN EN CURSO — 41% DEL PORTAFOLIO MODERNIZADO</span>
+    <span>▸ WAYNETECH INDUSTRIES — ADVANCED DEFENSE & SECURITY SOLUTIONS — GOTHAM CITY — EST. 1939</span>
+    <span>▸ CLOUD CENTER OF EXCELLENCE (CCoE) OPERATIVO — MODELO HÍBRIDO ACTIVO</span>
+    <span>▸ DIVISIÓN TECNOLÓGICA DE WAYNE ENTERPRISES — 6 LÍNEAS DE PRODUCTO — 14.200 EMPLEADOS GLOBALES</span>
+    <span>▸ FASE 2 DE MIGRACIÓN EN CURSO — 41% DEL PORTAFOLIO MODERNIZADO</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <svg class="bat-logo" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 32 C40 32 20 38 8 30 C4 28 2 24 4 20 C6 16 10 15 14 17 C10 12 12 6 18 8 C22 9 24 14 24 14 C26 10 30 8 34 10 C34 10 36 6 40 6 C44 6 46 10 46 10 C50 8 54 10 56 14 C56 14 58 9 62 8 C68 6 70 12 66 17 C70 15 74 16 76 20 C78 24 76 28 72 30 C60 38 40 32 40 32Z" fill="#c9a84c"/>
+      </svg>
+      <div>
+        <div class="nav-brand">WAYNETECH</div>
+        <div class="nav-sub">ADVANCED DEFENSE & SECURITY SOLUTIONS</div>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">Corporativo</a></li>
+      <li><a href="#organigrama">Organigrama</a></li>
+      <li><a href="#divisiones">Divisiones</a></li>
+      <li><a href="#tech">Tecnología</a></li>
+      <li><a href="#villains">Amenazas</a></li>
+      <li><a href="#cloud">Estrategia Cloud</a></li>
+      <li><a href="#kpis">KPIs</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="alert-dot"></div>
+      <span class="nav-alert">MIGRACIÓN ACTIVA</span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">ADVANCED DEFENSE & SECURITY SOLUTIONS — GOTHAM CITY</div>
+    <h1 class="hero-title">WAYNE<span class="hero-sub">INDUSTRIES</span></h1>
+    <p class="hero-desc">Tecnología de defensa y seguridad de próxima generación.<br>División líder de innovación de Wayne Enterprises — Gotham City desde 1939.</p>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hn">{{ stats.divisiones }}</span><span class="hl">Divisiones activas</span></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hn">{{ stats.empleados_globales|floatformat:"0" }}</span><span class="hl">Empleados globales</span></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hn">{{ stats.ingresos }}</span><span class="hl">Ingresos 2024</span></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hn">{{ stats.gadgets_activos }}</span><span class="hl">Sistemas activos</span></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><span class="hn">{{ stats.villanos_detenidos }}</span><span class="hl">Amenazas detenidas</span></div>
+    </div>
+    <div class="hero-scroll"><span>VER INFORME</span><div class="scroll-line"></div></div>
+  </div>
+</section>
+
+<!-- ABOUT / PERFIL CORPORATIVO -->
+<section class="about-sec" id="about">
+  <div class="wrap">
+    <div class="sec-label">Perfil Corporativo</div>
+    <h2 class="sec-title">WAYNE<span class="gold">TECH</span> INDUSTRIES</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>WayneTech, como <strong>conglomerado diversificado y referente en innovación</strong>, enfrenta el desafío de transformar su estructura organizativa para facilitar una planificación estratégica efectiva y una migración ordenada de operaciones a la nube.</p>
+        <p>La propuesta estratégica presentada se alinea con las mejores prácticas internacionales y está adaptada a los retos de la <strong>transformación digital, la gobernanza, la seguridad, la gestión del cambio y la escalabilidad</strong>. El objetivo es dotar a WayneTech de una arquitectura organizativa robusta, flexible y preparada para liderar la adopción de tecnologías emergentes.</p>
+        <p>Con un modelo operativo <strong>híbrido</strong> que combina supervisión centralizada con ejecución descentralizada por divisiones, WayneTech garantiza eficiencia operativa y capacidad de innovación sostenida a escala global.</p>
+        <div class="about-tags">
+          <span class="atag">IA / ML</span>
+          <span class="atag">Cloud-Native</span>
+          <span class="atag">DevOps / SRE</span>
+          <span class="atag">FinOps</span>
+          <span class="atag">Zero Trust</span>
+          <span class="atag">Multi-Cloud</span>
+          <span class="atag">Microservicios</span>
+          <span class="atag">Kubernetes</span>
+        </div>
+      </div>
+      <div class="about-panel">
+        <div class="panel-title">FICHA CORPORATIVA</div>
+        <div class="prow"><span class="pk">RAZÓN SOCIAL</span><span class="pv">WayneTech Industries Inc.</span></div>
+        <div class="prow"><span class="pk">FUNDACIÓN</span><span class="pv">1939 — Gotham City</span></div>
+        <div class="prow"><span class="pk">CEO</span><span class="pv">Bruce Wayne</span></div>
+        <div class="prow"><span class="pk">SEDE PRINCIPAL</span><span class="pv">Wayne Tower, Gotham City</span></div>
+        <div class="prow"><span class="pk">EMPLEADOS GLOBALES</span><span class="pv">~14.200</span></div>
+        <div class="prow"><span class="pk">INGRESOS ANUALES</span><span class="pv">$31.7B USD (fiscal 2024)</span></div>
+        <div class="prow"><span class="pk">DIVISIONES</span><span class="pv">7 unidades de negocio</span></div>
+        <div class="prow"><span class="pk">C-LEVELS</span><span class="pv">CEO, COO, CFO, CIO, CTO, CISO, CDO, CHRO</span></div>
+        <div class="prow"><span class="pk">MODELO CLOUD</span><span class="pv">Híbrido — CCoE Centralizado</span></div>
+        <div class="prow"><span class="pk">PROVEEDORES CLOUD</span><span class="pv">AWS · Azure · Google Cloud</span></div>
+        <div class="prow"><span class="pk">CERTIFICACIONES</span><span class="pv">ISO 9001 · GDPR · HIPAA · PCI DSS</span></div>
+        <div class="prow"><span class="pk">FASE MIGRACIÓN</span><span class="pv">Fase 2 — Migración Escalonada</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORGANIGRAMA DE C-LEVELS -->
+<section class="org-sec" id="organigrama">
+  <div class="wrap">
+    <div class="sec-label">Alta Dirección Ejecutiva</div>
+    <h2 class="sec-title">ORGANIGRAMA <span class="gold">EJECUTIVO</span></h2>
+    <p class="sec-desc">Estructura de liderazgo propuesta para soportar la transformación digital y la migración a la nube. El CEO articula la visión global mientras los C-levels orquestan la ejecución desde sus áreas especializadas.</p>
+
+    <!-- CEO Central -->
+    <div class="org-ceo-wrap">
+      {% for e in executives %}{% if e.level == 'CEO' %}
+      <div class="org-ceo-card" onclick="openModal('executive', {{ e.pk }})">
+        <div class="org-ceo-img">
+          {% if e.image %}<img src="{{ e.image.url }}" alt="{{ e.name }}">
+          {% else %}<div class="org-placeholder"><span>{{ e.role }}</span></div>{% endif %}
+        </div>
+        <div class="org-ceo-info">
+          <div class="org-role">{{ e.role }}</div>
+          <div class="org-title">{{ e.full_title }}</div>
+          <div class="org-name">{{ e.name }}</div>
+        </div>
+        <div class="org-ceo-badge">DIRECCIÓN SUPREMA</div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+
+    <!-- Línea conectora -->
+    <div class="org-connector"></div>
+
+    <!-- C-Levels Grid -->
+    <div class="org-grid">
+      {% for e in executives %}{% if e.level == 'C_LEVEL' %}
+      <div class="org-card" onclick="openModal('executive', {{ e.pk }})">
+        <div class="org-card-img">
+          {% if e.image %}<img src="{{ e.image.url }}" alt="{{ e.name }}">
+          {% else %}<div class="org-placeholder-sm"><span>{{ e.role }}</span></div>{% endif %}
+          <div class="scan-line"></div>
+        </div>
+        <div class="org-card-body">
+          <div class="org-card-role">{{ e.role }}</div>
+          <div class="org-card-name">{{ e.name }}</div>
+          <div class="org-card-title">{{ e.full_title }}</div>
+          <p class="org-card-cloud">{{ e.cloud_role|truncatewords:18 }}</p>
+          <div class="org-hint">▸ VER PERFIL COMPLETO</div>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+
+    <!-- Tres bloques del organigrama -->
+    <div class="org-blocks">
+      <div class="org-block">
+        <div class="org-block-title">ALTA DIRECCIÓN EJECUTIVA</div>
+        <p>CEO + C-levels con reporte directo. Gobierno centralizado de la estrategia de transformación digital y migración a la nube.</p>
+      </div>
+      <div class="org-block-arrow">→</div>
+      <div class="org-block">
+        <div class="org-block-title">DIVISIONES DE NEGOCIO</div>
+        <p>7 unidades lideradas por VP o Director General. Ejecución operativa autónoma bajo políticas corporativas del CCoE.</p>
+      </div>
+      <div class="org-block-arrow">→</div>
+      <div class="org-block">
+        <div class="org-block-title">ÁREAS FUNCIONALES</div>
+        <p>TI, Finanzas, Operaciones, Seguridad, RRHH, Legal, Marketing, PMO. Servicios transversales y estándares corporativos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVISIONES DE NEGOCIO -->
+<section class="div-sec" id="divisiones">
+  <div class="wrap">
+    <div class="sec-label">Unidades de Negocio</div>
+    <h2 class="sec-title">DIVISIONES DE <span class="gold">NEGOCIO</span></h2>
+    <p class="sec-desc">Las 7 divisiones principales de WayneTech, cada una con su propio enfoque estratégico, responsabilidades operativas y relevancia específica en la migración a la nube.</p>
+    <div class="div-grid">
+      {% for d in divisions %}
+      <div class="div-card" onclick="openModal('division', {{ d.pk }})">
+        <div class="div-card-top">
+          <div class="div-icon">{{ d.icon }}</div>
+          <div class="div-priority cloud-{{ d.cloud_priority }}">{{ d.get_cloud_priority_display }}</div>
+        </div>
+        <div class="div-name">{{ d.name }}</div>
+        <div class="div-focus">{{ d.focus }}</div>
+        <p class="div-desc">{{ d.description|truncatewords:28 }}</p>
+        <div class="div-cloud-label">RELEVANCIA CLOUD</div>
+        <p class="div-cloud">{{ d.cloud_relevance|truncatewords:22 }}</p>
+        <div class="div-hint">▸ VER DETALLE COMPLETO</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍA / GADGETS -->
+<section class="tech-sec" id="tech">
+  <div class="wrap">
+    <div class="sec-label">Investigación y Desarrollo</div>
+    <h2 class="sec-title">CATÁLOGO DE <span class="gold">TECNOLOGÍA</span></h2>
+
+    <form class="filter-bar" method="GET" action="#tech">
+      <span class="filter-label">FILTRAR POR TIPO</span>
+      <a href="?#tech" class="filter-btn {% if not clasificacion_activa %}active{% endif %}">Todos</a>
+      {% for code, label in clasificaciones %}
+      <a href="?clasificacion={{ code }}#tech" class="filter-btn {% if clasificacion_activa == code %}active{% endif %}">{{ label }}</a>
+      {% endfor %}
+    </form>
+
+    <div class="card-grid">
+      {% for g in gadgets %}
+      <div class="gcard" onclick="openModal('gadget', {{ g.pk }})">
+        <div class="card-img-wrap">
+          <div class="scan-line"></div>
+          {% if g.image %}<img src="{{ g.image.url }}" alt="{{ g.name }}" class="card-img">
+          {% else %}
+          <div class="card-ph"><span class="ph-code">{{ g.code }}</span><span class="ph-icon">⚙</span><span class="ph-lbl">IMAGEN CLASIFICADA</span></div>
+          {% endif %}
+          <div class="card-code">{{ g.code }}</div>
+          <div class="card-st st-{{ g.status }}">{{ g.get_status_display }}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">{{ g.get_classification_display }}</div>
+          <div class="card-name">{{ g.name }}</div>
+          <p class="card-desc">{{ g.description|truncatewords:22 }}</p>
+          <div class="card-meta">
+            <span><span class="ml">AÑO</span> {{ g.year_developed }}</span>
+            <span><span class="ml">INCIDENTES</span> {{ g.threat_neutralized }}</span>
+            <span><span class="ml">ACCESO</span> {{ g.clearance_level }}</span>
+          </div>
+          <div class="card-hint">▸ VER FICHA TÉCNICA</div>
+        </div>
+      </div>
+      {% empty %}<div class="empty-msg">No hay tecnología con ese filtro.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRO DE AMENAZAS -->
+<section class="villain-sec" id="villains">
+  <div class="wrap">
+    <div class="sec-label">Registro Criminal — Confidencial</div>
+    <h2 class="sec-title">AMENAZAS <span class="gold">REGISTRADAS</span></h2>
+
+    <div class="filter-bar">
+      <span class="filter-label">NIVEL DE AMENAZA</span>
+      <a href="?#villains" class="filter-btn {% if not nivel_activo %}active{% endif %}">Todos</a>
+      {% for code, label in niveles_amenaza %}
+      <a href="?nivel={{ code }}#villains" class="filter-btn ft-{{ code }} {% if nivel_activo == code %}active{% endif %}">{{ label }}</a>
+      {% endfor %}
+      <span class="filter-label" style="margin-left:16px">ESTADO</span>
+      {% for code, label in estados_villano %}
+      <a href="?estado={{ code }}#villains" class="filter-btn {% if estado_villano_activo == code %}active{% endif %}">{{ label }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="card-grid">
+      {% for v in villains %}
+      <div class="vcard" onclick="openModal('villain', {{ v.pk }})">
+        <div class="card-img-wrap">
+          <div class="scan-line"></div>
+          {% if v.image %}<img src="{{ v.image.url }}" alt="{{ v.alias }}" class="card-img">
+          {% else %}
+          <div class="card-ph villain-ph"><span class="ph-icon">☠</span><span class="ph-lbl">ACCESO RESTRINGIDO</span></div>
+          {% endif %}
+          <div class="threat-badge tb-{{ v.threat_level }}">AMENAZA {{ v.threat_level }}</div>
+          <div class="card-st vstatus-{{ v.status }}">{{ v.get_status_display }}</div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">{{ v.get_threat_level_display }}</div>
+          <div class="card-name">{{ v.alias }}</div>
+          <div class="card-realname">ID: <em>{{ v.name }}</em></div>
+          <p class="card-desc">{{ v.description|truncatewords:20 }}</p>
+          <div class="card-meta">
+            <span><span class="ml">DETENIDO</span> {{ v.times_detained }}x</span>
+            {% if v.arkham_cell %}<span><span class="ml">CELDA</span> {{ v.arkham_cell }}</span>{% endif %}
+          </div>
+          <div class="card-hint">▸ VER EXPEDIENTE</div>
+        </div>
+      </div>
+      {% empty %}<div class="empty-msg">No hay amenazas con ese filtro.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ESTRATEGIA CLOUD -->
+<section class="cloud-sec" id="cloud">
+  <div class="wrap">
+    <div class="sec-label">Modelo Operativo de Transformación</div>
+    <h2 class="sec-title">ESTRATEGIA <span class="gold">CLOUD</span></h2>
+    <p class="sec-desc">Estructura operativa híbrida recomendada para WayneTech: supervisión centralizada mediante el CCoE con ejecución descentralizada por divisiones de negocio.</p>
+
+    <!-- Tres modelos -->
+    <div class="cloud-models">
+      <div class="cm-card cm-gray">
+        <div class="cm-title">CENTRALIZADO</div>
+        <div class="cm-icon">◉</div>
+        <p>Todas las decisiones y operaciones cloud gestionadas desde el CCoE. Ideal para etapas iniciales o entornos de alta regulación.</p>
+        <div class="cm-tag">No recomendado para WayneTech</div>
+      </div>
+      <div class="cm-card cm-gray">
+        <div class="cm-title">FEDERADO</div>
+        <div class="cm-icon">◎</div>
+        <p>Cada división gestiona sus propios recursos cloud. Favorece la agilidad pero puede generar inconsistencias sin gobernanza central.</p>
+        <div class="cm-tag">Complementario — uso por división</div>
+      </div>
+      <div class="cm-card cm-gold">
+        <div class="cm-title">HÍBRIDO ✓</div>
+        <div class="cm-icon">◈</div>
+        <p>Supervisión centralizada (políticas, seguridad, cumplimiento) con ejecución descentralizada en divisiones. Equilibrio entre control y agilidad.</p>
+        <div class="cm-tag cm-tag-gold">MODELO RECOMENDADO</div>
+      </div>
+    </div>
+
+    <!-- CCoE -->
+    <div class="ccoe-box">
+      <div class="ccoe-title">CLOUD CENTER OF EXCELLENCE (CCoE)</div>
+      <p class="ccoe-desc">Equipo multifuncional que define estándares, mejores prácticas y gobierno para la adopción cloud en toda la organización. Reporta al CIO/CTO.</p>
+      <div class="ccoe-grid">
+        <div class="ccoe-item"><div class="ccoe-item-icon">🎯</div><div class="ccoe-item-text">Definir estrategia cloud y marcos de gobernanza</div></div>
+        <div class="ccoe-item"><div class="ccoe-item-icon">🔐</div><div class="ccoe-item-text">Seleccionar y homologar proveedores y tecnologías</div></div>
+        <div class="ccoe-item"><div class="ccoe-item-icon">🎓</div><div class="ccoe-item-text">Capacitación y acompañamiento a divisiones</div></div>
+        <div class="ccoe-item"><div class="ccoe-item-icon">📊</div><div class="ccoe-item-text">Monitorear cumplimiento, seguridad y eficiencia</div></div>
+      </div>
+    </div>
+
+    <!-- Plan de migración por fases -->
+    <div class="phases-wrap">
+      <div class="phases-title">PLAN DE MIGRACIÓN POR FASES</div>
+      <div class="phases">
+        <div class="phase">
+          <div class="phase-num">01</div>
+          <div class="phase-name">EVALUACIÓN Y DIAGNÓSTICO</div>
+          <p>Inventario de aplicaciones, análisis de dependencias, evaluación de riesgos y brechas de capacidades cloud.</p>
+          <div class="phase-status phase-done">COMPLETADA</div>
+        </div>
+        <div class="phase-arrow">→</div>
+        <div class="phase">
+          <div class="phase-num">02</div>
+          <div class="phase-name">PLANIFICACIÓN</div>
+          <p>Priorización de cargas según valor, complejidad y riesgo. Definición de cronograma, recursos y matriz RACI.</p>
+          <div class="phase-status phase-done">COMPLETADA</div>
+        </div>
+        <div class="phase-arrow">→</div>
+        <div class="phase phase-active">
+          <div class="phase-num">03</div>
+          <div class="phase-name">MIGRACIÓN ESCALONADA</div>
+          <p>Ejecución por oleadas priorizando aplicaciones críticas. Modernización progresiva con refactorización cloud-native.</p>
+          <div class="phase-status phase-progress">EN CURSO — FASE ACTIVA</div>
+        </div>
+        <div class="phase-arrow">→</div>
+        <div class="phase phase-pending">
+          <div class="phase-num">04</div>
+          <div class="phase-name">OPTIMIZACIÓN CONTINUA</div>
+          <p>Ajuste de recursos, optimización FinOps, automatización DevOps y monitoreo continuo de KPIs.</p>
+          <div class="phase-status phase-pending-st">PENDIENTE — Q3 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Matriz RACI -->
+    <div class="raci-wrap">
+      <div class="raci-title">MATRIZ RACI — MIGRACIÓN A LA NUBE</div>
+      <div class="raci-table-wrap">
+        <table class="raci-table">
+          <thead>
+            <tr>
+              <th>ACTIVIDAD</th>
+              <th>CCoE</th>
+              <th>TI</th>
+              <th>NEGOCIO</th>
+              <th>SEGURIDAD</th>
+              <th>FINANZAS</th>
+              <th>LEGAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Definir estrategia cloud</td><td class="r-r">R</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-i">I</td></tr>
+            <tr><td>Selección de proveedores</td><td class="r-r">R</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-c">C</td></tr>
+            <tr><td>Migración de aplicaciones</td><td class="r-c">C</td><td class="r-r">R</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-i">I</td><td class="r-i">I</td></tr>
+            <tr><td>Gestión de seguridad y cumplimiento</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-i">I</td><td class="r-r">R</td><td class="r-i">I</td><td class="r-r">R</td></tr>
+            <tr><td>Optimización de costos (FinOps)</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-i">I</td><td class="r-i">I</td><td class="r-r">R</td><td class="r-i">I</td></tr>
+            <tr><td>Gestión del cambio y capacitación</td><td class="r-c">C</td><td class="r-c">C</td><td class="r-r">R</td><td class="r-i">I</td><td class="r-i">I</td><td class="r-i">I</td></tr>
+          </tbody>
+        </table>
+        <div class="raci-legend">
+          <span><span class="r-r">R</span> Responsable</span>
+          <span><span class="r-c">C</span> Consultado</span>
+          <span><span class="r-i">I</span> Informado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KPIs CLOUD -->
+<section class="kpi-sec" id="kpis">
+  <div class="wrap">
+    <div class="sec-label">Medición de la Transformación</div>
+    <h2 class="sec-title">KPIs <span class="gold">ESTRATÉGICOS</span></h2>
+    <p class="sec-desc">Indicadores clave de rendimiento para medir el progreso de la transformación digital y la migración a la nube, organizados por pilar de valor estratégico.</p>
+
+    <!-- Stats rápidos del dashboard -->
+    <div class="dash-kpis">
+      <div class="dk-card">
+        <div class="dk-label">SISTEMAS ACTIVOS</div>
+        <div class="dk-val">{{ stats.gadgets_activos }}</div>
+        <div class="dk-delta up">▲ Operativos al 100%</div>
+      </div>
+      <div class="dk-card">
+        <div class="dk-label">AMENAZAS DETENIDAS</div>
+        <div class="dk-val">{{ stats.villanos_detenidos }}</div>
+        <div class="dk-delta">▸ de {{ total_villains }} en registro</div>
+      </div>
+      <div class="dk-card">
+        <div class="dk-label">INCIDENTES RESUELTOS</div>
+        <div class="dk-val">{{ stats.amenazas_neutralizadas }}</div>
+        <div class="dk-delta up">▲ Histórico acumulado</div>
+      </div>
+      <div class="dk-card">
+        <div class="dk-label">APLICACIONES MODERNIZADAS</div>
+        <div class="dk-val">41%</div>
+        <div class="dk-delta up">▲ Fase 2 en curso</div>
+      </div>
+    </div>
+
+    <!-- KPIs por pilar -->
+    {% for pilar, kpi_list in kpi_pillars.items %}
+    <div class="kpi-group">
+      <div class="kpi-group-title">{{ pilar|upper }}</div>
+      <div class="kpi-cards">
+        {% for kpi in kpi_list %}
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <div class="kpi-name">{{ kpi.metric_name }}</div>
+            <div class="kpi-trend {% if kpi.trend_up %}trend-up{% else %}trend-down{% endif %}">{% if kpi.trend_up %}▲{% else %}▼{% endif %}</div>
+          </div>
+          <p class="kpi-desc">{{ kpi.description }}</p>
+          <div class="kpi-progress-wrap">
+            <div class="kpi-progress-bar">
+              <div class="kpi-fill" style="width:{{ kpi.progress }}%"></div>
+            </div>
+            <span class="kpi-pct">{{ kpi.progress }}%</span>
+          </div>
+          <div class="kpi-data">
+            <div><span class="kpi-lbl">META</span><span class="kpi-val">{{ kpi.target }}</span></div>
+            {% if kpi.current %}<div><span class="kpi-lbl">ACTUAL</span><span class="kpi-val">{{ kpi.current }}</span></div>{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <svg class="bat-logo-f" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 32 C40 32 20 38 8 30 C4 28 2 24 4 20 C6 16 10 15 14 17 C10 12 12 6 18 8 C22 9 24 14 24 14 C26 10 30 8 34 10 C34 10 36 6 40 6 C44 6 46 10 46 10 C50 8 54 10 56 14 C56 14 58 9 62 8 C68 6 70 12 66 17 C70 15 74 16 76 20 C78 24 76 28 72 30 C60 38 40 32 40 32Z" fill="#c9a84c"/>
+        </svg>
+        <div>
+          <div class="fbn">WAYNE<span>TECH</span> INDUSTRIES</div>
+          <div class="fbs">Advanced Defense & Security Solutions | Gotham City</div>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <div class="fct">DIVISIONES</div>
+          <ul class="flinks">
+            {% for d in divisions %}<li>{{ d.name }}</li>{% endfor %}
+          </ul>
+        </div>
+        <div>
+          <div class="fct">EQUIPO EJECUTIVO</div>
+          <ul class="flinks">
+            {% for e in executives %}<li>{{ e.role }} — {{ e.name }}</li>{% endfor %}
+          </ul>
+        </div>
+        <div>
+          <div class="fct">ESTRATEGIA CLOUD</div>
+          <ul class="flinks">
+            <li>Modelo Operativo Híbrido</li>
+            <li>Cloud Center of Excellence</li>
+            <li>FinOps & Optimización</li>
+            <li>Seguridad Zero Trust</li>
+            <li>Estrategia Multi-Cloud</li>
+            <li>DevOps / Platform Engineering</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="fcopy">© 1939–2024 WayneTech Industries Inc. Todos los derechos reservados. | <span>Batman</span> © DC Comics. | Informe estratégico de uso interno.</div>
+      <div class="fclass">DOCUMENTO INTERNO — USO RESTRINGIDO — NO DISTRIBUIR</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOut(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalInner"><div class="modal-loading">Cargando expediente...</div></div>
+  </div>
+</div>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

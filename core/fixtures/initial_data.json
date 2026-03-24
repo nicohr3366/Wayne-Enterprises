@@ -1,0 +1,550 @@
+[
+  {
+    "model": "core.division",
+    "pk": 1,
+    "fields": {
+      "name": "Wayne Technologies",
+      "focus": "Investigación, desarrollo y comercialización de tecnologías avanzadas (IA, IoT, robótica, ciberseguridad)",
+      "description": "División líder en innovación tecnológica. Responsable de desarrollar productos y soluciones escalables para todo el portafolio de WayneTech Industries, colaborando con el CTO y el CDO en la modernización de aplicaciones y plataformas digitales.",
+      "cloud_relevance": "Punta de lanza en la adopción de microservicios, contenedores y serverless. Lidera la integración de IA y ML en la nube. Arquitecturas cloud-native como Docker, Kubernetes y funciones serverless son su estándar operativo.",
+      "cloud_priority": "alta",
+      "icon": "⚡",
+      "image": "",
+      "order": 1
+    }
+  },
+  {
+    "model": "core.division",
+    "pk": 2,
+    "fields": {
+      "name": "Wayne Industries",
+      "focus": "Manufactura avanzada, energía sostenible, automatización industrial",
+      "description": "Optimiza procesos productivos mediante digitalización y analítica avanzada. Implementa soluciones de IoT industrial y mantenimiento predictivo. Garantiza la resiliencia operativa y la continuidad del negocio en entornos de producción crítica.",
+      "cloud_relevance": "Migración de sistemas SCADA y ERP a entornos híbridos. Integración de datos de planta en plataformas cloud para analítica en tiempo real, simulación de producción y mantenimiento predictivo basado en IA.",
+      "cloud_priority": "media",
+      "icon": "🏭",
+      "image": "",
+      "order": 2
+    }
+  },
+  {
+    "model": "core.division",
+    "pk": 3,
+    "fields": {
+      "name": "Wayne Healthcare",
+      "focus": "Salud, biotecnología, investigación médica",
+      "description": "Gestiona datos clínicos y de investigación bajo estrictos estándares de privacidad y cumplimiento (HIPAA, GDPR). Desarrolla plataformas de telemedicina e impulsa la innovación en medicina personalizada y ensayos clínicos digitales.",
+      "cloud_relevance": "Uso intensivo de plataformas cloud para almacenamiento seguro, procesamiento de big data clínico y despliegue de modelos de IA para diagnóstico y tratamiento. Data Lakehouse para unificación de datos de salud.",
+      "cloud_priority": "alta",
+      "icon": "⚕",
+      "image": "",
+      "order": 3
+    }
+  },
+  {
+    "model": "core.division",
+    "pk": 4,
+    "fields": {
+      "name": "Wayne Real Estate",
+      "focus": "Gestión y desarrollo inmobiliario, smart buildings",
+      "description": "Digitaliza procesos de gestión de activos y mantenimiento. Implementa soluciones de smart building con monitoreo remoto y análisis de ocupación, consumo energético y sostenibilidad en tiempo real.",
+      "cloud_relevance": "Adopción de plataformas SaaS para gestión de activos y analítica de datos en tiempo real. Integración de sensores IoT con plataformas cloud para optimización energética y gestión predictiva de mantenimiento.",
+      "cloud_priority": "baja",
+      "icon": "🏛",
+      "image": "",
+      "order": 4
+    }
+  },
+  {
+    "model": "core.division",
+    "pk": 5,
+    "fields": {
+      "name": "Wayne Capital",
+      "focus": "Inversiones, gestión financiera, banca digital",
+      "description": "Moderniza sistemas financieros y de inversión mediante cloud computing y blockchain. Garantiza la seguridad y el cumplimiento normativo en la gestión de datos financieros y desarrolla productos fintech innovadores.",
+      "cloud_relevance": "Migración del core bancario a la nube con altos estándares de seguridad. Implementación de analítica avanzada, automatización de procesos financieros y soluciones de blockchain para trazabilidad de transacciones.",
+      "cloud_priority": "alta",
+      "icon": "💹",
+      "image": "",
+      "order": 5
+    }
+  },
+  {
+    "model": "core.division",
+    "pk": 6,
+    "fields": {
+      "name": "Wayne Foundation",
+      "focus": "Responsabilidad social, filantropía, desarrollo comunitario",
+      "description": "Digitaliza la gestión de proyectos sociales y la medición de impacto. Implementa plataformas colaborativas en la nube para voluntariado y donaciones, garantizando transparencia y trazabilidad de fondos y resultados.",
+      "cloud_relevance": "Uso de plataformas cloud para gestión de proyectos sociales, análisis de datos de impacto comunitario y comunicación multicanal. CRM cloud para gestión de relaciones con donantes y beneficiarios.",
+      "cloud_priority": "baja",
+      "icon": "◈",
+      "image": "",
+      "order": 6
+    }
+  },
+  {
+    "model": "core.division",
+    "pk": 7,
+    "fields": {
+      "name": "Wayne Ventures",
+      "focus": "Inversión en startups, incubación de proyectos de IA, ML, IoT",
+      "description": "Identifica y escala startups tecnológicas con alto potencial. Facilita la integración de tecnologías emergentes en el ecosistema Wayne y promueve la cultura de innovación abierta y colaboración con el ecosistema emprendedor global.",
+      "cloud_relevance": "Experimentación ágil con entornos cloud, sandboxing y despliegue rápido de MVPs. Laboratorios de innovación en la nube para prueba de conceptos de IA, ML e IoT antes de su escalado al portfolio corporativo.",
+      "cloud_priority": "media",
+      "icon": "🚀",
+      "image": "",
+      "order": 7
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 1,
+    "fields": {
+      "role": "CEO",
+      "full_title": "Chief Executive Officer",
+      "name": "Bruce Wayne",
+      "level": "CEO",
+      "strategic_responsibilities": "Visión corporativa, liderazgo organizacional, toma de decisiones estratégicas, alineación entre divisiones, representación institucional y supervisión del gobierno corporativo.",
+      "cloud_role": "Articula la visión de transformación digital, lidera el cambio cultural a todos los niveles de la organización y asegura la alineación estratégica de toda la estructura con la migración a la nube. Patrocina el Cloud Center of Excellence.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0001",
+      "order": 1
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 2,
+    "fields": {
+      "role": "COO",
+      "full_title": "Chief Operating Officer",
+      "name": "Lucius Fox",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Ejecución operativa, eficiencia de procesos, continuidad del negocio, coordinación entre divisiones y supervisión de la cadena de valor.",
+      "cloud_role": "Supervisa la adaptación de todas las operaciones a modelos cloud. Garantiza la resiliencia operativa durante la migración y lidera la implementación del modelo operativo híbrido (centralizado + federado) recomendado en el informe estratégico.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0002",
+      "order": 2
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 3,
+    "fields": {
+      "role": "CFO",
+      "full_title": "Chief Financial Officer",
+      "name": "Lucius Fox Jr.",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Gestión financiera, control de costos, FinOps, análisis de ROI/TCO, presupuestación y sostenibilidad financiera del portafolio de proyectos.",
+      "cloud_role": "Lidera la optimización de costos cloud mediante prácticas FinOps. Implementa modelos de chargeback por unidad de negocio, evalúa el ROI de la migración y supervisa herramientas como AWS Cost Explorer y Azure Cost Management.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0003",
+      "order": 3
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 4,
+    "fields": {
+      "role": "CIO",
+      "full_title": "Chief Information Officer",
+      "name": "Barbara Gordon",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Estrategia tecnológica, infraestructura IT, gestión de plataformas, seguridad de sistemas y gobierno de la información corporativa.",
+      "cloud_role": "Lidera directamente la migración a la nube y la modernización de la infraestructura TI. Define estándares cloud, selecciona proveedores, preside el Cloud Center of Excellence (CCoE) y asegura la interoperabilidad en entornos híbridos y multi-nube.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0014",
+      "order": 4
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 5,
+    "fields": {
+      "role": "CTO",
+      "full_title": "Chief Technology Officer",
+      "name": "Tim Drake",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Innovación tecnológica, arquitectura de sistemas, desarrollo de productos, hoja de ruta tecnológica y adopción de tecnologías emergentes.",
+      "cloud_role": "Impulsa la adopción de arquitecturas cloud-native (microservicios, contenedores, serverless). Lidera la modernización de aplicaciones legacy y la experimentación con IA, ML e IoT en plataformas como Azure ML, AWS SageMaker y Google Vertex AI.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0031",
+      "order": 5
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 6,
+    "fields": {
+      "role": "CISO",
+      "full_title": "Chief Information Security Officer",
+      "name": "Alfred Pennyworth",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Ciberseguridad corporativa, gestión de identidades (IAM), prevención de pérdida de datos (DLP), gestión de incidentes y cumplimiento normativo (GDPR, HIPAA, PCI DSS).",
+      "cloud_role": "Define las políticas de seguridad cloud bajo el principio 'security by design'. Implementa controles IAM con menor privilegio, cifrado AES-256/TLS, SIEM y monitoreo continuo. Preside el Comité de Gobernanza Cloud junto al CIO, CFO y CDO.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0003-A",
+      "order": 6
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 7,
+    "fields": {
+      "role": "CDO",
+      "full_title": "Chief Data & Digital Officer",
+      "name": "Selina Kyle",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Estrategia de datos, gobernanza de la información, analítica avanzada, transformación digital y alineación de iniciativas de IA con los objetivos de negocio.",
+      "cloud_role": "Lidera la gobernanza de datos con modelo híbrido (centralizado + federado). Implementa el Data Lakehouse corporativo, el MDM y el Business Intelligence en la nube. Define la estrategia de adopción de IA/ML en todas las divisiones.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0099",
+      "order": 7
+    }
+  },
+  {
+    "model": "core.executive",
+    "pk": 8,
+    "fields": {
+      "role": "CHRO",
+      "full_title": "Chief Human Resources Officer",
+      "name": "Dick Grayson",
+      "level": "C_LEVEL",
+      "strategic_responsibilities": "Gestión del talento, cultura organizacional, upskilling/reskilling, atracción y retención de talento digital, gestión del cambio y medición de impacto en productividad.",
+      "cloud_role": "Diseña e implementa programas de upskilling en cloud (AWS, Azure, GCP), DevOps, IA y ciberseguridad. Gestiona el cambio organizacional utilizando los modelos Kotter (8 pasos) y ADKAR para asegurar la adopción cultural de la transformación digital.",
+      "is_active": true,
+      "image": "",
+      "employee_id": "WE-0055",
+      "order": 8
+    }
+  },
+  {
+    "model": "core.gadget",
+    "pk": 1,
+    "fields": {
+      "name": "Batimóvil Mark VII",
+      "code": "WT-VH-001",
+      "classification": "vehiculo",
+      "description": "Vehículo blindado de alta velocidad para operaciones urbanas en Gotham. Motor turborreactor silenciado con blindaje de grafeno compuesto. Sistema de piloto automático con IA de reconocimiento de amenazas integrada y conectividad al Batcomputer en tiempo real.",
+      "specs": "Motor: Turborreactor WT-7X silenciado | Velocidad: 350 km/h | Blindaje: Grafeno 40mm | Autonomía: 800 km | Armamento: EMP, Red de captura, Gas no letal | IA: WayneOS v4.1 | Conectividad: 5G/Satélite",
+      "status": "activo",
+      "year_developed": 2019,
+      "image": "",
+      "threat_neutralized": 247,
+      "clearance_level": "OMEGA"
+    }
+  },
+  {
+    "model": "core.gadget",
+    "pk": 2,
+    "fields": {
+      "name": "Traje Blindado Mark X",
+      "code": "WT-TR-010",
+      "classification": "traje",
+      "description": "Exoesqueleto de combate en aleación titanio-kevlar con nanotubos de carbono. Resiste impactos de calibre 50 y temperaturas entre -40°C y 800°C. HUD holográfico con visión térmica, UV y electromagnética, y comunicación cifrada WayneCrypt-256.",
+      "specs": "Material: Ti-Kevlar / Nanotubos carbono | Resistencia: Cal.50 / 800°C | HUD: Térmica, UV, EM | Batería: 18h operación | Peso: 28 kg | Fuerza aumentada: ×3.5 | Cifrado: WayneCrypt-256",
+      "status": "activo",
+      "year_developed": 2021,
+      "image": "",
+      "threat_neutralized": 312,
+      "clearance_level": "OMEGA"
+    }
+  },
+  {
+    "model": "core.gadget",
+    "pk": 3,
+    "fields": {
+      "name": "Batwing Stealth",
+      "code": "WT-VH-002",
+      "classification": "vehiculo",
+      "description": "Aeronave hipersónica de perfil bajo con tecnología furtiva activa. Camuflaje óptico parcial que reduce la firma radar en 94%. Opera a Mach 2.4 y 18.000 metros de altitud con sistemas de armas no letales y reconocimiento.",
+      "specs": "Velocidad: Mach 2.4 | Altitud: 18.000 m | Firma radar: -94% | Autonomía: 4.200 km | Carga útil: 800 kg | Camuflaje óptico: Activo parcial",
+      "status": "activo",
+      "year_developed": 2020,
+      "image": "",
+      "threat_neutralized": 89,
+      "clearance_level": "OMEGA"
+    }
+  },
+  {
+    "model": "core.gadget",
+    "pk": 4,
+    "fields": {
+      "name": "Batarang de Precisión Mk3",
+      "code": "WT-AR-003",
+      "classification": "arma",
+      "description": "Proyectil de retorno guiado por giroscopio con trayectoria inteligente. Configurable como EMP localizado, gas incapacitante o impacto no letal. Acero inoxidable con recubrimiento cerámico y alcance efectivo de 85 metros.",
+      "specs": "Alcance: 85 m | Precisión: ±2 cm a 50 m | Modos: Impacto / EMP / Gas | Retorno guiado: Sí | Material: Acero inox + cerámica | Peso: 340 g",
+      "status": "activo",
+      "year_developed": 2018,
+      "image": "",
+      "threat_neutralized": 1840,
+      "clearance_level": "CLASS_A"
+    }
+  },
+  {
+    "model": "core.gadget",
+    "pk": 5,
+    "fields": {
+      "name": "Sistema ARGUS — Vigilancia IA",
+      "code": "WT-VI-004",
+      "classification": "vigilancia",
+      "description": "Red de inteligencia urbana con 4.200 nodos en Gotham. IA en tiempo real para reconocimiento facial, análisis de comportamiento y rastreo de vehículos. Uptime 99.97% con cifrado WayneCrypt-256 y latencia menor a 80ms.",
+      "specs": "Cobertura: 4.200 nodos | IA: Facial + conductual | Cifrado: WayneCrypt-256 | Latencia: <80 ms | Almacenamiento: 90 días rolling | Uptime: 99.97% | Integración: GCPD, NSA",
+      "status": "activo",
+      "year_developed": 2017,
+      "image": "",
+      "threat_neutralized": 5620,
+      "clearance_level": "CLASS_S"
+    }
+  },
+  {
+    "model": "core.gadget",
+    "pk": 6,
+    "fields": {
+      "name": "Batcomputer WayneOS v5",
+      "code": "WT-CO-005",
+      "classification": "comunicacion",
+      "description": "Sistema central de IA de la Baticueva. Procesador cuántico conectado a 8 satélites privados y redes de inteligencia de 34 países. Centro de mando, análisis forense en tiempo real, coordinación operacional y gestión del CCoE cloud.",
+      "specs": "CPU: Cuántico 1.2 PB/s | RAM: 2 exabytes | Conectividad: 34 redes nacionales + 8 satélites | IA: WayneAI v3.7 | Seguridad: Aislamiento físico + Zero Trust | Uptime: 99.999%",
+      "status": "activo",
+      "year_developed": 2022,
+      "image": "",
+      "threat_neutralized": 8940,
+      "clearance_level": "OMEGA"
+    }
+  },
+  {
+    "model": "core.villain",
+    "pk": 1,
+    "fields": {
+      "name": "Jack Napier",
+      "alias": "El Joker",
+      "threat_level": "S",
+      "status": "detenido",
+      "crimes": "Terrorismo masivo, 247 homicidios documentados, ataque con agente Joker Venom en el puente Kane (2019), sabotaje de infraestructura crítica de Gotham, extorsión corporativa a WayneTech y múltiples fugas de Arkham Asylum.",
+      "description": "El criminal más peligroso de Gotham y la mayor amenaza activa en el registro de WayneTech. Inteligencia táctica excepcional combinada con ausencia total de motivación convencional. Sus actos no siguen lógica económica ni política, haciéndolos imposibles de anticipar mediante modelos predictivos estándar.",
+      "times_detained": 11,
+      "last_detained": "2024-03-14",
+      "image": "",
+      "arkham_cell": "ARKHAM-A01"
+    }
+  },
+  {
+    "model": "core.villain",
+    "pk": 2,
+    "fields": {
+      "name": "Identidad Clasificada",
+      "alias": "Bane",
+      "threat_level": "S",
+      "status": "detenido",
+      "crimes": "Destrucción masiva de infraestructura urbana, tráfico internacional de Venom, intento de detonación del reactor de fusión de Gotham (2012), ocupación militar de la ciudad durante 5 meses, 89 homicidios confirmados.",
+      "description": "Físicamente el oponente más peligroso del registro activo. Usuario del compuesto Venom que multiplica su fuerza y resistencia de forma exponencial. Estratega militar con formación en 14 sistemas de combate certificados. Lideró la ocupación de Gotham durante 5 meses en 2012.",
+      "times_detained": 3,
+      "last_detained": "2023-11-08",
+      "image": "",
+      "arkham_cell": "ARKHAM-A02"
+    }
+  },
+  {
+    "model": "core.villain",
+    "pk": 3,
+    "fields": {
+      "name": "Ra's al Ghul",
+      "alias": "Ra's al Ghul",
+      "threat_level": "S",
+      "status": "desaparecido",
+      "crimes": "Terrorismo de escala civilizatoria, liderazgo de la Liga de las Sombras (~4.000 miembros activos en 18 países), intento de destrucción masiva mediante agente biológico en Gotham (2005). Crímenes documentados en 18 naciones.",
+      "description": "Amenaza de carácter global con presencia operativa estimada de más de un siglo gracias a los Pozos de Lázaro. Lidera la Liga de las Sombras con una ideología de purga civilizatoria. Acceso a recursos casi ilimitados. Paradero actual: DESCONOCIDO.",
+      "times_detained": 1,
+      "last_detained": "2005-06-22",
+      "image": "",
+      "arkham_cell": ""
+    }
+  },
+  {
+    "model": "core.villain",
+    "pk": 4,
+    "fields": {
+      "name": "Edward Nygma",
+      "alias": "El Acertijo",
+      "threat_level": "A",
+      "status": "detenido",
+      "crimes": "Ciberataques a infraestructura bancaria de Gotham (pérdidas estimadas $2.3B), extorsión corporativa, sabotaje de sistemas de tráfico aéreo, hackeo a redes del GCPD, 12 homicidios documentados.",
+      "description": "Genio con cociente intelectual estimado en 210. Mayor amenaza cibernética individual documentada en Gotham. Su compulsión de dejar pistas lo hace detectable pero no menos letal. Especialista en criptografía, ingeniería de sistemas y diseño de trampas de alta tecnología.",
+      "times_detained": 7,
+      "last_detained": "2024-01-30",
+      "image": "",
+      "arkham_cell": "ARKHAM-B04"
+    }
+  },
+  {
+    "model": "core.villain",
+    "pk": 5,
+    "fields": {
+      "name": "Oswald Cobblepot",
+      "alias": "El Pingüino",
+      "threat_level": "A",
+      "status": "en_libertad",
+      "crimes": "Tráfico internacional de armas, lavado de activos ($4.7B documentados), operación de red criminal Iceberg, soborno a funcionarios del GCPD y administración municipal, 34 homicidios por encargo confirmados.",
+      "description": "El criminal empresarial más sofisticado de Gotham. Opera desde el Iceberg Lounge como fachada legal para una red de crimen organizado de escala regional. Su detención es procesalmente compleja por sus estructuras legales blindadas. Activo en libertad.",
+      "times_detained": 4,
+      "last_detained": "2022-09-15",
+      "image": "",
+      "arkham_cell": ""
+    }
+  },
+  {
+    "model": "core.villain",
+    "pk": 6,
+    "fields": {
+      "name": "Selina Kyle",
+      "alias": "Catwoman",
+      "threat_level": "B",
+      "status": "desaparecido",
+      "crimes": "42 robos de alto perfil (valor total $890M), tráfico de arte robado, hackeo a sistemas de seguridad corporativos nivel enterprise, evasión de custodia en 5 ocasiones documentadas.",
+      "description": "Ladrona de élite con habilidades acrobáticas y de combate excepcionales. Motivación principalmente económica, sin inclinación hacia violencia masiva. Ha cooperado con WayneTech en al menos 3 operaciones documentadas. Estado de alianza: indefinido y no confirmado.",
+      "times_detained": 5,
+      "last_detained": "2023-04-11",
+      "image": "",
+      "arkham_cell": ""
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 1,
+    "fields": {
+      "pillar": "costos",
+      "metric_name": "Reducción de TCO",
+      "description": "Reducción del Costo Total de Propiedad en infraestructura IT mediante migración a la nube y optimización FinOps.",
+      "target": "40% reducción en 24 meses",
+      "current": "18% — Fase 2 en curso",
+      "progress": 45,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 2,
+    "fields": {
+      "pillar": "costos",
+      "metric_name": "Optimización FinOps",
+      "description": "Porcentaje del gasto cloud asignado y optimizado mediante prácticas de FinOps (tagging, chargeback, savings plans).",
+      "target": "95% del gasto clasificado",
+      "current": "72% clasificado",
+      "progress": 72,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 3,
+    "fields": {
+      "pillar": "productividad",
+      "metric_name": "Tiempo de Despliegue (CI/CD)",
+      "description": "Reducción del tiempo promedio de despliegue de aplicaciones mediante automatización DevOps.",
+      "target": "De 14 días a 4 horas",
+      "current": "2.1 días promedio actual",
+      "progress": 60,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 4,
+    "fields": {
+      "pillar": "productividad",
+      "metric_name": "Automatización de Procesos",
+      "description": "Porcentaje de procesos operativos críticos automatizados mediante herramientas cloud-native.",
+      "target": "80% de procesos críticos",
+      "current": "54% automatizados",
+      "progress": 54,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 5,
+    "fields": {
+      "pillar": "resiliencia",
+      "metric_name": "Uptime de Sistemas Críticos",
+      "description": "Disponibilidad de los sistemas críticos de negocio en entornos cloud con redundancia multi-zona.",
+      "target": "99.99% uptime",
+      "current": "99.94% actual",
+      "progress": 94,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 6,
+    "fields": {
+      "pillar": "resiliencia",
+      "metric_name": "RTO — Recuperación ante Desastres",
+      "description": "Tiempo de Recuperación Objetivo en caso de incidente mayor o falla catastrófica de sistemas.",
+      "target": "RTO < 15 minutos",
+      "current": "RTO actual: 47 minutos",
+      "progress": 40,
+      "trend_up": false
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 7,
+    "fields": {
+      "pillar": "agilidad",
+      "metric_name": "Time-to-Market de Nuevos Productos",
+      "description": "Reducción del tiempo desde la concepción hasta el lanzamiento de nuevas soluciones digitales.",
+      "target": "50% reducción en time-to-market",
+      "current": "32% de reducción lograda",
+      "progress": 64,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 8,
+    "fields": {
+      "pillar": "innovacion",
+      "metric_name": "Aplicaciones Modernizadas",
+      "description": "Porcentaje del portafolio de aplicaciones legacy migradas o refactorizadas a arquitecturas cloud-native.",
+      "target": "90% del portafolio en 36 meses",
+      "current": "41% completado",
+      "progress": 41,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 9,
+    "fields": {
+      "pillar": "innovacion",
+      "metric_name": "Adopción de IA/ML",
+      "description": "Número de casos de uso de IA/ML activos en producción en la nube a través de todas las divisiones.",
+      "target": "25 casos de uso en producción",
+      "current": "11 casos activos",
+      "progress": 44,
+      "trend_up": true
+    }
+  },
+  {
+    "model": "core.cloudkpi",
+    "pk": 10,
+    "fields": {
+      "pillar": "sostenibilidad",
+      "metric_name": "Reducción Huella de Carbono IT",
+      "description": "Reducción de emisiones de CO2 equivalente asociadas a la infraestructura IT mediante migración a datacenters cloud certificados.",
+      "target": "60% reducción vs. línea base 2022",
+      "current": "28% de reducción lograda",
+      "progress": 47,
+      "trend_up": true
+    }
+  }
+]
