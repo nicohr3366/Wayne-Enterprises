@@ -1,11 +1,74 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Wayne Foundation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wayne Foundation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/portal.css' %}">
 </head>
 <body>
-    <h1>Wayne Foundation</h1>
-    <p>Bienvenido a Wayne Foundation.</p>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Foundation</h1>
+        <span>Responsabilidad Social · Gotham City</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <a href="/" style="font-size:11px;letter-spacing:.15em;color:var(--text-muted);text-decoration:none;">← Volver al portal</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <p class="hero-eyebrow">División de Responsabilidad Social</p>
+    <h2>Wayne <em>Foundation</em></h2>
+    <p class="hero-sub">Filantropía, becas educativas y desarrollo comunitario en Gotham</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">+120</div>
+      <div class="stat-label">Proyectos activos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$4.2M</div>
+      <div class="stat-label">Fondos donados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">+8K</div>
+      <div class="stat-label">Personas beneficiadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">1941</div>
+      <div class="stat-label">Fundada en Gotham</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-copy">© 1939 Wayne Enterprises · Gotham City · Todos los derechos reservados</div>
+    <div class="footer-links">
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'core/js/portal.js' %}"></script>
 </body>
 </html>
