@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Real Estate — Portal Corporativo</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'realestate/css/realestate.css' %}">
+</head>
+<body>
+
+<!-- BACK BUTTON FLOATING -->
+<a href="{% url 'home' %}" class="back-to-portal">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+  Volver al Portal
+</a>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Real Estate · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 04</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Bienes Raíces Premium</p>
+    <h1>Wayne<br><em>Real Estate</em></h1>
+    <p class="hero-sub">Where Legacy Meets the Skyline.</p>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Desarrollamos, gestionamos y transformamos los activos inmobiliarios más estratégicos
+      del mundo. Desde Gotham hasta los mercados globales, construimos el futuro en piedra, acero y visión.
+    </p>
+    <a href="#sobre" class="btn-primary">Conocer más</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">87+</div>
+      <div class="stat-label">Años en el mercado</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">4.2K</div>
+      <div class="stat-label">Propiedades gestionadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">14</div>
+      <div class="stat-label">Países donde opera</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$3.8B</div>
+      <div class="stat-label">USD en activos</div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Bienes raíces de<br><em>escala global</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Real Estate es la división inmobiliaria de Wayne Enterprises. Opera en el sector
+        de desarrollo, administración y comercialización de propiedades de alto valor, abarcando
+        segmentos residencial, comercial, industrial y de uso mixto.
+      </p>
+      <p>
+        Su mercado objetivo incluye corporaciones multinacionales, gobiernos municipales, fondos
+        de inversión institucional y particulares de alto patrimonio. Con presencia en Gotham City,
+        Metrópolis, y más de 14 países, Wayne Real Estate define el estándar del mercado premium.
+      </p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Desarrollar y gestionar activos inmobiliarios de excelencia que generen valor sostenible
+          para inversores, comunidades y la economía urbana.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser el portfolio inmobiliario más reconocido del hemisferio occidental para 2035,
+          liderando la transformación de paisajes urbanos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Servicios y Productos</p>
+      <h2 class="section-title">Lo que<br><em>ofrecemos</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#127750;</div>
+        <h3>Desarrollo Urbano Premium</h3>
+        <p>Concepción, diseño y construcción de proyectos residenciales de lujo y complejos de uso mixto.</p>
+        <span class="service-tag">Inversores · Particulares</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127970;</div>
+        <h3>Gestión de Activos Comerciales</h3>
+        <p>Administración integral de oficinas corporativas, centros comerciales y parques empresariales.</p>
+        <span class="service-tag">Corporaciones · Fondos</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127981;</div>
+        <h3>Parques Industriales</h3>
+        <p>Diseño y operación de zonas industriales conectadas, bodegas inteligentes y hubs logísticos.</p>
+        <span class="service-tag">Industria · E-commerce</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128202;</div>
+        <h3>Consultoría e Inversión</h3>
+        <p>Asesoría estratégica para estructuración de portafolios inmobiliarios y due diligence.</p>
+        <span class="service-tag">Family offices</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127807;</div>
+        <h3>Edificios Verdes</h3>
+        <p>Diseño y retrofitting bajo estándares LEED Platinum, BREEAM Outstanding y WELL Building.</p>
+        <span class="service-tag">ESG · Corporaciones</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128273;</div>
+        <h3>Proptech & Plataforma Digital</h3>
+        <p>WayneHome Platform: ecosistema digital para búsqueda, transacción y gestión de propiedades.</p>
+        <span class="service-tag">Digital</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Respaldo del ecosistema Wayne Enterprises</h3>
+          <p>Acceso a tecnología de punta de Wayne Technologies, financiamiento estructurado de Wayne Capital
+             y mano de obra especializada de Wayne Industries.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Portfolio de activos con valor histórico</h3>
+          <p>Gestión de edificios icónicos de Gotham con décadas de historia. Protección del valor
+             patrimonial con estrategias de restauración y modernización.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Tecnología PropTech integrada</h3>
+          <p>Uso de gemelos digitales, BIM 6D, sensores IoT y analítica predictiva
+             en cada proyecto. Decisiones basadas en datos en tiempo real.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Compromiso ESG certificado</h3>
+          <p>100% de los proyectos nuevos diseñados bajo huella de carbono neta cero para 2030.
+             Reportes de sostenibilidad verificados por terceros.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>hablan</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="98">0</div>
+        <div class="big-stat-suffix">%</div>
+        <div class="big-stat-label">Tasa de ocupación promedio</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="12500">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Empleados globales</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="800">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Edificios en retrofitting energético</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás del portfolio</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">LF</div>
+        <h3>Lucius Fox Jr.</h3>
+        <p class="team-role">VP — Wayne Real Estate</p>
+        <p class="team-desc">Arquitecto de la estrategia de expansión global del portfolio.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">SC</div>
+        <h3>Sofia Crane</h3>
+        <p class="team-role">Directora de Desarrollo</p>
+        <p class="team-desc">Responsable del pipeline de nuevos proyectos y arquitectura.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">MV</div>
+        <h3>Marcus Vale</h3>
+        <p class="team-role">Director de Activos</p>
+        <p class="team-desc">Gestión y optimización del portafolio existente.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">AR</div>
+        <h3>Ana Romero</h3>
+        <p class="team-role">Directora de PropTech</p>
+        <p class="team-desc">Lidera la transformación digital de la división.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Listo para<br><em>invertir en el futuro?</em></h2>
+    <p class="reveal">
+      Conecta con nuestro equipo de asesores. Analizamos tu perfil de inversión y te
+      presentamos las oportunidades del portfolio que mejor se ajustan a tus objetivos.
+    </p>
+    <a href="mailto:realestate@wayneenterprises.com" class="btn-primary reveal">
+      Hablar con un asesor
+    </a>
+    <span class="cta-email reveal">realestate@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Real Estate — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'realestate/js/realestate.js' %}"></script>
+
+</body>
+</html>
