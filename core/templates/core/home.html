@@ -32,6 +32,27 @@
         <span>Portal Corporativo · Gotham City</span>
       </div>
     </div>
+
+    <!--
+    nuevo
+    -->
+
+    <nav class="main-nav">
+      <a href="/" class="nav-link nav-home">Wayne Enterprises</a>
+      {% for app in apps_activas %}
+        {% if app == 'tech' %}<a href="/tech/" class="nav-link">Technologies</a>{% endif %}
+        {% if app == 'industries' %}<a href="/industries/" class="nav-link">Industries</a>{% endif %}
+        {% if app == 'healthcare' %}<a href="/healthcare/" class="nav-link">Healthcare</a>{% endif %}
+        {% if app == 'realestate' %}<a href="/realestate/" class="nav-link">Real Estate</a>{% endif %}
+        {% if app == 'capital' %}<a href="/capital/" class="nav-link">Capital</a>{% endif %}
+        {% if app == 'foundation' %}<a href="/foundation/" class="nav-link">Foundation</a>{% endif %}
+        {% if app == 'ventures' %}<a href="/ventures/" class="nav-link">Ventures</a>{% endif %}
+      {% endfor %}
+    </nav>
+
+    <!---->
+
+
     <div class="header-right">
       <div class="status-dot">Sistemas activos</div>
       <span id="gotham-clock" style="font-size:11px;letter-spacing:.15em;color:var(--text-muted)"></span>

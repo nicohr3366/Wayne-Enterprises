@@ -493,3 +493,30 @@ footer {
   .user-badge { display: none; }
   .wrapper { padding: 0 20px; }
 }
+
+.main-nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.nav-link {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.6);
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  transition: all .2s;
+}
+.nav-link:hover {
+  color: #c9a84c;
+  border-color: rgba(201,168,76,0.3);
+}
+.nav-home {
+  color: #c9a84c;
+  font-weight: 700;
+}

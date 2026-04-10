@@ -1,11 +1,78 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Wayne Foundation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wayne Foundation — Portal Corporativo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/portal.css' %}">
 </head>
 <body>
-    <h1>Wayne Foundation</h1>
-    <p>Bienvenido a Wayne Foundation.</p>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Portal Corporativo · Gotham City</span>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="/" class="nav-link nav-home">Wayne Enterprises</a>
+      {% for app in apps_activas %}
+        {% if app == 'foundation' %}<a href="/foundation/" class="nav-link">Foundation</a>{% endif %}
+      {% endfor %}
+    </nav>
+
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span id="gotham-clock" style="font-size:11px;letter-spacing:.15em;color:var(--text-muted)"></span>
+      <div class="user-badge">
+        {% if user.is_authenticated %}
+          {{ user.get_full_name|default:user.username }}
+        {% else %}
+          Invitado
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <p class="hero-eyebrow">División 06</p>
+    <h2>
+      Wayne
+      <em>Foundation</em>
+    </h2>
+    <p class="hero-sub">Filantropía, educación y desarrollo comunitario en Gotham City</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <!-- Aquí va el contenido de Foundation -->
+
+  <footer>
+    <div class="footer-copy">© 1939 Wayne Enterprises · Gotham City · Todos los derechos reservados</div>
+    <div class="footer-links">
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+      {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}">Admin</a>
+      {% endif %}
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'core/js/portal.js' %}"></script>
 </body>
 </html>
