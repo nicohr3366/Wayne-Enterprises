@@ -1,0 +1,84 @@
+{% load static %}
+{% load ventures_tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Wayne Ventures{% endblock %}</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'ventures/css/ventures.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- BACK BUTTON FLOATING -->
+<a href="{% url 'home' %}" class="back-to-portal">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+  Volver al Portal
+</a>
+
+<div class="city-bg"></div>
+<div class="spotlight ventures-spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <div class="ventures-logo">WV</div>
+      <div class="logo-text">
+        <h1>Wayne Ventures</h1>
+        <span>A Wayne Enterprises Company</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot ventures-status">Sistemas activos</div>
+      <span class="division-badge ventures-badge">División 07</span>
+    </div>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav class="ventures-nav" aria-label="Navegación principal">
+    <ul class="ventures-nav-list">
+      {% for item in ventures_nav_items %}
+        {% with item_url_name=item.url_name|url_tail %}
+          <li>
+            <a href="{{ item.get_url }}"
+               class="ventures-nav-link{% if ventures_current_url_name == item_url_name %} is-active{% endif %}">
+              {{ item.label }}
+            </a>
+          </li>
+        {% endwith %}
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="ventures-footer">
+    <div class="footer-copy">© 2024 Wayne Ventures — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'ventures/js/main.js' %}"></script>
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

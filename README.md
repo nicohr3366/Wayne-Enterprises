@@ -11,10 +11,10 @@ Portal modular Django para el conglomerado Wayne Enterprises. Cada compañero de
 | 1 | Wayne Technologies | `tech` | — | Pendiente |
 | 2 | Wayne Industries | `industries` | — | Pendiente |
 | 3 | Wayne Healthcare | `healthcare` | — | Pendiente |
-| 4 | Wayne Real Estate | `realestate` | — | Pendiente |
+| 4 | Wayne Real Estate | `realestate` | — | Activo |
 | 5 | Wayne Capital | `capital` | — | Pendiente |
 | 6 | Wayne Foundation | `foundation` | Nicolás | Activo |
-| 7 | Wayne Ventures | `ventures` | — | Pendiente |
+| 7 | Wayne Ventures | `ventures` | Juliana | Activo |
 
 ---
 
@@ -29,73 +29,73 @@ El portal tiene **usuarios con roles**:
 - `/accounts/login/` — Iniciar sesión
 - `/accounts/dashboard/` — Panel de control
 - `/accounts/logout/` — Cerrar sesión
+- `/accounts/admin/roles/` — Gestión de roles (admin)
 
 Todas las apps de división requieren login.
 
 ---
 
-## Guía Rápida Git
-
-### Conceptos básicos
-
-- **Repositorio**: Carpeta del proyecto con historial
-- **Rama `main`**: Código oficial (no tocar directamente)
-- **Tu rama**: Donde trabajas (`Nombre_Apellido`)
-- **Commit**: Guardar cambios con mensaje descriptivo
-
-### Flujo diario de trabajo
+## Configuración Inicial
 
 ```bash
-# 1. Activar entorno virtual (Windows)
+# 1. Clonar el repositorio
+git clone https://github.com/nicohr3366/Wayne-Enterprises.git
+cd Wayne-Enterprises
+
+# 2. Crear entorno virtual
+python -m venv venv
+
+# 3. Activar entorno (Windows)
+venv\Scripts\activate
+
+# 4. Instalar dependencias
+pip install -r requirements.txt
+
+# 5. Preparar base de datos
+python manage.py migrate
+
+# 6. Crear superusuario (opcional)
+python manage.py createsuperuser
+
+# 7. Iniciar servidor
+python manage.py runserver
+```
+
+---
+
+## Flujo de Trabajo Git
+
+### Configuración inicial (solo una vez)
+
+```bash
+# Configurar tu nombre
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@email.com"
+
+# Crear tu rama de trabajo
+git checkout -b Nombre_Apellido
+```
+
+### Trabajo diario
+
+```bash
+# 1. Activar entorno
 venv\Scripts\activate
 
 # 2. Bajar cambios del main antes de empezar
 git pull origin main
 
-# 3. Trabajar en tu código...
-
-# 4. Ver cambios realizados
+# 3. Ver cambios realizados
 git status
 
-# 5. Agregar cambios
+# 4. Agregar cambios
 git add .
 
-# 6. Hacer commit
+# 5. Hacer commit
 git commit -m "feat: descripción de cambios"
 
-# 7. Subir a GitHub
+# 6. Subir a GitHub
 git push origin tu-rama
-```
-
-### Configuración inicial (solo una vez)
-
-```bash
-# Instalar Git desde https://git-scm.com/downloads
-
-# Configurar tu nombre
-git config --global user.name "Tu Nombre"
-git config --global user.email "tu@email.com"
-
-# Clonar el repositorio
-git clone https://github.com/nicohr3366/Wayne-Enterprises.git
-
-# Entrar a la carpeta
-cd Wayne-Enterprises
-
-# Crear entorno virtual
-python -m venv venv
-
-# Activar entorno
-venv\Scripts\activate
-
-# Instalar dependencias
-pip install -r requirements.txt
-
-# Preparar base de datos
-python manage.py migrate
-
-# Crear tu rama
-git checkout -b Nombre_Apellido
 ```
 
 ---
@@ -109,14 +109,14 @@ tu_app/
 ├── migrations/
 │   └── __init__.py
 ├── templates/
-│   └── tu_app/              # Subcarpeta con nombre de tu app
+│   └── tu_app/
 │       └── home.html
 ├── static/
 │   └── tu_app/
 │       ├── css/
 │       └── js/
 ├── __init__.py
-├── urls.py                  # Debe tener app_name = 'tu_app'
+├── urls.py          # Debe tener app_name = 'tu_app'
 ├── views.py
 └── ...
 ```
@@ -127,7 +127,7 @@ tu_app/
 from django.urls import path
 from . import views
 
-app_name = 'tu_app'  # IMPORTANTE: debe coincidir con tu app
+app_name = 'tu_app'  # IMPORTANTE
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -155,19 +155,7 @@ def home(request):
 
 ---
 
-## Hacer un Pull Request
-
-1. Sube tus cambios: `git push origin tu-rama`
-2. Ve al repo en GitHub
-3. Clic en **"Compare & pull request"**
-4. Escribe título descriptivo: `feat: agrego app [nombre]`
-5. Describe los cambios
-6. Clic en **"Create pull request"**
-7. Nicolás revisa y acepta
-
----
-
-## URLs reservadas
+## URLs Reservadas
 
 | División | URL |
 |----------|-----|
@@ -181,7 +169,7 @@ def home(request):
 
 ---
 
-## Errores comunes
+## Errores Comunes
 
 | Error | Solución |
 |-------|----------|
@@ -190,11 +178,10 @@ def home(request):
 | "Table doesn't exist" | Ejecutar: `python manage.py migrate` |
 | Template no encontrado | Revisar ruta: `templates/tu_app/home.html` |
 | Tarjeta en "Próximamente" | Verificar `app_name` en `urls.py` y `INSTALLED_APPS` |
-| Conflicto al hacer push | Hacer `git pull origin tu-rama` primero |
 
 ---
 
-## Reglas del equipo
+## Reglas del Equipo
 
 - Trabajar en tu propia rama, **nunca en `main`**
 - Hacer `git pull origin main` antes de empezar cada día
@@ -202,6 +189,18 @@ def home(request):
 - Avisar a Nicolás cuando el PR esté listo
 - No modificar `core/` ni `accounts/` sin coordinar
 - No subir `venv/` ni `db.sqlite3`
+
+---
+
+## Hacer un Pull Request
+
+1. Sube tus cambios: `git push origin tu-rama`
+2. Ve al repo en GitHub
+3. Clic en **"Compare & pull request"**
+4. Escribe título descriptivo: `feat: agrego app [nombre]`
+5. Describe los cambios
+6. Clic en **"Create pull request"**
+7. Nicolás revisa y acepta
 
 ---
 
