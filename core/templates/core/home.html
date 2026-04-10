@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wayne Enterprises — Portal Corporativo</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS del portal -->
+  <link rel="stylesheet" href="{% static 'core/css/portal.css' %}">
+
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Portal Corporativo · Gotham City</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span id="gotham-clock" style="font-size:11px;letter-spacing:.15em;color:var(--text-muted)"></span>
+      <div class="user-badge">
+        {% if user.is_authenticated %}
+          {{ user.get_full_name|default:user.username }}
+        {% else %}
+          Invitado
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <p class="hero-eyebrow">Sistema de gestión corporativa</p>
+    <h2>
+      Gotham's Finest
+      <em>Conglomerate</em>
+    </h2>
+    <p class="hero-sub">Selecciona una división para acceder a su módulo</p>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">+34K</div>
+      <div class="stat-label">Empleados globales</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$31.3B</div>
+      <div class="stat-label">Valoración corporativa</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">7</div>
+      <div class="stat-label">Divisiones estratégicas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">1939</div>
+      <div class="stat-label">Fundada en Gotham</div>
+    </div>
+  </div>
+
+  <!-- DIVISIONES -->
+  <p class="divisions-label">Divisiones corporativas</p>
+
+  <!--
+    data-active: lista separada por comas de las apps que YA
+    están instaladas. Django la rellena desde views.py.
+    El JS lee este atributo y activa las tarjetas.
+  -->
+  <div class="divisions-grid" id="grid"
+       data-active="{{ apps_activas|join:',' }}">
+
+    <!-- Wayne Technologies -->
+    <a href="#" class="division-card coming-soon"
+       data-app="tech" data-url="/tech/" id="card-1">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Technologies</div>
+      <div class="card-sub">División de I+D</div>
+      <div class="card-desc">Investigación, desarrollo tecnológico avanzado y proyectos de defensa para Gotham.</div>
+      <div class="card-number">01</div>
+    </a>
+
+    <!-- Wayne Industries -->
+    <a href="#" class="division-card coming-soon"
+       data-app="industries" data-url="/industries/" id="card-2">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 20h20M4 20V10l4-4 4 4V4l4 4v12"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Industries</div>
+      <div class="card-sub">Manufactura y producción</div>
+      <div class="card-desc">Operaciones industriales, manufactura pesada y cadena de suministro global.</div>
+      <div class="card-number">02</div>
+    </a>
+
+    <!-- Wayne Healthcare -->
+    <a href="#" class="division-card coming-soon"
+       data-app="healthcare" data-url="/healthcare/" id="card-3">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Healthcare</div>
+      <div class="card-sub">Salud y bienestar</div>
+      <div class="card-desc">Red hospitalaria, investigación médica y atención sanitaria para los ciudadanos de Gotham.</div>
+      <div class="card-number">03</div>
+    </a>
+
+    <!-- Wayne Real Estate-->
+    <a href="#" class="division-card coming-soon"
+       data-app="realestate" data-url="/realestate/" id="card-4">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Real Estate</div>
+      <div class="card-sub">Propiedades e inversión</div>
+      <div class="card-desc">Gestión de propiedades comerciales, residenciales y desarrollo urbano en Gotham.</div>
+      <div class="card-number">04</div>
+    </a>
+
+    <!-- Wayne Capital -->
+    <a href="#" class="division-card coming-soon"
+       data-app="capital" data-url="/capital/" id="card-5">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Capital</div>
+      <div class="card-sub">Finanzas e inversiones</div>
+      <div class="card-desc">Gestión de activos, banca de inversión y portafolio financiero corporativo.</div>
+      <div class="card-number">05</div>
+    </a>
+
+    <!-- Wayne Foundation -->
+    <a href="#" class="division-card coming-soon"
+       data-app="foundation" data-url="/foundation/" id="card-6">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Foundation</div>
+      <div class="card-sub">Responsabilidad social</div>
+      <div class="card-desc">Programas de filantropía, becas educativas y proyectos de desarrollo comunitario.</div>
+      <div class="card-number">06</div>
+    </a>
+
+    <!-- Wayne Ventures -->
+    <a href="#" class="division-card coming-soon"
+       data-app="ventures" data-url="/ventures/" id="card-7">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <span class="card-badge badge-soon">Próximamente</span>
+      </div>
+      <div class="card-name">Wayne Ventures</div>
+      <div class="card-sub">Startups y emprendimiento</div>
+      <div class="card-desc">Incubadora corporativa, capital de riesgo y alianzas estratégicas con startups globales.</div>
+      <div class="card-number">07</div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="footer-copy">© 1939 Wayne Enterprises · Gotham City · Todos los derechos reservados</div>
+    <div class="footer-links">
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+      {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}">Admin</a>
+      {% endif %}
+    </div>
+  </footer>
+
+</div>
+
+<!-- JS del portal -->
+<script src="{% static 'core/js/portal.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+#Entorno virtual
+venv/
+env/
+.env/
+.venv/
+
+#Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+#Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+
+#Archivos estáticos recolectados (collectstatic)
+staticfiles/
+mediafiles/
+media/
+
+#Variables de entorno y secretos
+.env
+.env.local
+.env.production
+*.secret
+
+#IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+#Sistema operativo
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+#Archivos temporales
+*.tmp
+*.bak
+*.orig
