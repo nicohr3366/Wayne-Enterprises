@@ -485,11 +485,131 @@ footer {
   to   { opacity: 1; }
 }
 
+/* Menú de Navegación Dinámico */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 16px;
+}
+
+.nav-link {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  letter-spacing: 0.05em;
+}
+
+.nav-link:hover {
+  transform: translateY(-1px);
+}
+
+/* Enlaces para usuarios no logueados */
+.nav-login {
+  color: var(--text-secondary);
+  border: 1px solid rgba(212,170,80,0.2);
+}
+
+.nav-login:hover {
+  color: var(--text-primary);
+  border-color: rgba(212,170,80,0.5);
+  background: rgba(212,170,80,0.05);
+}
+
+.nav-register {
+  color: var(--bat-black);
+  background: linear-gradient(135deg, rgba(212,170,80,0.9), rgba(180,150,60,0.9));
+  border: 1px solid var(--gold);
+}
+
+.nav-register:hover {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  box-shadow: 0 4px 12px rgba(212,170,80,0.3);
+}
+
+/* Enlace para usuario logueado */
+.nav-link .user-badge {
+  background: rgba(212,170,80,0.1);
+  border: 1px solid rgba(212,170,80,0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--gold);
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover .user-badge {
+  background: rgba(212,170,80,0.2);
+  border-color: var(--gold);
+}
+
+/* Botón de logout */
+.nav-logout {
+  color: #ff6b6b;
+  border: 1px solid rgba(255,107,107,0.3);
+}
+
+.nav-logout:hover {
+  background: rgba(255,107,107,0.1);
+  border-color: rgba(255,107,107,0.5);
+}
+
 @media (max-width: 768px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .stat-item:nth-child(2) { border-right: none; }
   .hero h2 { font-size: 28px; }
-  .header-right { gap: 12px; }
+  .header-right { gap: 12px; flex-wrap: wrap; }
+  .nav-menu { margin-left: 0; margin-top: 8px; width: 100%; justify-content: flex-end; }
   .user-badge { display: none; }
   .wrapper { padding: 0 20px; }
+}
+
+/* Estilos globales para selects/dropdowns - SIEMPRE tonos oscuros */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #1a1a1a;
+  border: 1px solid rgba(212,170,80,0.3);
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #e8e6e3;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--gold);
+  background-color: #1a1a1a;
+}
+
+/* Opciones del dropdown - fondo SIEMPRE oscuro, NUNCA blanco */
+select option {
+  background-color: #1a1a1a !important;
+  color: #e8e6e3 !important;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+/* Hover/seleccionado - gris oscuro #2a2a2a, NUNCA blanco ni claro */
+select option:hover,
+select option:focus,
+select option:checked,
+select option[selected],
+select option:active {
+  background-color: #2a2a2a !important;
+  color: #C9A84C !important;
+  box-shadow: none !important;
+}
+
+/* Optgroup - igual de oscuro */
+select optgroup {
+  background-color: #1a1a1a !important;
+  color: #C9A84C;
+  font-weight: 600;
 }

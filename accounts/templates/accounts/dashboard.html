@@ -1,0 +1,621 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Wayne Enterprises</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS del portal -->
+  <link rel="stylesheet" href="{% static 'core/css/portal.css' %}">
+
+  <style>
+    .dashboard-container {
+      min-height: 100vh;
+      padding: 40px 30px;
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .dashboard-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .dashboard-title em {
+      color: var(--gold);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-badge {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .user-badge .rol {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px;
+      padding: 12px 20px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(201,168,76,0.1);
+      border-color: rgba(201,168,76,0.4);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(201,168,76,0.2);
+      border-color: var(--gold);
+      color: var(--text-primary);
+    }
+
+    .nav-item.logout {
+      background: rgba(220,53,69,0.1);
+      border-color: rgba(220,53,69,0.3);
+      color: #ff6b6b;
+    }
+
+    .nav-item.logout:hover {
+      background: rgba(220,53,69,0.2);
+      border-color: rgba(220,53,69,0.5);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .dashboard-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .card-content {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge.active {
+      background: rgba(40,167,69,0.2);
+      color: #51cf66;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .btn-action {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 6px;
+      padding: 8px 16px;
+      color: var(--gold);
+      font-size: 13px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(201,168,76,0.2);
+      border-color: var(--gold);
+    }
+
+    .messages {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      max-width: 400px;
+    }
+
+    .message {
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 12px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .message.success {
+      background: rgba(40, 167, 69, 0.95);
+      color: white;
+    }
+
+    .message.error {
+      background: rgba(220, 53, 69, 0.95);
+      color: white;
+    }
+
+    .message.info {
+      background: rgba(201, 168, 76, 0.95);
+      color: #050507;
+    }
+  </style>
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <div class="message {{ message.tags }}">{{ message }}</div>
+  {% endfor %}</div>
+{% endif %}
+
+<div class="wrapper dashboard-container">
+
+  <!-- Header del Dashboard -->
+  <div class="dashboard-header">
+    <div>
+      <h1 class="dashboard-title">Panel de Control <em>{{ user.get_full_name|default:user.username }}</em></h1>
+    </div>
+    <div class="user-info">
+      <span class="user-badge">
+        {{ user.username }} |
+        <span class="rol">{{ profile.rol|upper }}</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Menú Dinámico -->
+  <nav class="nav-menu">
+    <a href="{% url 'accounts:dashboard' %}" class="nav-item active" target="_self">Dashboard</a>
+    <a href="{% url 'accounts:perfil' %}" class="nav-item" target="_self">Mi Perfil</a>
+
+    <!-- Enlaces especiales para Administradores -->
+    {% if profile.es_admin %}
+    <a href="{% url 'admin:index' %}" class="nav-item" target="_self">Panel Admin Django</a>
+    <a href="{% url 'accounts:gestionar_roles' %}" class="nav-item" target="_self">Gestionar Roles</a>
+    {% endif %}
+
+    <!-- Aquí se agregarán enlaces a las apps de divisiones cuando estén activas -->
+    {% if 'foundation' in apps_activas %}
+    <a href="{% url 'foundation:home' %}" class="nav-item" target="_self">Wayne Foundation</a>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="nav-item" target="_self">← Volver al Portal</a>
+    <a href="{% url 'accounts:logout' %}" class="nav-item logout" target="_self">Cerrar Sesión</a>
+  </nav>
+
+  <!-- Grid de Dashboard -->
+  <div class="dashboard-grid">
+
+    <!-- Card: Información del Usuario -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <h3 class="card-title">Información Personal</h3>
+      </div>
+      <div class="card-content">
+        <p><strong>Nombre:</strong> {{ user.get_full_name|default:"No especificado" }}</p>
+        <p><strong>Usuario:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email|default:"No especificado" }}</p>
+        <p><strong>Miembro desde:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+
+        <div class="quick-actions">
+          <a href="{% url 'accounts:perfil' %}" class="btn-action" target="_self">Ver tu perfil</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Estado de Acceso -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <h3 class="card-title">Estado de Acceso</h3>
+      </div>
+      <div class="card-content">
+        <p>Tu rol actual:
+          <span class="status-badge active">{{ profile.get_rol_display }}</span>
+        </p>
+
+        {% if profile.es_admin %}
+        <p style="margin-top: 12px;">Como <strong>Administrador</strong> tienes acceso completo al sistema:</p>
+        <ul style="margin-top: 8px; padding-left: 20px;">
+          <li>Gestión de usuarios</li>
+          <li>Panel de administración</li>
+          <li>Configuración del sistema</li>
+        </ul>
+        {% else %}
+        <p style="margin-top: 12px;">Como <strong>Usuario</strong> tienes acceso a:</p>
+        <ul style="margin-top: 8px; padding-left: 20px;">
+          <li>Portal corporativo</li>
+          <li>Módulos de divisiones (cuando estén activos)</li>
+          <li>Tu perfil y configuración</li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Card: Divisiones Disponibles (Placeholder para futuras integraciones) -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <h3 class="card-title">Mis Divisiones</h3>
+      </div>
+      <div class="card-content">
+        <!-- Este es un placeholder - aquí tus compañeros conectarán sus apps -->
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          </svg>
+          <p>Las divisiones corporativas se mostrarán aquí cuando estén disponibles.</p>
+          <p style="font-size: 12px; margin-top: 8px;">Próximamente: acceso directo a Wayne Technologies, Wayne Industries, Wayne Healthcare, etc.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Actividad Reciente (Placeholder) -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <h3 class="card-title">Actividad Reciente</h3>
+      </div>
+      <div class="card-content">
+        <div class="empty-state" style="padding: 20px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <p>Último acceso: {{ user.last_login|date:"d/m/Y H:i"|default:"Primera vez" }}</p>
+          <p style="font-size: 12px; margin-top: 8px;">El historial de actividad se mostrará aquí.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // Auto-cerrar mensajes después de 5 segundos
+  setTimeout(function() {
+    var messages = document.querySelectorAll('.message');
+    messages.forEach(function(msg) {
+      msg.style.opacity = '0';
+      msg.style.transform = 'translateX(100%)';
+      setTimeout(function() {
+        msg.remove();
+      }, 300);
+    });
+  }, 5000);
+
+  // Forzar que todos los enlaces internos se abran en la misma ventana
+  document.addEventListener('DOMContentLoaded', function() {
+    // Eliminar cualquier atributo target="_blank" existente
+    document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+      link.setAttribute('target', '_self');
+    });
+
+    document.querySelectorAll('a[href^="/"], a[href^="."], a[href^="{%"]').forEach(function(link) {
+      link.setAttribute('target', '_self');
+      link.addEventListener('click', function(e) {
+        // Prevenir comportamientos que puedan abrir nueva ventana
+        if (e.shiftKey || e.metaKey || e.ctrlKey) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = this.getAttribute('href');
+        }
+      });
+    });
+
+    // Asegurar que todos los formularios se envíen en la misma ventana
+    document.querySelectorAll('form').forEach(function(form) {
+      form.setAttribute('target', '_self');
+      form.removeAttribute('formtarget');
+    });
+  });
+
+  // Interceptar submits de formularios
+  document.addEventListener('submit', function(e) {
+    var form = e.target;
+    form.setAttribute('target', '_self');
+    form.removeAttribute('formtarget');
+  }, true);
+
+  // ============================================
+  // SISTEMA DE CIERRE POR INACTIVIDAD
+  // ============================================
+  (function() {
+    // Tiempos de inactividad (en milisegundos)
+    var TIEMPO_AVISO = 13 * 60 * 1000;      // 13 minutos - mostrar aviso
+    var TIEMPO_CIERRE = 15 * 60 * 1000;     // 15 minutos - cerrar sesión
+    var INTERVALO_VERIFICACION = 30 * 1000; // Verificar cada 30 segundos
+
+    var ultimaActividad = Date.now();
+    var avisoMostrado = false;
+    var temporizadorCierre = null;
+
+    // Crear modal de aviso
+    function crearModalAviso() {
+      var modal = document.createElement('div');
+      modal.id = 'inactivity-modal';
+      modal.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.85);
+          backdrop-filter: blur(5px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          font-family: 'Rajdhani', sans-serif;
+        ">
+          <div style="
+            background: linear-gradient(180deg, #1a1a20, #0d0d10);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+          ">
+            <div style="
+              width: 60px;
+              height: 60px;
+              margin: 0 auto 20px;
+              border: 2px solid #C9A84C;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #C9A84C;
+              font-size: 24px;
+            ">⚠</div>
+            <h3 style="
+              color: #f0f0f5;
+              font-family: 'Cinzel', serif;
+              margin: 0 0 16px 0;
+              font-size: 20px;
+            ">Sesión por expirar</h3>
+            <p style="
+              color: #a0a0b0;
+              margin: 0 0 24px 0;
+              font-size: 15px;
+              line-height: 1.6;
+            ">
+              Tu sesión se cerrará en <strong id="countdown" style="color: #C9A84C;">2 minutos</strong>
+              por inactividad.
+            </p>
+            <button id="stay-logged-in" style="
+              background: linear-gradient(135deg, rgba(201,168,76,0.9), rgba(180,150,60,0.9));
+              color: #050507;
+              border: none;
+              border-radius: 8px;
+              padding: 12px 32px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+            ">Mantener sesión activa</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Manejar clic en el botón
+      document.getElementById('stay-logged-in').addEventListener('click', function() {
+        ultimaActividad = Date.now();
+        avisoMostrado = false;
+        clearTimeout(temporizadorCierre);
+        var modal = document.getElementById('inactivity-modal');
+        if (modal) modal.remove();
+
+        // Hacer ping al servidor para renovar sesión
+        fetch('/accounts/session-ping/', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+          },
+          credentials: 'same-origin'
+        }).catch(function() {});
+      });
+    }
+
+    // Función para cerrar sesión
+    function cerrarSesion() {
+      window.location.href = '/accounts/logout/';
+    }
+
+    // Actualizar tiempo de última actividad
+    function registrarActividad() {
+      ultimaActividad = Date.now();
+
+      // Si hay modal visible y el usuario interactúa, cerrarlo
+      if (avisoMostrado && document.getElementById('inactivity-modal')) {
+        document.getElementById('stay-logged-in').click();
+      }
+    }
+
+    // Verificar inactividad
+    function verificarInactividad() {
+      var tiempoInactivo = Date.now() - ultimaActividad;
+
+      if (tiempoInactivo >= TIEMPO_CIERRE) {
+        // Cerrar sesión por inactividad
+        cerrarSesion();
+      } else if (tiempoInactivo >= TIEMPO_AVISO && !avisoMostrado) {
+        // Mostrar aviso
+        avisoMostrado = true;
+        crearModalAviso();
+
+        // Contador regresivo visual
+        var segundosRestantes = Math.floor((TIEMPO_CIERRE - tiempoInactivo) / 1000);
+        var countdownEl = document.getElementById('countdown');
+        if (countdownEl) {
+          var intervalo = setInterval(function() {
+            segundosRestantes--;
+            if (segundosRestantes <= 0) {
+              clearInterval(intervalo);
+            } else {
+              var minutos = Math.floor(segundosRestantes / 60);
+              var secs = segundosRestantes % 60;
+              countdownEl.textContent = minutos + ':' + String(secs).padStart(2, '0');
+            }
+          }, 1000);
+        }
+
+        // Programar cierre si no hay respuesta
+        temporizadorCierre = setTimeout(function() {
+          if (avisoMostrado) cerrarSesion();
+        }, TIEMPO_CIERRE - tiempoInactivo);
+      }
+    }
+
+    // Escuchar eventos de actividad
+    var eventos = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    eventos.forEach(function(evento) {
+      document.addEventListener(evento, registrarActividad, true);
+    });
+
+    // Iniciar verificación periódica
+    setInterval(verificarInactividad, INTERVALO_VERIFICACION);
+  })();
+</script>
+
+</body>
+</html>

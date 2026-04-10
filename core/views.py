@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.apps import apps as django_apps
 
 DIVISION_APPS = [
@@ -11,6 +12,7 @@ DIVISION_APPS = [
     'ventures',
 ]
 
+@login_required
 def home(request):
 
     apps_activas = [

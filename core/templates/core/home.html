@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wayne Enterprises — Portal Corporativo</title>
 
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+
   <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -35,13 +38,21 @@
     <div class="header-right">
       <div class="status-dot">Sistemas activos</div>
       <span id="gotham-clock" style="font-size:11px;letter-spacing:.15em;color:var(--text-muted)"></span>
-      <div class="user-badge">
+
+      <!-- Menú Dinámico de Navegación -->
+      <nav class="nav-menu">
         {% if user.is_authenticated %}
-          {{ user.get_full_name|default:user.username }}
+          <!-- Usuario Logueado -->
+          <a href="{% url 'accounts:dashboard' %}" class="nav-link" target="_self">
+            <span class="user-badge">{{ user.get_full_name|default:user.username }}</span>
+          </a>
+          <a href="{% url 'accounts:logout' %}" class="nav-link nav-logout" target="_self">Salir</a>
         {% else %}
-          Invitado
+          <!-- Usuario Invitado -->
+          <a href="{% url 'accounts:login' %}" class="nav-link nav-login" target="_self">Ingresar</a>
+          <a href="{% url 'accounts:registro' %}" class="nav-link nav-register" target="_self">Registrarse</a>
         {% endif %}
-      </div>
+      </nav>
     </div>
   </header>
 
@@ -209,10 +220,10 @@
   <footer>
     <div class="footer-copy">© 1939 Wayne Enterprises · Gotham City · Todos los derechos reservados</div>
     <div class="footer-links">
-      <a href="#">Accesibilidad</a>
-      <a href="#">Seguridad</a>
+      <a href="#" target="_self">Accesibilidad</a>
+      <a href="#" target="_self">Seguridad</a>
       {% if user.is_staff %}
-        <a href="{% url 'admin:index' %}">Admin</a>
+        <a href="{% url 'admin:index' %}" target="_self">Admin</a>
       {% endif %}
     </div>
   </footer>
@@ -221,6 +232,205 @@
 
 <!-- JS del portal -->
 <script src="{% static 'core/js/portal.js' %}"></script>
+
+<script>
+  // Forzar que todos los enlaces internos se abran en la misma ventana
+  document.addEventListener('DOMContentLoaded', function() {
+    // Eliminar cualquier atributo target="_blank" existente
+    document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+      link.setAttribute('target', '_self');
+    });
+
+    document.querySelectorAll('a[href^="/"], a[href^="."]').forEach(function(link) {
+      link.setAttribute('target', '_self');
+      link.addEventListener('click', function(e) {
+        // Prevenir comportamientos que puedan abrir nueva ventana
+        if (e.shiftKey || e.metaKey || e.ctrlKey) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = this.getAttribute('href');
+        }
+      });
+    });
+
+    // Asegurar que todos los formularios se envíen en la misma ventana
+    document.querySelectorAll('form').forEach(function(form) {
+      form.setAttribute('target', '_self');
+      form.removeAttribute('formtarget');
+    });
+  });
+
+  // Interceptar submits de formularios
+  document.addEventListener('submit', function(e) {
+    var form = e.target;
+    form.setAttribute('target', '_self');
+    form.removeAttribute('formtarget');
+  }, true);
+
+  // ============================================
+  // SISTEMA DE CIERRE POR INACTIVIDAD
+  // ============================================
+  (function() {
+    // Tiempos de inactividad (en milisegundos)
+    var TIEMPO_AVISO = 13 * 60 * 1000;      // 13 minutos - mostrar aviso
+    var TIEMPO_CIERRE = 15 * 60 * 1000;     // 15 minutos - cerrar sesión
+    var INTERVALO_VERIFICACION = 30 * 1000; // Verificar cada 30 segundos
+
+    var ultimaActividad = Date.now();
+    var avisoMostrado = false;
+    var temporizadorCierre = null;
+
+    // Crear modal de aviso
+    function crearModalAviso() {
+      var modal = document.createElement('div');
+      modal.id = 'inactivity-modal';
+      modal.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.85);
+          backdrop-filter: blur(5px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          font-family: 'Rajdhani', sans-serif;
+        ">
+          <div style="
+            background: linear-gradient(180deg, #1a1a20, #0d0d10);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+          ">
+            <div style="
+              width: 60px;
+              height: 60px;
+              margin: 0 auto 20px;
+              border: 2px solid #C9A84C;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #C9A84C;
+              font-size: 24px;
+            ">⚠</div>
+            <h3 style="
+              color: #f0f0f5;
+              font-family: 'Cinzel', serif;
+              margin: 0 0 16px 0;
+              font-size: 20px;
+            ">Sesión por expirar</h3>
+            <p style="
+              color: #a0a0b0;
+              margin: 0 0 24px 0;
+              font-size: 15px;
+              line-height: 1.6;
+            ">
+              Tu sesión se cerrará en <strong id="countdown" style="color: #C9A84C;">2 minutos</strong>
+              por inactividad.
+            </p>
+            <button id="stay-logged-in" style="
+              background: linear-gradient(135deg, rgba(201,168,76,0.9), rgba(180,150,60,0.9));
+              color: #050507;
+              border: none;
+              border-radius: 8px;
+              padding: 12px 32px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+            ">Mantener sesión activa</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Manejar clic en el botón
+      document.getElementById('stay-logged-in').addEventListener('click', function() {
+        ultimaActividad = Date.now();
+        avisoMostrado = false;
+        clearTimeout(temporizadorCierre);
+        var modal = document.getElementById('inactivity-modal');
+        if (modal) modal.remove();
+
+        // Hacer ping al servidor para renovar sesión
+        fetch('/accounts/session-ping/', {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+          },
+          credentials: 'same-origin'
+        }).catch(function() {});
+      });
+    }
+
+    // Función para cerrar sesión
+    function cerrarSesion() {
+      window.location.href = '/accounts/logout/';
+    }
+
+    // Actualizar tiempo de última actividad
+    function registrarActividad() {
+      ultimaActividad = Date.now();
+
+      // Si hay modal visible y el usuario interactúa, cerrarlo
+      if (avisoMostrado && document.getElementById('inactivity-modal')) {
+        document.getElementById('stay-logged-in').click();
+      }
+    }
+
+    // Verificar inactividad
+    function verificarInactividad() {
+      var tiempoInactivo = Date.now() - ultimaActividad;
+
+      if (tiempoInactivo >= TIEMPO_CIERRE) {
+        // Cerrar sesión por inactividad
+        cerrarSesion();
+      } else if (tiempoInactivo >= TIEMPO_AVISO && !avisoMostrado) {
+        // Mostrar aviso
+        avisoMostrado = true;
+        crearModalAviso();
+
+        // Contador regresivo visual
+        var segundosRestantes = Math.floor((TIEMPO_CIERRE - tiempoInactivo) / 1000);
+        var countdownEl = document.getElementById('countdown');
+        if (countdownEl) {
+          var intervalo = setInterval(function() {
+            segundosRestantes--;
+            if (segundosRestantes <= 0) {
+              clearInterval(intervalo);
+            } else {
+              var minutos = Math.floor(segundosRestantes / 60);
+              var secs = segundosRestantes % 60;
+              countdownEl.textContent = minutos + ':' + String(secs).padStart(2, '0');
+            }
+          }, 1000);
+        }
+
+        // Programar cierre si no hay respuesta
+        temporizadorCierre = setTimeout(function() {
+          if (avisoMostrado) cerrarSesion();
+        }, TIEMPO_CIERRE - tiempoInactivo);
+      }
+    }
+
+    // Escuchar eventos de actividad
+    var eventos = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    eventos.forEach(function(evento) {
+      document.addEventListener(evento, registrarActividad, true);
+    });
+
+    // Iniciar verificación periódica
+    setInterval(verificarInactividad, INTERVALO_VERIFICACION);
+  })();
+</script>
 
 </body>
 </html>

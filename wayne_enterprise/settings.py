@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'foundation',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Configuración de autenticación
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+# Configuración de sesión - 30 minutos de duración total
+SESSION_COOKIE_AGE = 1800  # 30 minutos en segundos
+SESSION_SAVE_EVERY_REQUEST = True  # Renovar sesión en cada petición
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Mantener sesión al cerrar pestaña
