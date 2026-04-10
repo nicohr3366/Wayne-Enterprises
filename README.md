@@ -8,12 +8,12 @@ Portal modular Django para el conglomerado Wayne Enterprises. Cada compañero de
 
 | # | División | App | Responsable | Estado |
 |---|----------|-----|-------------|--------|
-| 1 | Wayne Technologies | `tech` | — | Pendiente |
-| 2 | Wayne Industries | `industries` | — | Pendiente |
-| 3 | Wayne Healthcare | `healthcare` | — | Pendiente |
-| 4 | Wayne Real Estate | `realestate` | — | Activo |
-| 5 | Wayne Capital | `capital` | — | Pendiente |
-| 6 | Wayne Foundation | `foundation` | Nicolás | Activo |
+| 1 | Wayne Technologies | `tech` | Cuervo | Pendiente |
+| 2 | Wayne Industries | `industries` | Diego Granja | Pendiente |
+| 3 | Wayne Healthcare | `healthcare` | Juan José | Pendiente |
+| 4 | Wayne Real Estate | `realestate` | Perlaza | Activo |
+| 5 | Wayne Capital | `capital` | Valeria | Pendiente |
+| 6 | Wayne Foundation | `foundation` | Camilo | Activo |
 | 7 | Wayne Ventures | `ventures` | Juliana | Activo |
 
 ---
