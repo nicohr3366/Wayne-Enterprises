@@ -1,1 +1,355 @@
-/* Base stylesheet for Wayne Ventures */
+:root {
+	--ventures-cyan: #00ffff;
+	--ventures-cyan-dim: #00cfcf;
+	--ventures-cyan-glow: rgba(0, 255, 255, 0.2);
+	--ventures-border: rgba(0, 255, 255, 0.22);
+	--ventures-border-hover: rgba(0, 255, 255, 0.75);
+}
+
+.ventures-body {
+	position: relative;
+}
+
+.ventures-noise,
+.ventures-backdrop {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+}
+
+.ventures-noise {
+	background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+	background-size: 14px 14px;
+	opacity: 0.18;
+}
+
+.ventures-backdrop {
+	background:
+		radial-gradient(circle at top, rgba(0, 255, 255, 0.09), transparent 40%),
+		linear-gradient(to bottom, rgba(5, 5, 7, 0) 0%, rgba(5, 5, 7, 0.88) 100%);
+}
+
+.ventures-shell {
+	position: relative;
+	z-index: 1;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding: 28px 24px 40px;
+}
+
+.ventures-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding-bottom: 22px;
+	border-bottom: 1px solid var(--ventures-border);
+}
+
+.ventures-brand {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.ventures-mark {
+	width: 54px;
+	height: 54px;
+	display: grid;
+	place-items: center;
+	border: 1px solid var(--ventures-border);
+	color: var(--ventures-cyan);
+	font-family: 'Cinzel', serif;
+	font-weight: 900;
+	letter-spacing: 0.14em;
+	background: rgba(0, 255, 255, 0.04);
+	box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
+}
+
+.ventures-brand-text h1,
+.ventures-title {
+	font-family: 'Cinzel', serif;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.ventures-brand-text h1 {
+	font-size: 22px;
+	color: var(--gold);
+}
+
+.ventures-brand-text span {
+	display: block;
+	margin-top: 4px;
+	color: var(--text-secondary);
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+.ventures-nav {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.ventures-nav-list {
+	list-style: none;
+	display: flex;
+	gap: 12px;
+}
+
+.ventures-nav-link,
+.ventures-footer-link,
+.ventures-portal-link {
+	text-decoration: none;
+	color: var(--text-secondary);
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.ventures-nav-link.is-active,
+.ventures-footer-link.is-active {
+	color: var(--ventures-cyan);
+}
+
+.ventures-portal-link {
+	color: var(--gold);
+}
+
+.ventures-burger {
+	display: none;
+	width: 44px;
+	height: 44px;
+	border: 1px solid var(--ventures-border);
+	background: transparent;
+	padding: 0;
+}
+
+.ventures-burger span {
+	display: block;
+	width: 20px;
+	height: 1px;
+	margin: 4px auto;
+	background: var(--ventures-cyan);
+}
+
+.ventures-main {
+	padding: 36px 0 28px;
+}
+
+.ventures-hero {
+	padding: 44px;
+	margin-bottom: 24px;
+}
+
+.ventures-eyebrow,
+.ventures-section-title {
+	color: var(--ventures-cyan);
+	letter-spacing: 0.34em;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.ventures-title {
+	margin-top: 16px;
+	font-size: clamp(32px, 5vw, 58px);
+	color: var(--text-primary);
+	line-height: 1.08;
+}
+
+.ventures-title span {
+	color: var(--ventures-cyan);
+}
+
+.ventures-lead {
+	max-width: 760px;
+	margin-top: 18px;
+	font-size: 18px;
+	color: var(--text-secondary);
+	line-height: 1.7;
+}
+
+.ventures-actions {
+	display: flex;
+	gap: 14px;
+	flex-wrap: wrap;
+	margin-top: 28px;
+}
+
+.ventures-stats {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0;
+	border: 1px solid var(--ventures-border);
+	margin-bottom: 24px;
+}
+
+.ventures-stat {
+	padding: 24px;
+	border-right: 1px solid var(--ventures-border);
+	background: rgba(13, 13, 20, 0.88);
+}
+
+.ventures-stat:last-child {
+	border-right: 0;
+}
+
+.ventures-stat-value {
+	font-family: 'JetBrains Mono', monospace;
+	color: var(--ventures-cyan);
+	font-size: 30px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
+.ventures-stat-label {
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	font-size: 11px;
+	color: var(--text-secondary);
+}
+
+.ventures-grid {
+	display: grid;
+	gap: 16px;
+}
+
+.ventures-grid-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin-bottom: 24px;
+}
+
+.ventures-card {
+	padding: 22px;
+}
+
+.ventures-card h3,
+.ventures-card h4 {
+	font-family: 'Cinzel', serif;
+	color: var(--text-primary);
+	margin-bottom: 10px;
+}
+
+.ventures-card p,
+.ventures-panel p {
+	color: var(--text-secondary);
+	line-height: 1.7;
+}
+
+.ventures-panel {
+	padding: 24px 22px;
+	margin-bottom: 24px;
+}
+
+.ventures-tags {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-top: 16px;
+}
+
+.ventures-tags span {
+	border: 1px solid var(--ventures-border);
+	padding: 8px 12px;
+	color: var(--ventures-cyan);
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+.ventures-divisions {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin-top: 16px;
+}
+
+.ventures-card-highlight {
+	border-color: var(--ventures-border-hover);
+	box-shadow: 0 0 24px rgba(0, 255, 255, 0.12);
+}
+
+.ventures-footer {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 24px;
+	padding-top: 22px;
+	border-top: 1px solid var(--ventures-border);
+}
+
+.ventures-footer-slogan {
+	color: var(--gold);
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	font-family: 'Cinzel', serif;
+}
+
+.ventures-footer-copy {
+	margin-top: 8px;
+	color: var(--text-muted);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+.ventures-footer-links {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+}
+
+@media (max-width: 960px) {
+	.ventures-header,
+	.ventures-footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.ventures-stats,
+	.ventures-grid-2,
+	.ventures-divisions {
+		grid-template-columns: 1fr;
+	}
+
+	.ventures-stat {
+		border-right: 0;
+		border-bottom: 1px solid var(--ventures-border);
+	}
+
+	.ventures-stat:last-child {
+		border-bottom: 0;
+	}
+
+	.ventures-nav {
+		width: 100%;
+		flex-wrap: wrap;
+	}
+}
+
+@media (max-width: 720px) {
+	.ventures-shell {
+		padding-inline: 16px;
+	}
+
+	.ventures-hero {
+		padding: 28px 20px;
+	}
+
+	.ventures-nav-list {
+		display: none;
+		width: 100%;
+		flex-direction: column;
+		padding: 12px 0;
+	}
+
+	.ventures-nav-list.is-open {
+		display: flex;
+	}
+
+	.ventures-burger {
+		display: inline-grid;
+		place-items: center;
+	}
+}

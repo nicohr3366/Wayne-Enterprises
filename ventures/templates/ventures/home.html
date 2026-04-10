@@ -1,14 +1,44 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wayne Ventures</title>
-  </head>
-  <body>
-    <main>
-      <h1>Wayne Ventures</h1>
-      <p>Fase 0: estructura base preparada.</p>
-    </main>
-  </body>
-</html>
+{% extends 'ventures/base.html' %}
+
+{% block title %}Wayne Ventures{% endblock %}
+
+{% block content %}
+<section class="ventures-hero ventures-panel">
+  <p class="ventures-eyebrow">A Wayne Enterprises Company</p>
+  <h2 class="ventures-title">Acelerando el futuro. <span>Asegurando el mañana.</span></h2>
+  <p class="ventures-lead">Wayne Ventures es el brazo de inversión estratégica de Wayne Enterprises, orientado a startups, validación industrial y crecimiento global.</p>
+  <div class="ventures-actions">
+    <a class="ventures-btn ventures-btn-primary" href="{% url 'ventures:about' %}">Explorar Portafolio</a>
+    <a class="ventures-btn ventures-btn-secondary" href="#contact">Presentar mi Proyecto</a>
+  </div>
+</section>
+
+<section class="ventures-stats" aria-label="Indicadores clave">
+  <article class="ventures-stat">
+    <div class="ventures-stat-value">+$250M</div>
+    <div class="ventures-stat-label">Capital invertido</div>
+  </article>
+  <article class="ventures-stat">
+    <div class="ventures-stat-value">45+</div>
+    <div class="ventures-stat-label">Startups activas</div>
+  </article>
+  <article class="ventures-stat">
+    <div class="ventures-stat-value">12</div>
+    <div class="ventures-stat-label">Proyectos escalados</div>
+  </article>
+  <article class="ventures-stat">
+    <div class="ventures-stat-value">8</div>
+    <div class="ventures-stat-label">Países</div>
+  </article>
+</section>
+
+<section class="ventures-panel" id="portfolio">
+  <h3 class="ventures-section-title">Foco de la división</h3>
+  <p>Inversión temprana, sandbox cloud, co-creación con ingenieros de élite y validación de soluciones con impacto en el ecosistema Wayne.</p>
+</section>
+
+<section class="ventures-panel" id="contact">
+  <h3 class="ventures-section-title">Contacto institucional</h3>
+  <p>ventures@wayneenterprises.com · Wayne Tower, Nivel 90, Gotham City</p>
+</section>
+{% endblock %}

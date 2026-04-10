@@ -1,0 +1,41 @@
+.ventures-panel {
+  border: 1px solid var(--ventures-border);
+  background: rgba(13, 13, 20, 0.92);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.ventures-card {
+  border: 1px solid var(--ventures-border);
+  background: linear-gradient(180deg, rgba(19, 19, 30, 0.92), rgba(13, 13, 20, 0.96));
+}
+
+.ventures-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ventures-btn:hover {
+  transform: translateY(-1px);
+}
+
+.ventures-btn-primary {
+  background: var(--ventures-cyan);
+  color: #050507;
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.24);
+}
+
+.ventures-btn-secondary {
+  border: 1px solid var(--ventures-border);
+  color: var(--ventures-cyan);
+  background: rgba(0, 255, 255, 0.04);
+}

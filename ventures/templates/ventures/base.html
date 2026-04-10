@@ -1,0 +1,80 @@
+{% load static %}
+{% load ventures_tags %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Wayne Ventures{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/portal.css' %}">
+  <link rel="stylesheet" href="{% static 'ventures/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'ventures/css/components.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="ventures-body">
+  <div class="ventures-noise"></div>
+  <div class="ventures-backdrop"></div>
+
+  <div class="ventures-shell">
+    <header class="ventures-header">
+      <div class="ventures-brand">
+        <div class="ventures-mark" aria-hidden="true">WV</div>
+        <div class="ventures-brand-text">
+          <h1>Wayne Ventures</h1>
+          <span>A Wayne Enterprises Company</span>
+        </div>
+      </div>
+
+      <nav class="ventures-nav" aria-label="Navegación principal">
+        <button class="ventures-burger" type="button" aria-label="Abrir menú" aria-expanded="false" data-ventures-burger>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <ul class="ventures-nav-list" data-ventures-nav>
+          {% for item in ventures_nav_items %}
+            {% with item_url_name=item.url_name|url_tail %}
+              <li>
+                <a
+                  href="{{ item.get_url }}"
+                  class="ventures-nav-link{% if ventures_current_url_name == item_url_name %} is-active{% endif %}"
+                  {% if item.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                >
+                  {{ item.label }}
+                </a>
+              </li>
+            {% endwith %}
+          {% endfor %}
+        </ul>
+
+        <a class="ventures-portal-link" href="{% url 'home' %}">← Portal Wayne</a>
+      </nav>
+    </header>
+
+    <main class="ventures-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="ventures-footer">
+      <div>
+        <p class="ventures-footer-slogan">Acelerando el futuro. Asegurando el mañana.</p>
+        <p class="ventures-footer-copy">Wayne Tower, Nivel 90, Gotham City · ventures@wayneenterprises.com</p>
+      </div>
+      <ul class="ventures-footer-links">
+        {% for item in ventures_nav_items %}
+          {% with item_url_name=item.url_name|url_tail %}
+            <li>
+              <a href="{{ item.get_url }}" class="ventures-footer-link{% if ventures_current_url_name == item_url_name %} is-active{% endif %}">{{ item.label }}</a>
+            </li>
+          {% endwith %}
+        {% endfor %}
+      </ul>
+    </footer>
+  </div>
+
+  <script src="{% static 'ventures/js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
