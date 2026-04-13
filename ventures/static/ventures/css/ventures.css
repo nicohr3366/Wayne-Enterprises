@@ -1,6 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   WAYNE VENTURES — CSS UNIFICADO
-   Hereda estilos del portal + acento cian identitario
+   WAYNE VENTURES — CSS UNIFICADO (Estilo Real Estate + Dorado)
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
@@ -19,12 +18,12 @@
   --text-secondary: #b0a690;
   --text-muted:     #7a7060;
 
-  /* ── Exclusivo Wayne Ventures ── */
-  --ventures-cyan:       #00ffff;
-  --ventures-cyan-dim:   #00cfcf;
-  --ventures-cyan-glow:  rgba(0, 255, 255, 0.2);
-  --ventures-border:     rgba(0, 255, 255, 0.22);
-  --ventures-border-hover: rgba(0, 255, 255, 0.75);
+  /* ── Exclusivo Wayne Ventures (Dorado) ── */
+  --ventures-gold:       #C9A84C;
+  --ventures-gold-dim:   #b8922e;
+  --ventures-gold-glow:  rgba(212,170,80,0.25);
+  --ventures-border:     rgba(212,170,80,0.40);
+  --ventures-border-hover: rgba(212,170,80,0.80);
 }
 
 *, *::before, *::after {
@@ -68,7 +67,7 @@ body::before {
   gap: 8px;
   padding: 10px 18px;
   background: var(--surface);
-  border: 1px solid var(--ventures-border);
+  border: 1px solid var(--border);
   border-radius: 2px;
   color: var(--text-secondary);
   font-family: 'Rajdhani', sans-serif;
@@ -81,10 +80,10 @@ body::before {
 }
 
 .back-to-portal:hover {
-  border-color: var(--ventures-cyan);
-  color: var(--ventures-cyan);
-  background: rgba(0, 255, 255, 0.08);
-  box-shadow: 0 0 20px var(--ventures-cyan-glow);
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,170,80,0.1);
+  box-shadow: 0 0 20px var(--gold-glow);
 }
 
 .back-to-portal svg {
@@ -112,13 +111,10 @@ body::before {
   transform: translateX(-50%);
   width: 700px;
   height: 800px;
+  background: radial-gradient(ellipse at top, rgba(212,170,80,0.07) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
   animation: spotPulse 8s ease-in-out infinite;
-}
-
-.ventures-spotlight {
-  background: radial-gradient(ellipse at top, rgba(0, 255, 255, 0.07) 0%, transparent 65%);
 }
 
 .wrapper {
@@ -136,7 +132,7 @@ header {
   align-items: center;
   justify-content: space-between;
   padding: 28px 0 24px;
-  border-bottom: 1px solid var(--ventures-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .logo-group {
@@ -145,25 +141,18 @@ header {
   gap: 18px;
 }
 
-.ventures-logo {
+.bat-logo {
   width: 52px;
   height: 52px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--ventures-border);
-  color: var(--ventures-cyan);
-  font-family: 'Cinzel', serif;
-  font-weight: 900;
-  font-size: 18px;
-  letter-spacing: 0.14em;
-  background: rgba(0, 255, 255, 0.04);
-  box-shadow: 0 0 24px rgba(0, 255, 255, 0.08);
-  animation: venturesLogoPulse 4s ease-in-out infinite;
+  animation: logoPulse 4s ease-in-out infinite;
 }
 
-@keyframes venturesLogoPulse {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(0,255,255,0.4)); }
-  50%       { filter: drop-shadow(0 0 18px rgba(0,255,255,0.8)); }
+.bat-logo path[fill="#C9A84C"] {
+  fill: var(--ventures-gold);
+}
+
+.bat-logo path[fill="#050507"] {
+  fill: var(--bat-black);
 }
 
 .logo-text h1 {
@@ -171,10 +160,10 @@ header {
   font-size: 24px;
   font-weight: 900;
   letter-spacing: 0.12em;
-  color: var(--ventures-cyan);
+  color: var(--gold);
   line-height: 1;
   text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  text-shadow: 0 0 20px rgba(212,170,80,0.3);
 }
 
 .logo-text span {
@@ -208,36 +197,28 @@ header {
   content: '';
   width: 7px;
   height: 7px;
+  background: var(--ventures-gold);
   border-radius: 50%;
-  box-shadow: 0 0 8px;
+  box-shadow: 0 0 8px var(--ventures-gold);
   animation: blink 2s ease-in-out infinite;
-}
-
-.ventures-status::before {
-  background: var(--ventures-cyan);
-  box-shadow: 0 0 8px var(--ventures-cyan);
 }
 
 .division-badge {
   font-family: 'Cinzel', serif;
   font-size: 13px;
   font-weight: 600;
+  color: var(--gold);
   letter-spacing: 0.1em;
-  border: 1px solid;
+  border: 1px solid var(--border);
   padding: 7px 16px;
   border-radius: 2px;
-}
-
-.ventures-badge {
-  color: var(--ventures-cyan);
-  border-color: var(--ventures-border);
-  background: rgba(0, 255, 255, 0.06);
+  background: rgba(212,170,80,0.06);
 }
 
 /* ── NAVIGATION ── */
 .ventures-nav {
   padding: 16px 0;
-  border-bottom: 1px solid var(--ventures-border);
+  border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
 }
 
@@ -261,16 +242,16 @@ header {
 }
 
 .ventures-nav-link:hover {
-  color: var(--ventures-cyan);
+  color: var(--ventures-gold);
   border-color: var(--ventures-border);
-  background: rgba(0, 255, 255, 0.04);
+  background: rgba(212,170,80,0.04);
 }
 
 .ventures-nav-link.is-active {
-  color: var(--ventures-cyan);
-  border-color: var(--ventures-cyan);
-  background: rgba(0, 255, 255, 0.08);
-  box-shadow: 0 0 12px var(--ventures-cyan-glow);
+  color: var(--ventures-gold);
+  border-color: var(--ventures-gold);
+  background: rgba(212,170,80,0.08);
+  box-shadow: 0 0 12px var(--ventures-gold-glow);
 }
 
 /* ── HERO ── */
@@ -280,27 +261,18 @@ header {
   position: relative;
 }
 
-.ventures-hero {
-  padding: 72px 0 56px;
-  text-align: center;
-  position: relative;
-}
-
 .hero-eyebrow {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.45em;
+  color: var(--gold-dim);
   text-transform: uppercase;
   margin-bottom: 20px;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards 0.2s;
 }
 
-.ventures-eyebrow {
-  color: var(--ventures-cyan-dim);
-}
-
-.hero h1, .ventures-hero h1 {
+.hero h1 {
   font-family: 'Cinzel', serif;
   font-size: clamp(34px, 5vw, 60px);
   font-weight: 900;
@@ -315,34 +287,28 @@ header {
 
 .hero h1 em {
   font-style: normal;
-  color: var(--ventures-cyan);
+  color: var(--gold);
   display: block;
-  text-shadow: 0 0 40px rgba(0, 255, 255, 0.35);
+  text-shadow: 0 0 40px rgba(212,170,80,0.35);
 }
 
 .hero-sub {
   margin-top: 20px;
   font-size: 16px;
   font-weight: 500;
+  color: var(--text-secondary);
   letter-spacing: 0.1em;
   opacity: 0;
   animation: fadeUp 0.8s ease forwards 0.6s;
 }
 
-.ventures-sub {
-  color: var(--text-secondary);
-}
-
 .gold-line {
   width: 100px;
   height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
   margin: 28px auto;
   opacity: 0;
   animation: fadeIn 1s ease forwards 0.8s;
-}
-
-.ventures-line {
-  background: linear-gradient(to right, transparent, var(--ventures-cyan), transparent);
 }
 
 .hero-desc {
@@ -350,12 +316,9 @@ header {
   margin: 0 auto;
   font-size: 16px;
   line-height: 1.7;
+  color: var(--text-secondary);
   opacity: 0;
   animation: fadeUp 0.8s ease forwards 1s;
-}
-
-.ventures-desc {
-  color: var(--text-secondary);
 }
 
 /* ── BUTTONS ── */
@@ -364,7 +327,8 @@ header {
   margin-top: 32px;
   padding: 14px 36px;
   background: transparent;
-  border: 1px solid;
+  border: 1px solid var(--gold);
+  color: var(--gold);
   font-family: 'Rajdhani', sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -378,86 +342,38 @@ header {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 30px;
-}
-
-.ventures-btn-primary {
-  border-color: var(--ventures-cyan);
-  color: var(--ventures-cyan);
-}
-
-.ventures-btn-primary:hover {
-  background: var(--ventures-cyan);
+  background: var(--gold);
   color: var(--bat-black);
-  box-shadow: 0 0 30px var(--ventures-cyan-glow);
-}
-
-.ventures-btn-secondary {
-  display: inline-block;
-  margin-top: 32px;
-  padding: 14px 36px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.ventures-btn-secondary:hover {
-  border-color: var(--ventures-cyan);
-  color: var(--ventures-cyan);
-  background: rgba(0, 255, 255, 0.04);
+  box-shadow: 0 0 30px var(--gold-glow);
 }
 
 /* ── STATS BAR ── */
 .stats-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px solid;
+  border: 1px solid var(--border);
   background: var(--surface);
   margin: 48px 0;
 }
 
-.ventures-stats-bar {
-  border-color: var(--ventures-border);
-}
-
 .stat-item {
   padding: 26px 28px;
+  border-right: 1px solid var(--border);
   text-align: center;
   position: relative;
 }
 
-.stat-item {
-  border-right: 1px solid;
-}
-
-.ventures-stats-bar .stat-item {
-  border-right-color: var(--ventures-border);
-}
-
-.stat-item:last-child {
-  border-right: none;
-}
+.stat-item:last-child { border-right: none; }
 
 .stat-val {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Cinzel', serif;
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 900;
+  color: var(--gold);
   letter-spacing: 0.05em;
   line-height: 1;
   margin-bottom: 8px;
-}
-
-.ventures-stat-val {
-  color: var(--ventures-cyan);
-  text-shadow: 0 0 20px var(--ventures-cyan-glow);
+  text-shadow: 0 0 20px rgba(212,170,80,0.3);
 }
 
 .stat-label {
@@ -488,12 +404,9 @@ header {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.4em;
+  color: var(--gold-dim);
   text-transform: uppercase;
   margin-bottom: 16px;
-}
-
-.ventures-section-label {
-  color: var(--ventures-cyan-dim);
 }
 
 .section-title {
@@ -508,7 +421,7 @@ header {
 
 .section-title em {
   font-style: normal;
-  color: var(--ventures-cyan);
+  color: var(--gold);
 }
 
 .section-body {
@@ -534,7 +447,7 @@ header {
 
 .mv-card {
   background: var(--surface);
-  border: 1px solid var(--ventures-border);
+  border: 1px solid var(--border);
   padding: 40px;
   text-align: left;
 }
@@ -543,7 +456,7 @@ header {
   font-family: 'Cinzel', serif;
   font-size: 20px;
   font-weight: 600;
-  color: var(--ventures-cyan);
+  color: var(--gold);
   letter-spacing: 0.08em;
   margin-bottom: 16px;
   text-transform: uppercase;
@@ -555,79 +468,50 @@ header {
   color: var(--text-secondary);
 }
 
-/* ── PANELS ── */
-.ventures-panel {
-  background: var(--surface);
-  border: 1px solid var(--ventures-border);
-  padding: 40px;
-  margin-bottom: 24px;
-}
-
-.ventures-panel h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ventures-cyan);
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-}
-
-.ventures-panel p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--text-secondary);
-}
-
-/* ── GRIDS ── */
-.ventures-grid {
+/* ── SERVICES GRID ── */
+.services-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  margin-top: 24px;
 }
 
-.ventures-grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.ventures-grid-4 {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-/* ── CARDS ── */
-.ventures-card {
+.service-card {
   background: var(--surface-2);
-  border: 1px solid var(--ventures-border);
+  border: 1px solid var(--border);
   padding: 32px;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
 }
 
-.ventures-card::before {
+.service-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--ventures-cyan);
+  background: var(--gold);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
 }
 
-.ventures-card:hover {
-  border-color: var(--ventures-border-hover);
+.service-card:hover {
+  border-color: var(--border-hover);
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px var(--ventures-cyan-glow);
 }
 
-.ventures-card:hover::before {
+.service-card:hover::before {
   transform: scaleX(1);
 }
 
-.ventures-card h4 {
+.service-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.service-card h3 {
   font-family: 'Cinzel', serif;
   font-size: 16px;
   font-weight: 600;
@@ -637,35 +521,172 @@ header {
   text-transform: uppercase;
 }
 
-.ventures-card p {
+.service-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.service-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+}
+
+/* ── VALUE LIST ── */
+.value-list {
+  max-width: 800px;
+  margin: 48px auto 0;
+}
+
+.value-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.value-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.value-num {
+  font-family: 'Cinzel', serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--gold);
+  opacity: 0.3;
+  min-width: 60px;
+  text-align: center;
+}
+
+.value-content h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.value-content p {
   font-size: 14px;
   line-height: 1.6;
   color: var(--text-secondary);
 }
 
-/* ── TAGS ── */
-.ventures-tags {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 16px;
+/* ── BIG STATS GRID ── */
+.big-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: center;
 }
 
-.ventures-tags span {
-  border: 1px solid var(--ventures-border);
-  padding: 8px 12px;
-  color: var(--ventures-cyan);
-  letter-spacing: 0.16em;
+.big-stat {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 48px 32px;
+  position: relative;
+}
+
+.big-stat-number {
+  font-family: 'Cinzel', serif;
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  display: inline;
+}
+
+.big-stat-suffix {
+  font-family: 'Cinzel', serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--gold);
+  display: inline;
+}
+
+.big-stat-label {
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
   text-transform: uppercase;
+}
+
+/* ── TEAM GRID ── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.team-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 40px 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.team-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.team-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 0 auto 20px;
+}
+
+.team-card h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.team-role {
   font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.team-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
 }
 
 /* ── CTA SECTION ── */
 .cta-section {
   padding: 100px 32px;
   text-align: center;
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.04) 0%, transparent 60%);
-  border-top: 1px solid var(--ventures-border);
+  background: linear-gradient(135deg, rgba(212,170,80,0.06) 0%, transparent 60%);
+  border-top: 1px solid var(--border);
   margin: 0 -32px;
 }
 
@@ -682,13 +703,13 @@ header {
   margin-top: 32px;
   font-family: 'Cinzel', serif;
   font-size: 14px;
-  color: var(--ventures-cyan);
+  color: var(--gold);
   letter-spacing: 0.1em;
 }
 
 /* ── FOOTER ── */
-.ventures-footer {
-  border-top: 1px solid var(--ventures-border);
+footer {
+  border-top: 1px solid var(--border);
   padding: 28px 0;
   display: flex;
   align-items: center;
@@ -720,7 +741,7 @@ header {
 }
 
 .footer-links a:hover {
-  color: var(--ventures-cyan);
+  color: var(--gold);
 }
 
 /* ── ANIMATIONS ── */
@@ -732,11 +753,6 @@ header {
 @keyframes logoPulse {
   0%, 100% { filter: drop-shadow(0 0 8px rgba(212,170,80,0.4)); }
   50%       { filter: drop-shadow(0 0 18px rgba(212,170,80,0.8)); }
-}
-
-@keyframes venturesLogoPulse {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(0,255,255,0.4)); }
-  50%       { filter: drop-shadow(0 0 18px rgba(0,255,255,0.8)); }
 }
 
 @keyframes blink {
@@ -776,7 +792,7 @@ header {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--ventures-cyan-dim);
+  background: var(--gold-dim);
   border-radius: 2px;
 }
 
@@ -809,19 +825,28 @@ header {
 
   .stat-item:nth-child(3),
   .stat-item:nth-child(4) {
-    border-top: 1px solid var(--ventures-border);
+    border-top: 1px solid var(--border);
   }
 
   .mv-grid {
     grid-template-columns: 1fr;
   }
 
-  .ventures-grid-2,
-  .ventures-grid-4 {
+  .big-stats-grid {
     grid-template-columns: 1fr;
   }
 
-  .ventures-footer {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .value-item {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  footer {
     flex-direction: column;
     gap: 16px;
     text-align: center;
@@ -849,15 +874,18 @@ header {
 
   .stat-item {
     border-right: none;
-    border-bottom: 1px solid var(--ventures-border);
+    border-bottom: 1px solid var(--border);
   }
 
   .stat-item:last-child {
     border-bottom: none;
   }
 
-  .ventures-grid-2,
-  .ventures-grid-4 {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-grid {
     grid-template-columns: 1fr;
   }
 }
