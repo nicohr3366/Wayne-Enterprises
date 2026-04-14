@@ -14,14 +14,6 @@
 </head>
 <body>
 
-<!-- BACK BUTTON FLOATING -->
-<a href="/" class="back-to-portal">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M19 12H5M12 19l-7-7 7-7"/>
-  </svg>
-  Volver al Portal
-</a>
-
 <div class="city-bg"></div>
 <div class="spotlight"></div>
 
@@ -74,6 +66,7 @@
   <footer>
     <div class="footer-copy">© 1939 Wayne Enterprises · Gotham City · Todos los derechos reservados</div>
     <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
       <a href="#">Accesibilidad</a>
       <a href="#">Seguridad</a>
     </div>
