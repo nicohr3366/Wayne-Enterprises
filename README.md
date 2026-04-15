@@ -14,7 +14,7 @@ Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de
 | 2 | Wayne Industries | `industries` | **Diego Granja** | 🔴 Pendiente | [Guía](docs/guia_diego_granja.md) |
 | 3 | Wayne Healthcare | `healthcare` | **Juan José** | 🔴 Pendiente | [Guía](docs/guia_juan_jose.md) |
 | 4 | Wayne Real Estate | `realestate` | **Perlaza** | ✅ Activo | [Guía](docs/guia_perlaza.md) |
-| 5 | Wayne Capital | `capital` | **Valeria** | 🔴 Pendiente | [Guía](docs/guia_valeria.md) |
+| 5 | Wayne Capital | `capital` | **Valeria** | 🟡 En desarrollo | [Guía](docs/guia_valeria.md) |
 | 6 | Wayne Foundation | `foundation` | **Camilo** | ✅ Activo | [Guía](docs/guia_camilo.md) |
 | 7 | Wayne Ventures | `ventures` | **Juliana** | ✅ Activo | [Guía](docs/guia_juliana.md) |
 
@@ -38,7 +38,48 @@ Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de
 | 14 | *(Sin asignar)* | Wayne Shipping | ETL | Logística marítima | [Guía](docs/guia_dataset_14.md) |
 | 15 | *(Sin asignar)* | Brother Eye AI | ML/ETL | Sistema de vigilancia | [Guía](docs/guia_dataset_15.md) |
 
-**Progreso Total: ~55%**
+**Progreso Total: ~60%**
+
+### Estructura de Carpetas del Proyecto
+
+```
+Wayne-Enterprises/
+├── accounts/              # Sistema de autenticación
+├── core/                  # Portal principal y landing
+├── tech/                  # División 1: Technologies (pendiente)
+├── industries/            # División 2: Industries (pendiente)
+├── healthcare/            # División 3: Healthcare (pendiente)
+├── realestate/            # División 4: Real Estate ✅ Activa
+├── capital/               # División 5: Capital 🟡 En desarrollo
+├── foundation/            # División 6: Foundation ✅ Activa
+├── ventures/              # División 7: Ventures ✅ Activa
+├── defense_contracts/     # Dataset ETL de contratos de defensa
+├── docs/                  # Guías individuales de cada persona
+├── assets/                # Documentos PDF, imágenes del proyecto
+│   └── docs_profesor/     # PDFs y documentos entregados por el profesor
+└── venv/                  # Entorno virtual (no subir a Git)
+```
+
+### Dónde Guardar Archivos del Profesor
+
+**Ubicación recomendada:** `assets/docs_profesor/`
+
+Crea esta estructura para organizar los documentos:
+```bash
+# Crear carpetas para documentos
+mkdir -p assets/docs_profesor
+mkdir -p assets/images
+mkdir -p assets/mockups
+```
+
+**Qué guardar aquí:**
+- PDFs con requisitos del proyecto
+- Documentos de especificaciones
+- Imágenes de referencia
+- Mockups o wireframes
+- Rubricas de evaluación
+
+**NO guardar en Git:** Archivos muy pesados (>10MB). Para esos, usa el sistema de archivos local.
 
 ---
 
@@ -606,6 +647,7 @@ Cada persona tiene una guía detallada en `/docs/`:
 | "Cannot use ImageField" | Pillow no instalado | `python -m pip install Pillow` |
 | "tarjeta no se activa" | URL no incluida | Agregar `path('url/', include('tu_app.urls'))` |
 | "datos no se cargan" | JSON mal formado | Validar JSON en jsonlint.com |
+| **CSRF verification failed (403)** | Sesión expiró o token inválido | Recargar página e iniciar sesión nuevamente. Ahora hay una página amigable que explica el error. |
 
 ---
 

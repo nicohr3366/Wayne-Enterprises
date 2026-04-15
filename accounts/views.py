@@ -202,6 +202,102 @@ def perfil(request):
     return render(request, 'accounts/perfil.html', context)
 
 
+def csrf_failure(request, reason=""):
+    """
+    Vista personalizada para errores CSRF (403 Forbidden).
+
+    Este error ocurre normalmente cuando:
+    - La sesión expiró y el usuario intenta enviar un formulario
+    - El usuario hizo login en otra pestaña (el token CSRF rota después de login)
+    - El navegador no acepta cookies
+
+    En lugar de mostrar el error técnico de Django, redirigimos
+    al login con un mensaje claro.
+    """
+    from django.http import HttpResponse
+
+    html = """
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sesión Expirada | Wayne Enterprises</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                color: #e0e0e0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .container {
+                text-align: center;
+                padding: 40px;
+                max-width: 500px;
+            }
+            .icon {
+                font-size: 64px;
+                margin-bottom: 20px;
+            }
+            h1 {
+                color: #C9A84C;
+                font-size: 28px;
+                margin-bottom: 16px;
+            }
+            p {
+                color: #a0a0b0;
+                line-height: 1.6;
+                margin-bottom: 30px;
+            }
+            .btn {
+                display: inline-block;
+                background: linear-gradient(135deg, rgba(201,168,76,0.9), rgba(180,150,60,0.9));
+                color: #050507;
+                padding: 14px 32px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.2s ease;
+            }
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(201,168,76,0.3);
+            }
+            .note {
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid rgba(201,168,76,0.2);
+                font-size: 13px;
+                color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="icon">🔒</div>
+            <h1>Sesión Expirada</h1>
+            <p>
+                Tu sesión ha expirado por seguridad o el token de verificación es inválido.
+                Esto ocurre normalmente cuando:<br><br>
+                • Pasaron más de 30 minutos sin actividad<br>
+                • Iniciaste sesión en otra pestaña<br>
+                • Recargaste la página después de hacer login
+            </p>
+            <a href="/accounts/login/" class="btn">Volver a Iniciar Sesión</a>
+            <div class="note">
+                Wayne Enterprises Security System v1.0
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    return HttpResponse(html, status=403)
+
+
 @login_required
 def session_ping(request):
     """
