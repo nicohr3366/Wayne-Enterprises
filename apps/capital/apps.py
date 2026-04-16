@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class VenturesConfig(AppConfig):
+class CapitalConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'ventures'
+    name = 'apps.capital'

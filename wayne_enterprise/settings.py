@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'ventures',
-    'foundation',
-    'accounts',
-    'realestate',
+    'apps.core',
+    'apps.ventures',
+    'apps.foundation',
+    'apps.accounts',
+    'apps.realestate',
+    'apps.capital',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'ventures.context_processors.ventures_nav',
+                'apps.ventures.context_processors.ventures_nav',
             ],
         },
     },
@@ -141,4 +142,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Mantener sesión al cerrar pestaña
 
 # Configuración CSRF - Prevenir errores 403 frecuentes
 CSRF_COOKIE_AGE = 86400  # 24 horas (token CSRF válido por 1 día)
-CSRF_FAILURE_VIEW = 'accounts.views.csrf_failure'  # Vista personalizada para errores CSRF
+CSRF_FAILURE_VIEW = 'apps.accounts.views.csrf_failure'  # Vista personalizada para errores CSRF

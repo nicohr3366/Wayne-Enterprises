@@ -14,7 +14,7 @@ Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de
 | 2 | Wayne Industries | `industries` | **Diego Granja** | 🔴 Pendiente | [Guía](docs/guia_diego_granja.md) |
 | 3 | Wayne Healthcare | `healthcare` | **Juan José** | 🔴 Pendiente | [Guía](docs/guia_juan_jose.md) |
 | 4 | Wayne Real Estate | `realestate` | **Perlaza** | ✅ Activo | [Guía](docs/guia_perlaza.md) |
-| 5 | Wayne Capital | `capital` | **Valeria** | 🟡 En desarrollo | [Guía](docs/guia_valeria.md) |
+| 5 | Wayne Capital | `capital` | **Valeria** | ✅ Activa | [Guía](docs/guia_valeria.md) |
 | 6 | Wayne Foundation | `foundation` | **Camilo** | ✅ Activo | [Guía](docs/guia_camilo.md) |
 | 7 | Wayne Ventures | `ventures` | **Juliana** | ✅ Activo | [Guía](docs/guia_juliana.md) |
 
@@ -38,7 +38,7 @@ Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de
 | 14 | *(Sin asignar)* | Wayne Shipping | ETL | Logística marítima | [Guía](docs/guia_dataset_14.md) |
 | 15 | *(Sin asignar)* | Brother Eye AI | ML/ETL | Sistema de vigilancia | [Guía](docs/guia_dataset_15.md) |
 
-**Progreso Total: ~60%**
+**Progreso Total: ~65%**
 
 ### Estructura de Carpetas del Proyecto
 

@@ -34,4 +34,27 @@ desktop.ini
 *.tmp
 *.bak
 *.orig
+
+# Archivos de datos grandes (datasets)
+datasets/**/data/raw/*
+datasets/**/data/processed/*
+datasets/**/output/*
+!datasets/**/data/raw/.gitkeep
+!datasets/**/data/processed/.gitkeep
+!datasets/**/output/.gitkeep
+
+# Archivos de sistema y caché adicionales
+*.cache
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+*.log
+*.pot
+
+# Archivos de backup de editores
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
 CLAUDE.md
