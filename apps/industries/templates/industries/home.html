@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'industries/css/style.css' %}">
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Wayne Industries</h1>
+        <p>Innovación en manufactura, tecnología industrial y desarrollo de infraestructura avanzada.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary">Ver Productos</a>
+            <a href="#" class="btn-secondary">Explorar</a>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat-item">
+        <h2>150+</h2>
+        <p>Productos</p>
+    </div>
+    <div class="stat-item">
+        <h2>50</h2>
+        <p>Fábricas</p>
+    </div>
+    <div class="stat-item">
+        <h2>30</h2>
+        <p>Países</p>
+    </div>
+</section>
+
+<section class="cards">
+    <div class="card">
+        <h3>Maquinaria</h3>
+        <p>Equipos industriales de última generación.</p>
+    </div>
+    <div class="card">
+        <h3>Energía</h3>
+        <p>Soluciones energéticas sostenibles.</p>
+    </div>
+    <div class="card">
+        <h3>Automatización</h3>
+        <p>Procesos inteligentes para la industria.</p>
+    </div>
+</section>
+
+{% endblock %}
