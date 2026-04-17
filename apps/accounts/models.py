@@ -48,7 +48,9 @@ class UserProfile(models.Model):
 @receiver(post_save, sender=User)
 def crear_perfil_usuario(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        # Si el usuario es superuser de Django, asignar rol admin
+        rol_inicial = 'admin' if instance.is_superuser else 'usuario'
+        UserProfile.objects.create(user=instance, rol=rol_inicial)
 
 # Señal para guardar el perfil cuando se guarda el usuario
 @receiver(post_save, sender=User)
