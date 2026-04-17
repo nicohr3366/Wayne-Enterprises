@@ -1,9 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════
-   WAYNE VENTURES — CSS UNIFICADO (Estilo Real Estate + Dorado)
-   ═══════════════════════════════════════════════════════════════ */
-
 :root {
-  /* ── Herencia del portal ── */
   --gold:           #D4AA50;
   --gold-dim:       #b8922e;
   --gold-bright:    #e8c46a;
@@ -17,13 +12,6 @@
   --text-primary:   #f2eada;
   --text-secondary: #b0a690;
   --text-muted:     #7a7060;
-
-  /* ── Exclusivo Wayne Ventures (Dorado) ── */
-  --ventures-gold:       #C9A84C;
-  --ventures-gold-dim:   #b8922e;
-  --ventures-gold-glow:  rgba(212,170,80,0.25);
-  --ventures-border:     rgba(212,170,80,0.40);
-  --ventures-border-hover: rgba(212,170,80,0.80);
 }
 
 *, *::before, *::after {
@@ -147,14 +135,6 @@ header {
   animation: logoPulse 4s ease-in-out infinite;
 }
 
-.bat-logo path[fill="#C9A84C"] {
-  fill: var(--ventures-gold);
-}
-
-.bat-logo path[fill="#050507"] {
-  fill: var(--bat-black);
-}
-
 .logo-text h1 {
   font-family: 'Cinzel', serif;
   font-size: 24px;
@@ -197,9 +177,9 @@ header {
   content: '';
   width: 7px;
   height: 7px;
-  background: var(--ventures-gold);
+  background: #3aaa62;
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--ventures-gold);
+  box-shadow: 0 0 8px #3aaa62;
   animation: blink 2s ease-in-out infinite;
 }
 
@@ -213,45 +193,6 @@ header {
   padding: 7px 16px;
   border-radius: 2px;
   background: rgba(212,170,80,0.06);
-}
-
-/* ── NAVIGATION ── */
-.ventures-nav {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 24px;
-}
-
-.ventures-nav-list {
-  list-style: none;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.ventures-nav-link {
-  text-decoration: none;
-  color: var(--text-secondary);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-size: 12px;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.ventures-nav-link:hover {
-  color: var(--ventures-gold);
-  border-color: var(--ventures-border);
-  background: rgba(212,170,80,0.04);
-}
-
-.ventures-nav-link.is-active {
-  color: var(--ventures-gold);
-  border-color: var(--ventures-gold);
-  background: rgba(212,170,80,0.08);
-  box-shadow: 0 0 12px var(--ventures-gold-glow);
 }
 
 /* ── HERO ── */
@@ -860,10 +801,6 @@ footer {
   .cta-section {
     margin: 0 -20px;
     padding: 60px 20px;
-  }
-
-  .ventures-nav-list {
-    justify-content: center;
   }
 }
 

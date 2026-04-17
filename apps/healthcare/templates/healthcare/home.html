@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Healthcare — Portal Corporativo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'healthcare/css/healthcare.css' %}">
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Healthcare · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 03</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Ciencias de la Salud</p>
+    <h1>Wayne<br><em>Healthcare</em></h1>
+    <p class="hero-sub">Innovación que Salva Vidas.</p>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Wayne Healthcare combina investigación biomédica de vanguardia, tecnología médica avanzada
+      y atención sanitaria de excelencia para transformar el futuro de la salud humana.
+    </p>
+    <a href="#sobre" class="btn-primary">Conocer más</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">50+</div>
+      <div class="stat-label">Años de investigación</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">28</div>
+      <div class="stat-label">Centros médicos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">2.5M</div>
+      <div class="stat-label">Pacientes atendidos/año</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$4.2B</div>
+      <div class="stat-label">USD en I+D médica</div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Excelencia en<br><em>salud global</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Healthcare es la división de ciencias de la salud de Wayne Enterprises. Abarcamos
+        desde la investigación biomédica fundamental hasta la atención médica directa, pasando por
+        el desarrollo de dispositivos médicos, tecnología diagnóstica y terapias innovadoras.
+      </p>
+      <p>
+        Con el Centro Médico Wayne en Gotham como buque insignia, operamos una red de hospitales,
+        clínicas especializadas y centros de investigación en todo el mundo. Nuestro enfoque
+        integra medicina personalizada, IA diagnóstica y biotecnología de última generación.
+      </p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Desarrollar y proporcionar soluciones de salud innovadoras, accesibles y de la más alta
+          calidad, mejorando la vida de millones de personas a través de la ciencia y la compasión.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser el líder mundial en transformación de la atención médica, eliminando enfermedades
+          mediante prevención predictiva y tratamientos personalizados para 2035.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Servicios y Productos</p>
+      <h2 class="section-title">Nuestras<br><em>áreas de excelencia</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#127973;</div>
+        <h3>Atención Hospitalaria</h3>
+        <p>Red de hospitales y clínicas con tecnología de punta y personal médico de clase mundial.</p>
+        <span class="service-tag">Urgencias · Cirugía · Oncología</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128187;</div>
+        <h3>Wayne MedTech</h3>
+        <p>Dispositivos médicos innovadores: desde implantes biomecatrónicos hasta sistemas de imagen portátiles.</p>
+        <span class="service-tag">Implantes · Diagnóstico</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#129516;</div>
+        <h3>Investigación Biomédica</h3>
+        <p>Descubrimiento de nuevos fármacos, terapias génicas y tratamientos regenerativos.</p>
+        <span class="service-tag">Genética · Células madre</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#129302;</div>
+        <h3>IA Médica y Diagnóstico</h3>
+        <p>Algoritmos de deep learning para detección temprana de enfermedades y tratamientos personalizados.</p>
+        <span class="service-tag">Radiología · Patología</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128202;</div>
+        <h3>Telemedicina Global</h3>
+        <p>Plataforma de salud digital con consultas remotas, monitoreo continuo y análisis predictivo.</p>
+        <span class="service-tag">Remote care · Wearables</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127775;</div>
+        <h3>Educación Médica</h3>
+        <p>Formación de la próxima generación de médicos, enfermeros e investigadores en nuestras academias.</p>
+        <span class="service-tag">Residencias · Fellowships</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Integración con Wayne Technologies</h3>
+          <p>Acceso exclusivo a las últimas innovaciones en IA, robótica quirúrgica y dispositivos
+             conectados. Nuestra tecnología médica incorpora siempre lo último del grupo Wayne.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Ciclo Completo de I+D</h3>
+          <p>Desde el laboratorio hasta el paciente: desarrollamos, probamos y comercializamos
+             terapias bajo un mismo techo, acelerando el tiempo de llegada al mercado.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Datos y Precisión</h3>
+          <p>La mayor base de datos médica anónima del sector privado, permitiendo análisis
+             poblacionales y tratamientos verdaderamente personalizados.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Compromiso Social</h3>
+          <p>Programas de salud gratuitos en comunidades desatendidas de Gotham y el mundo,
+             financiados por Wayne Foundation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>salvan vidas</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="89">0</div>
+        <div class="big-stat-suffix">%</div>
+        <div class="big-stat-label">Tasa de supervivencia en cáncer temprano</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="340">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Patentes médicas registradas</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="12">0</div>
+        <div class="big-stat-suffix"></div>
+        <div class="big-stat-label">Premios Nobel en medicina</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás de la cura</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">LH</div>
+        <h3>Dr. Leslie Thompkins</h3>
+        <p class="team-role">CEO — Wayne Healthcare</p>
+        <p class="team-desc">Cirujana eminente y defensora de la salud pública en Gotham.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">ME</div>
+        <h3>Dr. Michael Endor</h3>
+        <p class="team-role">Director de I+D Médica</p>
+        <p class="team-desc">Lidera el desarrollo de terapias génicas y medicina regenerativa.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">SC</div>
+        <h3>Dr. Sarah Chen</h3>
+        <p class="team-role">Directora de IA Médica</p>
+        <p class="team-desc">Pionera en algoritmos de diagnóstico asistido por computadora.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">RM</div>
+        <h3>Dr. Robert Mercer</h3>
+        <p class="team-role">Director del Centro Médico Wayne</p>
+        <p class="team-desc">Responsable de las operaciones clínicas de nuestro hospital insignia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Listo para cuidar<br><em>tu salud?</em></h2>
+    <p class="reveal">
+      Agenda una consulta con nuestros especialistas o conecta con nuestro equipo
+      de investigación para oportunidades de colaboración.
+    </p>
+    <a href="mailto:healthcare@wayneenterprises.com" class="btn-primary reveal">
+      Contactar ahora
+    </a>
+    <span class="cta-email reveal">healthcare@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Healthcare — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'healthcare/js/healthcare.js' %}"></script>
+
+</body>
+</html>

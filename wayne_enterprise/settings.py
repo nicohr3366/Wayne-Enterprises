@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.realestate',
     'apps.capital',
+    'apps.industries',
+    'apps.healthcare',
+    'apps.tech',
 ]
 
 MIDDLEWARE = [

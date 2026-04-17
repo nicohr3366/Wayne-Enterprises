@@ -1,249 +1,301 @@
-{% extends 'ventures/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Ventures — Portal Corporativo</title>
 
-{% block title %}Wayne Ventures — Portal Corporativo{% endblock %}
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
 
-{% block content %}
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-eyebrow">Capital de Riesgo Corporativo</p>
-  <h1>Wayne<br><em>Ventures</em></h1>
-  <p class="hero-sub">Acelerando el futuro. Asegurando el mañana.</p>
-  <div class="gold-line"></div>
-  <p class="hero-desc">
-    Wayne Ventures es el brazo de inversión estratégica de Wayne Enterprises, orientado a startups,
-    validación industrial y crecimiento global. Detectamos, validamos y escalamos tecnologías que
-    pueden integrarse al ecosistema Wayne.
-  </p>
-  <a href="{% url 'ventures:about' %}" class="btn-primary">Explorar Portafolio</a>
-</section>
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'ventures/css/ventures.css' %}">
+</head>
+<body>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-val">+$250M</div>
-    <div class="stat-label">Capital invertido</div>
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Ventures · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 07</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Capital de Riesgo Corporativo</p>
+    <h1>Wayne<br><em>Ventures</em></h1>
+    <p class="hero-sub">Acelerando el futuro. Asegurando el mañana.</p>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Wayne Ventures es el brazo de inversión estratégica de Wayne Enterprises, orientado a startups,
+      validación industrial y crecimiento global. Detectamos, validamos y escalamos tecnologías que
+      pueden integrarse al ecosistema Wayne.
+    </p>
+    <a href="#sobre" class="btn-primary">Explorar Portafolio</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">+$250M</div>
+      <div class="stat-label">Capital invertido</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">45+</div>
+      <div class="stat-label">Startups activas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">12</div>
+      <div class="stat-label">Proyectos escalados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">8</div>
+      <div class="stat-label">Países</div>
+    </div>
   </div>
-  <div class="stat-item">
-    <div class="stat-val">45+</div>
-    <div class="stat-label">Startups activas</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-val">12</div>
-    <div class="stat-label">Proyectos escalados</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-val">8</div>
-    <div class="stat-label">Países</div>
-  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Inversión estratégica de<br><em>escala global</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Ventures opera como el brazo de Capital de Riesgo Corporativo (CVC) de Wayne Enterprises.
+        Nuestro foco está en tecnologías de Deep Tech, IA/ML, IoT y soluciones cloud que puedan
+        integrarse al ecosistema del grupo y generar sinergias con nuestras 7 divisiones.
+      </p>
+      <p>
+        Con nodos en Gotham City, Silicon Valley, Tel Aviv y Singapur, mantenemos un radar global
+        para detectar las startups más prometedoras en etapas Seed a Serie B.
+      </p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Impulsar el crecimiento sostenible de Wayne Enterprises mediante la inversión en talento externo
+          y tecnología de vanguardia, facilitando la transición definitiva hacia una infraestructura
+          basada en la nube.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser el socio de inversión más influyente del mundo, validando las tecnologías que definirán
+          el próximo siglo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Servicios y Productos</p>
+      <h2 class="section-title">Nuestra<br><em>tesis de inversión</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#128640;</div>
+        <h3>Inversión Directa CVC</h3>
+        <p>Capital de riesgo corporativo en startups Seed a Serie B con potencial de integración al ecosistema Wayne.</p>
+        <span class="service-tag">Seed · Serie A · Serie B</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#9729;</div>
+        <h3>Cloud Sandbox Program</h3>
+        <p>Infraestructura cloud gratuita para validación de soluciones con potencial de sinergia con Wayne Technologies.</p>
+        <span class="service-tag">AWS · Azure · GCP</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128187;</div>
+        <h3>Co-Creación Técnica</h3>
+        <p>Acceso a ingenieros de élite de Wayne Technologies para co-desarrollo y validación técnica.</p>
+        <span class="service-tag">IA/ML · IoT · Cloud</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127758;</div>
+        <h3>Escalamiento Global</h3>
+        <p>Validación industrial y comercial mediante la red global de Wayne Shipping y Wayne Manufacturing.</p>
+        <span class="service-tag">Logística · Industrial · Global</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128161;</div>
+        <h3>Wayne Labs</h3>
+        <p>Programa de incubación para startups en etapa pre-seed con acceso a mentorship y recursos técnicos.</p>
+        <span class="service-tag">Pre-seed · Incubación</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128200;</div>
+        <h3>Due Diligence Tech</h3>
+        <p>Evaluación técnica profunda de tecnologías para inversores externos y fondos de capital riesgo.</p>
+        <span class="service-tag">Consultoría · Evaluación</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Ecosistema Wayne Enterprises</h3>
+          <p>Acceso directo a 7 divisiones operativas para validación real de tecnologías. Tus soluciones pueden
+             integrarse desde día uno a la infraestructura de Wayne Technologies, Wayne Shipping y más.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Validación Industrial Real</h3>
+          <p>No solo capital: ofrecemos entornos de prueba reales en operaciones globales. Tu startup se prueba
+             en la infraestructura de una multinacional desde el primer día.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Equipo Técnico de Elite</h3>
+          <p>Acceso a más de 500 ingenieros de Wayne Technologies para co-desarrollo, arquitectura de soluciones
+             y resolución de problemas técnicos complejos.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Escalamiento Global Garantizado</h3>
+          <p>Una vez validada tu solución, acceso inmediato a la red global de operaciones en 8 países
+             y 3 continentes para escalamiento comercial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>hablan</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="250">0</div>
+        <div class="big-stat-suffix">M</div>
+        <div class="big-stat-label">USD en capital desplegado</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="85">0</div>
+        <div class="big-stat-suffix">%</div>
+        <div class="big-stat-label">Tasa de supervivencia de startups</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="4">0</div>
+        <div class="big-stat-suffix"></div>
+        <div class="big-stat-label">Unicornios en portfolio</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás de las inversiones</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">TW</div>
+        <h3>Timothy Drake</h3>
+        <p class="team-role">CEO — Wayne Ventures</p>
+        <p class="team-desc">Estratega de inversiones con 15 años en capital de riesgo tecnológico.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">BG</div>
+        <h3>Barbara Gordon</h3>
+        <p class="team-role">Directora de Operaciones</p>
+        <p class="team-desc">Lidera la integración operativa entre startups y divisiones Wayne.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">DL</div>
+        <h3>David Li</h3>
+        <p class="team-role">Director de Scouting</p>
+        <p class="team-desc">Radar global de startups Deep Tech y evaluación de oportunidades.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">SR</div>
+        <h3>Sarah Reynolds</h3>
+        <p class="team-role">Directora de Cloud Sandbox</p>
+        <p class="team-desc">Gestiona el programa de validación técnica en infraestructura cloud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Tienes una idea que pueda<br><em>cambiar el mundo?</em></h2>
+    <p class="reveal">
+      Conecta con nuestro equipo de scouting. Evaluamos proyectos en cualquier etapa y te
+      acompañamos en el proceso de validación y escalamiento.
+    </p>
+    <a href="mailto:ventures@wayneenterprises.com" class="btn-primary reveal">
+      Presentar mi Proyecto
+    </a>
+    <span class="cta-email reveal">ventures@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Ventures — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
 </div>
 
-<!-- SOBRE LA DIVISIÓN -->
-<section id="sobre" class="content-section">
-  <div class="section-header reveal">
-    <p class="section-label">La División</p>
-    <h2 class="section-title">Inversión estratégica de<br><em>escala global</em></h2>
-  </div>
-  <div class="section-body reveal">
-    <p>
-      Wayne Ventures opera como el brazo de Capital de Riesgo Corporativo (CVC) de Wayne Enterprises.
-      Nuestro foco está en tecnologías de Deep Tech, IA/ML, IoT y soluciones cloud que puedan
-      integrarse al ecosistema del grupo y generar sinergias con nuestras 7 divisiones.
-    </p>
-    <p>
-      Con nodos en Gotham City, Silicon Valley, Tel Aviv y Singapur, mantenemos un radar global
-      para detectar las startups más prometedoras en etapas Seed a Serie B.
-    </p>
-  </div>
+<script src="{% static 'ventures/js/ventures.js' %}"></script>
 
-  <!-- MISIÓN Y VISIÓN -->
-  <div class="mv-grid">
-    <div class="mv-card reveal">
-      <h3>Misión</h3>
-      <p>
-        Impulsar el crecimiento sostenible de Wayne Enterprises mediante la inversión en talento externo
-        y tecnología de vanguardia, facilitando la transición definitiva hacia una infraestructura
-        basada en la nube.
-      </p>
-    </div>
-    <div class="mv-card reveal">
-      <h3>Visión</h3>
-      <p>
-        Ser el socio de inversión más influyente del mundo, validando las tecnologías que definirán
-        el próximo siglo.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICIOS -->
-<section id="servicios" class="content-section section-dark">
-  <div class="section-header reveal">
-    <p class="section-label">Servicios y Productos</p>
-    <h2 class="section-title">Nuestra<br><em>tesis de inversión</em></h2>
-  </div>
-
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="service-icon">&#128640;</div>
-      <h3>Inversión Directa CVC</h3>
-      <p>Capital de riesgo corporativo en startups Seed a Serie B con potencial de integración al ecosistema Wayne.</p>
-      <span class="service-tag">Seed · Serie A · Serie B</span>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-icon">&#9729;</div>
-      <h3>Cloud Sandbox Program</h3>
-      <p>Infraestructura cloud gratuita para validación de soluciones con potencial de sinergia con Wayne Technologies.</p>
-      <span class="service-tag">AWS · Azure · GCP</span>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-icon">&#128187;</div>
-      <h3>Co-Creación Técnica</h3>
-      <p>Acceso a ingenieros de élite de Wayne Technologies para co-desarrollo y validación técnica.</p>
-      <span class="service-tag">IA/ML · IoT · Cloud</span>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-icon">&#127758;</div>
-      <h3>Escalamiento Global</h3>
-      <p>Validación industrial y comercial mediante la red global de Wayne Shipping y Wayne Manufacturing.</p>
-      <span class="service-tag">Logística · Industrial · Global</span>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-icon">&#128161;</div>
-      <h3>Wayne Labs</h3>
-      <p>Programa de incubación para startups en etapa pre-seed con acceso a mentorship y recursos técnicos.</p>
-      <span class="service-tag">Pre-seed · Incubación</span>
-    </div>
-
-    <div class="service-card reveal">
-      <div class="service-icon">&#128200;</div>
-      <h3>Due Diligence Tech</h3>
-      <p>Evaluación técnica profunda de tecnologías para inversores externos y fondos de capital riesgo.</p>
-      <span class="service-tag">Consultoría · Evaluación</span>
-    </div>
-  </div>
-</section>
-
-<!-- VENTAJAS -->
-<section id="valor" class="content-section">
-  <div class="section-header reveal">
-    <p class="section-label">¿Por qué elegirnos?</p>
-    <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
-  </div>
-
-  <div class="value-list">
-    <div class="value-item reveal">
-      <span class="value-num">01</span>
-      <div class="value-content">
-        <h3>Ecosistema Wayne Enterprises</h3>
-        <p>Acceso directo a 7 divisiones operativas para validación real de tecnologías. Tus soluciones pueden
-           integrarse desde día uno a la infraestructura de Wayne Technologies, Wayne Shipping y más.</p>
-      </div>
-    </div>
-    <div class="value-item reveal">
-      <span class="value-num">02</span>
-      <div class="value-content">
-        <h3>Validación Industrial Real</h3>
-        <p>No solo capital: ofrecemos entornos de prueba reales en operaciones globales. Tu startup se prueba
-           en la infraestructura de una multinacional desde el primer día.</p>
-      </div>
-    </div>
-    <div class="value-item reveal">
-      <span class="value-num">03</span>
-      <div class="value-content">
-        <h3>Equipo Técnico de Elite</h3>
-        <p>Acceso a más de 500 ingenieros de Wayne Technologies para co-desarrollo, arquitectura de soluciones
-           y resolución de problemas técnicos complejos.</p>
-      </div>
-    </div>
-    <div class="value-item reveal">
-      <span class="value-num">04</span>
-      <div class="value-content">
-        <h3>Escalamiento Global Garantizado</h3>
-        <p>Una vez validada tu solución, acceso inmediato a la red global de operaciones en 8 países
-           y 3 continentes para escalamiento comercial.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CIFRAS DESTACADAS -->
-<section id="cifras" class="content-section section-dark">
-  <div class="section-header reveal">
-    <p class="section-label">Datos Impactantes</p>
-    <h2 class="section-title">Números que<br><em>hablan</em></h2>
-  </div>
-
-  <div class="big-stats-grid">
-    <div class="big-stat reveal">
-      <div class="big-stat-number" data-target="250">0</div>
-      <div class="big-stat-suffix">M</div>
-      <div class="big-stat-label">USD en capital desplegado</div>
-    </div>
-    <div class="big-stat reveal">
-      <div class="big-stat-number" data-target="85">0</div>
-      <div class="big-stat-suffix">%</div>
-      <div class="big-stat-label">Tasa de supervivencia de startups</div>
-    </div>
-    <div class="big-stat reveal">
-      <div class="big-stat-number" data-target="4">0</div>
-      <div class="big-stat-suffix"></div>
-      <div class="big-stat-label">Unicornios en portfolio</div>
-    </div>
-  </div>
-</section>
-
-<!-- EQUIPO -->
-<section id="equipo" class="content-section">
-  <div class="section-header reveal">
-    <p class="section-label">Liderazgo</p>
-    <h2 class="section-title">El equipo<br><em>detrás de las inversiones</em></h2>
-  </div>
-
-  <div class="team-grid">
-    <div class="team-card reveal">
-      <div class="team-avatar">TW</div>
-      <h3>Timothy Drake</h3>
-      <p class="team-role">CEO — Wayne Ventures</p>
-      <p class="team-desc">Estratega de inversiones con 15 años en capital de riesgo tecnológico.</p>
-    </div>
-    <div class="team-card reveal">
-      <div class="team-avatar">BC</div>
-      <h3>Barbara Gordon</h3>
-      <p class="team-role">Directora de Operaciones</p>
-      <p class="team-desc">Lidera la integración operativa entre startups y divisiones Wayne.</p>
-    </div>
-    <div class="team-card reveal">
-      <div class="team-avatar">DL</div>
-      <h3>David Li</h3>
-      <p class="team-role">Director de Scouting</p>
-      <p class="team-desc">Radar global de startups Deep Tech y evaluación de oportunidades.</p>
-    </div>
-    <div class="team-card reveal">
-      <div class="team-avatar">SR</div>
-      <h3>Sarah Reynolds</h3>
-      <p class="team-role">Directora de Cloud Sandbox</p>
-      <p class="team-desc">Gestiona el programa de validación técnica en infraestructura cloud.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA / CONTACTO -->
-<section id="contacto" class="cta-section">
-  <p class="section-label reveal">Contacto</p>
-  <h2 class="section-title reveal">¿Tienes una idea que pueda<br><em>cambiar el mundo?</em></h2>
-  <p class="reveal">
-    Conecta con nuestro equipo de scouting. Evaluamos proyectos en cualquier etapa y te
-    acompañamos en el proceso de validación y escalamiento.
-  </p>
-  <a href="mailto:ventures@wayneenterprises.com" class="btn-primary reveal">
-    Presentar mi Proyecto
-  </a>
-  <span class="cta-email reveal">ventures@wayneenterprises.com</span>
-</section>
-
-{% endblock %}
+</body>
+</html>

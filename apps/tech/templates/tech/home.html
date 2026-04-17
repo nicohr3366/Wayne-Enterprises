@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Technologies — Portal Corporativo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'tech/css/tech.css' %}">
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Technologies · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 01</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Innovación Tecnológica</p>
+    <h1>Wayne<br><em>Technologies</em></h1>
+    <p class="hero-sub">Tecnología que define el mañana.</p>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Wayne Technologies es el centro de investigación y desarrollo de Wayne Enterprises.
+      Desde IA hasta biotecnología, creamos las tecnologías que impulsan el futuro de Gotham y el mundo.
+    </p>
+    <a href="#sobre" class="btn-primary">Conocer más</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">45+</div>
+      <div class="stat-label">Años de innovación</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">2,400+</div>
+      <div class="stat-label">Patentes registradas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">12</div>
+      <div class="stat-label">Centros de I+D</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$8.5B</div>
+      <div class="stat-label">USD en activos</div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Innovación de<br><em>clase mundial</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Technologies es la división de investigación y desarrollo de Wayne Enterprises.
+        Desde 1980, hemos sido pioneros en inteligencia artificial, robótica, biotecnología,
+        nanotecnología y energías renovables.
+      </p>
+      <p>
+        Nuestros laboratorios en Gotham City, Silicon Valley, Singapur y Zurich representan la
+        vanguardia de la innovación tecnológica global, colaborando con universidades, startups
+        y gobiernos para resolver los desafíos más complejos de la humanidad.
+      </p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Desarrollar tecnologías de vanguardia que impulsen el progreso humano,
+          manteniendo los más altos estándares éticos y de sostenibilidad.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser el centro de innovación tecnológica más influyente del mundo,
+          definiendo el futuro de la humanidad para 2040.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Servicios y Productos</p>
+      <h2 class="section-title">Nuestros<br><em>pilares tecnológicos</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#129302;</div>
+        <h3>Inteligencia Artificial</h3>
+        <p>WayneAI: Sistemas de IA generativa, visión por computadora y NLP para empresas y gobiernos.</p>
+        <span class="service-tag">IA/ML · Cloud</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#129516;</div>
+        <h3>Robótica Avanzada</h3>
+        <p>Robots industriales, exoesqueletos médicos y sistemas autónomos para manufactura y logística.</p>
+        <span class="service-tag">Automatización · IoT</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128267;</div>
+        <h3>Energía Limpia</h3>
+        <p>Fusión nuclear, paneles solares de alta eficiencia y sistemas de almacenamiento de energía.</p>
+        <span class="service-tag">Renovable · Sostenible</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#129516;</div>
+        <h3>Biotecnología</h3>
+        <p>Ingeniería genética, terapias celulares y dispositivos médicos inteligentes.</p>
+        <span class="service-tag">Salud · Pharma</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128225;</div>
+        <h3>Nanotecnología</h3>
+        <p>Materiales avanzados, nanorobots médicos y recubrimientos industriales de precisión.</p>
+        <span class="service-tag">Materiales · Industrial</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128187;</div>
+        <h3>Ciberseguridad</h3>
+        <p>WayneShield: Protección de infraestructura crítica, detección de amenazas y cifrado cuántico.</p>
+        <span class="service-tag">Security · Quantum</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Ecosistema Integrado</h3>
+          <p>Tecnología desarrollada en sinergia con las 7 divisiones Wayne. Cada solución
+             aprovecha la infraestructura global del grupo para máximo impacto.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Talento de Elite</h3>
+          <p>Los mejores ingenieros, científicos e investigadores del mundo trabajan en nuestros
+             laboratorios, con acceso a recursos ilimitados para la innovación.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Infraestructura Global</h3>
+          <p>12 centros de I+D en 6 continentes, permitiendo investigación 24/7 y colaboración
+             con los mejores talentos de cada región.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Ética y Sostenibilidad</h3>
+          <p>Compromiso con el desarrollo responsable de IA y tecnologías emergentes.
+             Cada proyecto evalúa impacto social y ambiental.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>innovan</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="2400">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Patentes activas</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="3500">0</div>
+        <div class="big-stat-suffix"></div>
+        <div class="big-stat-label">Ingenieros e investigadores</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="89">0</div>
+        <div class="big-stat-suffix">%</div>
+        <div class="big-stat-label">Proyectos escalados exitosamente</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás de la innovación</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">LF</div>
+        <h3>Lucius Fox</h3>
+        <p class="team-role">CEO — Wayne Technologies</p>
+        <p class="team-desc">Visionario tecnológico y arquitecto de la estrategia de I+D.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">TH</div>
+        <h3>Dr. Thomas Elliot</h3>
+        <p class="team-role">Director de IA</p>
+        <p class="team-desc">Líder en desarrollo de sistemas de inteligencia artificial.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">MC</div>
+        <h3>Dr. Miranda Crane</h3>
+        <p class="team-role">Directora de Biotecnología</p>
+        <p class="team-desc">Pionera en terapias génicas y medicina regenerativa.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">DK</div>
+        <h3>David Kane</h3>
+        <p class="team-role">Director de Robótica</p>
+        <p class="team-desc">Experto en sistemas autónomos y robótica industrial.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Listo para innovar<br><em>juntos?</em></h2>
+    <p class="reveal">
+      Conecta con nuestro equipo de desarrollo. Exploramos partnership, licenciamiento de tecnología
+      y oportunidades de investigación conjunta.
+    </p>
+    <a href="mailto:tech@wayneenterprises.com" class="btn-primary reveal">
+      Contactar ahora
+    </a>
+    <span class="cta-email reveal">tech@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Technologies — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'tech/js/tech.js' %}"></script>
+
+</body>
+</html>
