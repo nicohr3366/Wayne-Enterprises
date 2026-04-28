@@ -1,8 +1,10 @@
-# Python/Django related ignores
+# ── Entornos virtuales ──────────────────────────────
 venv/
 env/
 .env/
 .venv/
+
+# ── Python / Django ──────────────────────────────────
 __pycache__/
 *.py[cod]
 *.pyo
@@ -17,15 +19,24 @@ local_settings.py
 staticfiles/
 mediafiles/
 media/
+
+# ── Variables de entorno y secretos ─────────────────
 .env
 .env.local
 .env.production
 *.secret
+
+# ── IDEs y editores ──────────────────────────────────
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# ── Sistema operativo ────────────────────────────────
 .DS_Store
 .DS_Store?
 Thumbs.db
@@ -34,27 +45,26 @@ desktop.ini
 *.tmp
 *.bak
 *.orig
-
-# Archivos de datos grandes (datasets)
-datasets/**/data/raw/*
-datasets/**/data/processed/*
-datasets/**/output/*
-!datasets/**/data/raw/.gitkeep
-!datasets/**/data/processed/.gitkeep
-!datasets/**/output/.gitkeep
-
-# Archivos de sistema y caché adicionales
 *.cache
+
+# ── Tests y cobertura ────────────────────────────────
 .pytest_cache/
 .coverage
 htmlcov/
 *.cover
-*.log
 *.pot
 
-# Archivos de backup de editores
-*.sublime-project
-*.sublime-workspace
-*.code-workspace
+# ── Archivos de datos / Datasets ─────────────────────
+# Los CSV y Excel van en apps/[app]/data/ y NO se suben a git
+# (pueden ser grandes y cada quien los genera localmente)
+apps/*/data/*.csv
+apps/*/data/*.xlsx
+apps/*/data/*.xls
+apps/*/data/*.json
+apps/*/data/*.xml
 
+# Excepción: mantener la carpeta data/ vacía con .gitkeep
+!apps/*/data/.gitkeep
+
+# ── Claude Code ──────────────────────────────────────
 CLAUDE.md

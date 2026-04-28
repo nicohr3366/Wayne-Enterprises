@@ -46,6 +46,7 @@
           <a href="{% url 'accounts:dashboard' %}" class="nav-link" target="_self">
             <span class="user-badge">{{ user.get_full_name|default:user.username }}</span>
           </a>
+          <a href="{% url 'contracts_dashboard' %}" class="nav-link" target="_self" style="color:#C9A84C; border:1px solid rgba(201,168,76,0.3); padding:4px 12px; border-radius:6px;">ETL Dashboard</a>
           <a href="{% url 'accounts:logout' %}" class="nav-link nav-logout" target="_self">Salir</a>
         {% else %}
           <!-- Usuario Invitado -->

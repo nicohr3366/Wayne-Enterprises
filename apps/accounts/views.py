@@ -9,33 +9,27 @@ from .forms import RegistroForm
 
 def rol_requerido(rol):
     """
-    Decorador personalizado para verificar roles de usuario.
-    Uso: @rol_requerido('admin') o @rol_requerido('usuario')
+    Decorador para verificar roles. Usa la jerarquía definida en UserProfile.ROL_JERARQUIA.
+    Admin siempre tiene acceso. El resto necesita tener jerarquía igual o superior al rol requerido.
 
-    Para futura expansión, se pueden agregar más roles:
-    - 'tech_manager' - Gerente de Wayne Technologies
-    - 'healthcare_admin' - Admin de Wayne Healthcare
-    - 'division_head' - Jefe de división
-    - 'cfo' - Rol financiero
-    etc.
+    Roles disponibles:
+        admin, executive, division_manager,
+        tech_manager, pmo_manager, security_analyst,
+        finops_analyst, hr_manager, usuario
     """
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
             if not request.user.is_authenticated:
                 return redirect('accounts:login')
-
             try:
                 profile = request.user.profile
-                if profile.rol != rol and not profile.es_admin:
-                    # Los admins pueden acceder a todo
-                    if profile.rol != 'admin':
-                        return HttpResponseForbidden(
-                            'No tienes permisos para acceder a esta sección.'
-                        )
+                if not profile.tiene_acceso_minimo(rol):
+                    return HttpResponseForbidden(
+                        'No tienes permisos para acceder a esta sección.'
+                    )
             except AttributeError:
                 return HttpResponseForbidden('Perfil de usuario no encontrado.')
-
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator
@@ -159,9 +153,10 @@ def gestionar_roles(request):
 
         return redirect('accounts:gestionar_roles')
 
+    from .models import UserProfile
     context = {
         'usuarios': usuarios,
-        'roles_disponibles': [('usuario', 'Usuario'), ('admin', 'Administrador')],
+        'roles_disponibles': UserProfile.ROL_CHOICES,
     }
 
     return render(request, 'accounts/gestionar_roles.html', context)

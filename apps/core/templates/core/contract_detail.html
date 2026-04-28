@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ contract.contract_number }} — Wayne Enterprises</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.12);
+      --bg: #050507; --card: #0d0d12; --border: rgba(201,168,76,0.2);
+      --text: #e8e8f0; --muted: #888899; --green: #3ecf8e; --blue: #4a9eff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar nav a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em; margin-left: 24px; }
+    .top-bar nav a:hover { color: var(--gold); }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+
+    .contract-header {
+      border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 28px;
+    }
+    .contract-header .eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .contract-header h2 { font-family: 'Cinzel', serif; font-size: 20px; color: var(--text); margin-bottom: 6px; }
+    .contract-header .agency-line { font-size: 13px; color: var(--muted); }
+    .contract-header .amount-big { font-family: 'Cinzel', serif; font-size: 28px; color: var(--green); margin-top: 12px; }
+
+    .section-title {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .fields-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+      margin-bottom: 28px;
+    }
+    .field {
+      background: var(--card); padding: 12px 16px;
+    }
+    .field-label { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .field-value { font-size: 14px; color: var(--text); }
+    .field-value.highlight { color: var(--gold); }
+    .field-value.money { font-family: 'Cinzel', serif; color: var(--green); font-size: 15px; }
+
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px;
+    }
+    .badge-active    { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.3); }
+    .badge-completed { background: rgba(74,158,255,0.12); color: var(--blue);  border: 1px solid rgba(74,158,255,0.3); }
+    .badge-terminated{ background: rgba(248,113,113,0.12);color: #f87171;    border: 1px solid rgba(248,113,113,0.3); }
+    .badge-option    { background: rgba(167,139,250,0.12); color: #a78bfa;   border: 1px solid rgba(167,139,250,0.3); }
+    .badge-pending   { background: rgba(245,158,11,0.12);  color: var(--gold);border: 1px solid rgba(245,158,11,0.3); }
+    .badge-default   { background: rgba(136,136,153,0.12); color: var(--muted);border: 1px solid rgba(136,136,153,0.2); }
+
+    .flag-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+    .flag { padding: 4px 12px; border-radius: 20px; font-size: 12px; }
+    .flag-yes { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.25); }
+    .flag-no  { background: rgba(136,136,153,0.08); color: var(--muted); border: 1px solid rgba(136,136,153,0.15); }
+
+    .back-btn {
+      display: inline-block; margin-bottom: 24px;
+      color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em;
+    }
+    .back-btn:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>Wayne Enterprises — Defense Contracts</h1>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'contracts_dashboard' %}">Dashboard</a>
+    <a href="{% url 'contracts_list' %}">Tabla</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="container">
+
+  <a href="{% url 'contracts_list' %}" class="back-btn">← Volver a la tabla</a>
+
+  <div class="contract-header">
+    <p class="eyebrow">Detalle de contrato · {{ contract.contract_id }}</p>
+    <h2>{{ contract.contract_number }}</h2>
+    <p class="agency-line">{{ contract.agency }} · {{ contract.contractor_name }}</p>
+    <div class="amount-big">${{ contract.obligated_amount_usd|floatformat:"2" }}</div>
+  </div>
+
+  <!-- Identificadores -->
+  <p class="section-title">Identificadores</p>
+  <div class="fields-grid">
+    <div class="field"><div class="field-label">Contract ID</div><div class="field-value highlight">{{ contract.contract_id }}</div></div>
+    <div class="field"><div class="field-label">Contract Number</div><div class="field-value">{{ contract.contract_number|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">UEI Number</div><div class="field-value">{{ contract.uei_number|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">CAGE Code</div><div class="field-value">{{ contract.cage_code|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">FPDS Transaction ID</div><div class="field-value">{{ contract.fpds_transaction_id|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">Año Fiscal</div><div class="field-value">{% if contract.fiscal_year %}FY{{ contract.fiscal_year }}{% else %}—{% endif %}</div></div>
+  </div>
+
+  <!-- Financiero -->
+  <p class="section-title">Financiero</p>
+  <div class="fields-grid">
+    <div class="field"><div class="field-label">Obligated Amount</div><div class="field-value money">${{ contract.obligated_amount_usd|floatformat:"2" }}</div></div>
+    <div class="field"><div class="field-label">Contract Ceiling</div><div class="field-value money">${{ contract.contract_ceiling_usd|floatformat:"2" }}</div></div>
+    <div class="field"><div class="field-label">Modification Amount</div><div class="field-value money">${{ contract.modification_amount_usd|floatformat:"2" }}</div></div>
+    <div class="field">
+      <div class="field-label">Performance Status</div>
+      <div class="field-value">
+        {% with s=contract.performance_status %}
+        {% if s == "Active" %}<span class="badge badge-active">{{ s }}</span>
+        {% elif s == "Completed" %}<span class="badge badge-completed">{{ s }}</span>
+        {% elif s == "Terminated" %}<span class="badge badge-terminated">{{ s }}</span>
+        {% elif "Option" in s %}<span class="badge badge-option">{{ s }}</span>
+        {% elif "Pending" in s %}<span class="badge badge-pending">{{ s }}</span>
+        {% else %}<span class="badge badge-default">{{ s }}</span>{% endif %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+
+  <!-- ETL / XML -->
+  <p class="section-title">ETL / XML Pipeline</p>
+  <div class="fields-grid">
+    <div class="field"><div class="field-label">ETL Source System</div><div class="field-value highlight">{{ contract.etl_source_system|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">XML Schema Version</div><div class="field-value">{{ contract.xml_schema_version|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">Data Feed Format</div><div class="field-value">{{ contract.data_feed_format|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">PSC Code</div><div class="field-value">{{ contract.psc_code|default:"—" }}</div></div>
+  </div>
+
+  <!-- Clasificación -->
+  <p class="section-title">Clasificación y cumplimiento</p>
+  <div class="fields-grid">
+    <div class="field"><div class="field-label">Security Classification</div><div class="field-value">{{ contract.security_classification|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">Cyber Compliance Level</div><div class="field-value highlight">{{ contract.cyber_compliance_level|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">NAICS Code</div><div class="field-value">{{ contract.naics_code|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">NAICS Description</div><div class="field-value">{{ contract.naics_description|default:"—" }}</div></div>
+  </div>
+
+  <!-- Fechas -->
+  <p class="section-title">Fechas</p>
+  <div class="fields-grid">
+    <div class="field"><div class="field-label">Award Date</div><div class="field-value">{{ contract.award_date|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">Period of Performance Start</div><div class="field-value">{{ contract.start_date|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">Period of Performance End</div><div class="field-value">{{ contract.end_date|default:"—" }}</div></div>
+    <div class="field"><div class="field-label">Place of Performance</div><div class="field-value">{{ contract.place_of_performance_state|default:"—" }}</div></div>
+  </div>
+
+  <!-- Set-asides -->
+  <p class="section-title">Set-aside flags</p>
+  <div class="flag-row">
+    <span class="flag {% if contract.small_business %}flag-yes{% else %}flag-no{% endif %}">
+      Small Business: {% if contract.small_business %}Sí{% else %}No{% endif %}
+    </span>
+    <span class="flag {% if contract.veteran_owned %}flag-yes{% else %}flag-no{% endif %}">
+      Veteran Owned: {% if contract.veteran_owned %}Sí{% else %}No{% endif %}
+    </span>
+    <span class="flag {% if contract.women_owned %}flag-yes{% else %}flag-no{% endif %}">
+      Women Owned: {% if contract.women_owned %}Sí{% else %}No{% endif %}
+    </span>
+    <span class="flag {% if contract.hubzone %}flag-yes{% else %}flag-no{% endif %}">
+      HUBZone: {% if contract.hubzone %}Sí{% else %}No{% endif %}
+    </span>
+  </div>
+
+</div>
+</body>
+</html>

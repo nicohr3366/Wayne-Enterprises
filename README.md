@@ -1,262 +1,340 @@
 # Wayne Enterprises — Portal Corporativo
 
-Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de negocio. Cada compañero desarrolla una app que se integra automáticamente al portal central.
+Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de negocio.
+Cada compañero desarrolla su dataset ETL dentro de la app de su división.
 
 ---
 
-## 📊 Sistemas ETL y Datasets
+## 📋 Asignación: Quién trabaja dónde
 
-| ID | Responsable | Dataset | Tipo | Descripción | Guía |
-|----|-------------|---------|------|-------------|------|
-| 1 | **Cuervo** | Telemetría Tumbler | ETL | Datos de impacto, velocidad, consumo |
-| 2 | **Nicolás** | Contratos Defensa | ETL/XML | Licitaciones gobierno EE.UU. |
-| 3 | **Camilo** | Stock Market | ETL | Acciones WayneTech, series temporales |
-| 4 | **Emerick** | Donaciones Fundación | ETL | Ayuda a orfanatos y hospitales |
-| 5 | **Juan José** | Red Eléctrica Gotham | ETL | Datos de carga de Wayne Energy |
-| 6 | **Juliana** | Satélites | ETL | Logs de comunicaciones WayneTech |
-| 7 | **Valeria** | Desarrollo Urbano | ETL | Costos reconstrucción Gotham |
-| 8 | **Dana** | Ciberseguridad | ML/ETL | Intentos de hackeo, clasificación ML |
-| 9 | **Perlaza** | Aerospace | ETL | Inventario aviones y drones |
-| 10 | **Diego Granja** | Patentes Nanotech | ETL | Propiedad intelectual Wayne |
-| 11 | **Pérez** | RRHH Wayne Manor | RBAC | Personal y sistema de permisos |
-| 12 | **Drada** | Clean Energy | ETL | Monitoreo reactor fusión |
-| 13 | * | Adquisiciones Startups | ETL | Historial de compras |
-| 14 | * | Wayne Shipping | ETL | Logística marítima |
-| 15 | * | Brother Eye AI | ML/ETL | Sistema de vigilancia |
+| Compañero | Dataset | App Django | Carpeta de trabajo | Branch |
+|---|---|---|---|---|
+| **Nicolás** | Contratos Defensa ETL/XML | `apps/core/` | `apps/core/data/` | `main` |
+| **Cuervo** | Telemetría Tumbler | `apps/tech/` | `apps/tech/data/` | `cuervo` |
+| **Camilo** | Stock Market WayneTech | `apps/capital/` | `apps/capital/data/` | `Camilo_Piedrahita` |
+| **Emerick / Drada** | Donaciones Fundación / Clean Energy | `apps/foundation/` | `apps/foundation/data/` | `Valeria-Drada` |
+| **Juan José** | Red Eléctrica Gotham | `apps/industries/` | `apps/industries/data/` | `Juan_Jose_Arango` |
+| **Juliana** | Satélites WayneTech | `apps/ventures/` | `apps/ventures/data/` | `WayneVentures_JulianaHoyos` |
+| **Valeria** | Desarrollo Urbano Gotham | `apps/realestate/` | `apps/realestate/data/` | `Valeria` |
+| **Danna** | Ciberseguridad ML/ETL | `apps/healthcare/` | `apps/healthcare/data/` | `Danna` |
+| **Perlaza** | Aerospace / Inventario drones | `apps/realestate/` | `apps/realestate/data/` | `Perlaza_WayneRealEstate` |
+| **Diego** | Patentes Nanotech | `apps/tech/` | `apps/tech/data/` | `Diego` |
+| **Pérez** | RRHH Wayne Manor (RBAC) | `apps/accounts/` | `apps/accounts/data/` | `perez_Wayne-Manor` |
 
-### Estructura de Carpetas del Proyecto
+> **Regla:** Tu CSV/Excel **siempre** va en `apps/[tu_app]/data/`. Esa carpeta está en `.gitignore` — el archivo no se sube a GitHub, cada quien lo tiene localmente.
+
+---
+
+## 🗂️ Estructura del Proyecto
 
 ```
 Wayne-Enterprises-2/
-├── apps/                          # Apps Django del proyecto
-│   ├── accounts/                  # Autenticación y roles
-│   ├── capital/                   # División 5: Wayne Capital
-│   ├── core/                      # Portal principal y landing
-│   ├── foundation/                # División 6: Wayne Foundation
-│   ├── healthcare/                # División 3: Wayne Healthcare
-│   ├── industries/                # División 2: Wayne Industries
-│   ├── realestate/                # División 4: Wayne Real Estate
-│   ├── tech/                      # División 1: Wayne Technologies
-│   └── ventures/                  # División 7: Wayne Ventures
-├── wayne_enterprise/              # Configuración principal Django
+├── apps/
+│   ├── accounts/              # Autenticación, roles (Pérez)
+│   │   └── data/              # ← CSV de RRHH va aquí
+│   ├── capital/               # Wayne Capital — finanzas (Camilo)
+│   │   └── data/              # ← CSV de Stock Market va aquí
+│   ├── core/                  # Portal principal + ETL Contratos Defensa (Nicolás)
+│   │   ├── data/              # ← contratos.csv va aquí
+│   │   ├── management/
+│   │   │   └── commands/
+│   │   │       └── load_contracts.py
+│   │   ├── models.py          # modelo DefenseContract (51 campos)
+│   │   ├── views.py           # dashboard, lista, detalle, exportar CSV
+│   │   └── templates/core/
+│   │       ├── contracts_dashboard.html
+│   │       ├── contracts_list.html
+│   │       └── contract_detail.html
+│   ├── foundation/            # Wayne Foundation — donaciones (Emerick/Drada)
+│   │   └── data/
+│   ├── healthcare/            # Wayne Healthcare (Danna — Ciberseguridad)
+│   │   └── data/
+│   ├── industries/            # Wayne Industries — energía (Juan José)
+│   │   └── data/
+│   ├── realestate/            # Wayne Real Estate (Valeria / Perlaza)
+│   │   └── data/
+│   ├── tech/                  # Wayne Technologies (Cuervo / Diego)
+│   │   └── data/
+│   └── ventures/              # Wayne Ventures (Juliana)
+│       └── data/
+├── wayne_enterprise/          # Configuración principal Django
+│   ├── settings.py
+│   └── urls.py
 ├── manage.py
-└── venv/                          # Entorno virtual (no subir a Git)
+└── venv/                      # NO subir a Git
 ```
 
 ---
-## 🚀 Inicio Rápido: Clonar y Ejecutar
 
-### Paso 1: Clonar el Repositorio
+## ➕ Cómo agregar tu dataset (4 pasos)
 
-Abre **Git Bash** o **PowerShell** y ejecuta:
+Sigue exactamente este flujo. El ejemplo usa `capital` (Camilo / Stock Market) pero aplica a cualquier app.
 
+### Paso 1 — Crea la carpeta `data/` y pon tu CSV ahí
+
+```
+apps/capital/data/stocks.csv      ← tu archivo aquí
+apps/capital/data/.gitkeep        ← archivo vacío para que git vea la carpeta
+```
+
+El CSV **no se sube a GitHub** (está en `.gitignore`). El `.gitkeep` sí se sube para que la carpeta exista cuando alguien clone el repo.
+
+### Paso 2 — Crea el modelo en `apps/[tu_app]/models.py`
+
+```python
+from django.db import models
+
+class StockRecord(models.Model):
+    ticker       = models.CharField(max_length=20)
+    company_name = models.CharField(max_length=200)
+    date         = models.DateField()
+    open_price   = models.DecimalField(max_digits=12, decimal_places=4)
+    close_price  = models.DecimalField(max_digits=12, decimal_places=4)
+    volume       = models.BigIntegerField(default=0)
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"{self.ticker} — {self.date}"
+```
+
+Luego corre las migraciones:
 ```bash
-# Clonar el repositorio
-git clone https://github.com/nicohr3366/Wayne-Enterprises.git
-
-# Entrar a la carpeta
-cd Wayne-Enterprises
+python manage.py makemigrations capital
+python manage.py migrate
 ```
 
-### Paso 2: Verificar tu Rama (Importante)
+### Paso 3 — Crea el management command para cargar datos
 
-Cada persona tiene su propia rama. **Nunca trabajes en `main`**.
+Crea esta estructura de carpetas:
+```
+apps/capital/management/__init__.py        ← archivo vacío
+apps/capital/management/commands/__init__.py   ← archivo vacío
+apps/capital/management/commands/load_stocks.py
+```
 
-#### Ver ramas disponibles:
+Contenido de `load_stocks.py`:
+```python
+import csv
+from django.core.management.base import BaseCommand
+from apps.capital.models import StockRecord
+
+class Command(BaseCommand):
+    help = 'Carga registros de Stock Market desde CSV'
+
+    def add_arguments(self, parser):
+        parser.add_argument('--file', type=str, default='apps/capital/data/stocks.csv')
+
+    def handle(self, *args, **options):
+        registros = []
+        with open(options['file'], encoding='utf-8-sig') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                registros.append(StockRecord(
+                    ticker=row['TICKER'],
+                    company_name=row['COMPANY'],
+                    # ... mapear el resto de columnas de tu CSV
+                ))
+        StockRecord.objects.bulk_create(registros, ignore_conflicts=True)
+        self.stdout.write(self.style.SUCCESS(f'✓ {len(registros)} registros cargados.'))
+```
+
+Ejecutar:
 ```bash
-# Ver ramas remotas (las que están en GitHub)
-git branch -r
+python manage.py load_stocks
 ```
 
-Deberías ver algo como:
-```
-  origin/main
-  origin/camilo
-  origin/cuervo
-  origin/diego_granja
-  origin/juan_jose
-  origin/juliana
-  origin/perlaza
-  origin/valeria
-```
+### Paso 4 — Crea las vistas y templates
 
-#### Cambiar a tu rama:
-```bash
-# Para Cuervo
-git checkout cuervo
+En `apps/capital/views.py`:
+```python
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import StockRecord
 
-# Para Diego Granja
-git checkout diego_granja
+@login_required
+def home(request):
+    return render(request, 'capital/home.html', {})
 
-# Para Juan José
-git checkout juan_jose
-
-# Para Valeria
-git checkout valeria
-
-# Para Camilo, Perlaza, Juliana (ya tienen apps funcionando)
-git checkout camilo
+@login_required
+def stocks_dashboard(request):
+    records = StockRecord.objects.all()
+    return render(request, 'capital/stocks_dashboard.html', {'records': records})
 ```
 
-#### Si NO tienes tu rama creada:
-```bash
-# Crear tu rama desde main
-git checkout main
-git pull origin main
-git checkout -b Nombre_Apellido
+En `apps/capital/urls.py`:
+```python
+from django.urls import path
+from . import views
 
-# Subir tu rama a GitHub
-git push -u origin Nombre_Apellido
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('stocks/', views.stocks_dashboard, name='stocks_dashboard'),
+]
+```
+
+---
+
+## 🔑 Sistema de Roles
+
+El sistema tiene 9 roles jerárquicos. El admin puede asignarlos en `/accounts/admin/roles/`.
+
+| Rol | Código | Descripción |
+|---|---|---|
+| Administrador | `admin` | Acceso total al sistema |
+| Ejecutivo C-Suite | `executive` | CEO, COO, CFO, CIO, CTO, CISO |
+| Director de División | `division_manager` | Líderes de cada división |
+| Gerente de Tecnología | `tech_manager` | TI, DevOps, Platform Engineering |
+| Analista de Seguridad | `security_analyst` | CISO área, cumplimiento CMMC/NIST |
+| Analista FinOps | `finops_analyst` | Control de costos cloud |
+| Gerente PMO | `pmo_manager` | Gestión de proyectos |
+| Gerente de RRHH | `hr_manager` | Talento y capacitación |
+| Usuario | `usuario` | Acceso básico al portal |
+
+Para restringir una vista a un rol mínimo:
+```python
+from apps.accounts.views import rol_requerido
+
+@rol_requerido('division_manager')
+def vista_confidencial(request):
+    ...
 ```
 
 ---
 
 ## 🗄️ Configuración de Base de Datos (MariaDB 10.6+)
 
-> **IMPORTANTE:** Django 4.2+ requiere **MariaDB 10.6 o superior**. XAMPP trae MariaDB 10.4 que **NO es compatible** y causará error al migrar. Sigue los pasos de abajo.
+> **IMPORTANTE:** Django 6.0 requiere **MariaDB 10.6 o superior**. XAMPP trae MariaDB 10.4 que **NO es compatible**.
 
 ### 1. Instalar MariaDB 10.6
 
-1. Descarga **MariaDB 10.6** desde: https://mariadb.org/download/?t=mariadb&p=mariadb&r=10.6
-2. Selecciona **Windows** → **MSI Package (x86_64)**
-3. Ejecuta el instalador
-4. En la pantalla **"Modify password for root user"**:
-   - **Desmarca** la casilla (sin contraseña, más simple)
-   - O deja una contraseña que recuerdes y actualiza `settings.py`
-5. En la pantalla **"Database settings"**:
-   - Puerto: `3306`
-   - Deja todo por defecto y haz clic en **Next**
-   - Si dice "puerto en uso", apaga MySQL en XAMPP primero y vuelve a intentar
-
-> Si ya tienes XAMPP corriendo con MySQL, **detén MySQL en XAMPP** antes de instalar MariaDB 10.6 para evitar conflicto de puertos.
+1. Descarga **MariaDB 10.6** desde: https://mariadb.org/download/
+2. Selecciona **Windows → MSI Package (x86_64)**
+3. Durante la instalación: sin contraseña para root (más simple)
+4. Puerto: `3306`. Si XAMPP está corriendo, apaga MySQL primero.
 
 ### 2. Crear la Base de Datos
-
-Abre **PowerShell** y ejecuta:
 
 ```powershell
 & "C:\Program Files\MariaDB 10.6\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS wayne_enterprise CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 ```
 
-### 3. Verificar Configuración
-
-El archivo `settings.py` ya está configurado para conectarse a `localhost:3306` sin contraseña. Solo verifica que el servicio **MariaDB** esté corriendo (aparece en Servicios de Windows o arranca automáticamente al instalar).
-
-### 4. Crear Tablas
+### 3. Crear Tablas
 
 ```bash
-# En la terminal de VS Code (estando en Wayne-Enterprises/)
 python manage.py migrate
 ```
-
-**Verifica**: Debes ver una lista de migraciones aplicadas sin errores.
 
 ---
 
 ## 💻 Instalación del Proyecto
 
-### 1. Crear Entorno Virtual
-
 ```bash
-# En la carpeta Wayne-Enterprises/
+# 1. Clonar
+git clone https://github.com/nicohr3366/Wayne-Enterprises.git
+cd Wayne-Enterprises
+
+# 2. Entorno virtual
 python -m venv venv
-```
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Mac/Linux
 
-### 2. Activar Entorno (Windows)
+# 3. Dependencias
+pip install django PyMySQL
 
-```bash
-venv\Scripts\activate
-```
+# 4. Migraciones
+python manage.py migrate
 
-> Verás `(venv)` al inicio de la línea de comandos
-
-### 3. Instalar Dependencias
-
-```bash
-python -m pip install django PyMySQL
-```
-
-### 5. Crear Superusuario (Opcional pero recomendado)
-
-```bash
+# 5. Superusuario (opcional)
 python manage.py createsuperuser
-```
 
-- **Username:** `admin`
-- **Email:** tu@email.com
-- **Password:** tu contraseña
-
-### 6. Iniciar Servidor
-
-```bash
+# 6. Servidor
 python manage.py runserver
 ```
 
-Abre en navegador: `http://127.0.0.1:8000`
+Abre: `http://127.0.0.1:8000`
 
 ---
 
-## 🔄 Flujo de Trabajo Git (Muy Importante)
+## 🔄 Flujo de Trabajo Git
 
-### Configuración Inicial (Solo una vez)
+### Configuración inicial (solo una vez)
 
 ```bash
-# Configurar tu identidad
 git config --global user.name "Tu Nombre"
 git config --global user.email "tu@email.com"
-
-# Verificar tu rama
-git branch
-
-# Si estás en main, cambia a tu rama
-git checkout tu_rama
 ```
 
-### Trabajo Diario (Cada vez que empiezas)
+### Cambiar a tu rama
 
 ```bash
-# 1. Asegúrate de estar en tu rama
+# Ver en qué rama estás
 git branch
-# Debe decir: * tu_rama
 
-# 2. Bajar cambios del main antes de empezar
+# Cambiar a tu rama (reemplaza con tu nombre)
+git checkout Camilo_Piedrahita
+
+# Si tu rama NO existe todavía, créala desde main
+git checkout main
+git pull origin main
+git checkout -b Tu_Nombre
+git push -u origin Tu_Nombre
+```
+
+### Trabajo diario
+
+```bash
+# 1. Bajar cambios nuevos de main
 git pull origin main
 
-# 3. Ver qué archivos cambiaste
+# 2. Trabajar en tu app...
+
+# 3. Ver qué cambiaste
 git status
 
-# 4. Revisar cambios específicos
-git diff nombre_archivo
+# 4. Agregar tus archivos (SOLO los tuyos, no los de otros)
+git add apps/capital/
+git add apps/capital/templates/
 
-# 5. Agregar cambios al área de preparación
-git add nombre_archivo
-# O agregar todos los cambios:
-git add .
+# 5. Commit
+git commit -m "feat: agrega modelo StockRecord y dashboard"
 
-# 6. Guardar cambios (commit)
-git commit -m "feat: descripción de lo que hiciste"
-
-# 7. Subir a GitHub
-git push origin tu_rama
+# 6. Subir tu rama
+git push origin Camilo_Piedrahita
 ```
 
-### Mensajes de Commit
-
-Usa prefijos para organizar tus cambios:
+### Mensajes de commit
 
 ```bash
-# Nueva funcionalidad
-git commit -m "feat: agrega modelo Producto para industries"
-
-# Corrección de errores
-git commit -m "fix: corrige error en template de login"
-
-# Mejoras visuales
-git commit -m "style: mejora CSS de tarjetas de productos"
-
-# Documentación
-git commit -m "docs: actualiza instrucciones en README"
-
-# Datos
-git commit -m "data: agrega 10 productos al dataset"
+git commit -m "feat: agrega modelo para dataset stock market"
+git commit -m "fix: corrige error en template de capital"
+git commit -m "style: mejora CSS del dashboard"
+git commit -m "data: agrega script de carga ETL"
+git commit -m "docs: actualiza README con instrucciones de capital"
 ```
+
+### Para integrar tu trabajo a main (Pull Request)
+
+1. Sube tu rama: `git push origin Tu_Nombre`
+2. Ve a GitHub → **Pull Requests** → **New Pull Request**
+3. Base: `main` ← Compare: `Tu_Nombre`
+4. Describe qué hiciste y pide revisión
+
+---
+
+## 📊 Estado del Proyecto
+
+| App | Modelo | ETL | Vistas | Template | Responsable |
+|---|---|---|---|---|---|
+| `core` | ✅ DefenseContract | ✅ load_contracts | ✅ dashboard + lista + detalle | ✅ | Nicolás |
+| `accounts` | ✅ UserProfile (9 roles) | — | ✅ login/registro/roles | ✅ | Nicolás |
+| `realestate` | ✅ Property | — | 🔲 | 🔲 | Valeria / Perlaza |
+| `ventures` | ✅ NavItem | — | 🔲 | 🔲 | Juliana |
+| `capital` | 🔲 | 🔲 | 🔲 | 🔲 | Camilo |
+| `tech` | 🔲 | 🔲 | 🔲 | 🔲 | Cuervo / Diego |
+| `industries` | 🔲 | 🔲 | 🔲 | 🔲 | Juan José |
+| `healthcare` | 🔲 | 🔲 | 🔲 | 🔲 | Danna |
+| `foundation` | 🔲 | 🔲 | 🔲 | 🔲 | Emerick / Drada |
+
+✅ = implementado · 🔲 = pendiente

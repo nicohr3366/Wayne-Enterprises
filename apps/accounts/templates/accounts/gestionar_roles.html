@@ -146,16 +146,53 @@
       letter-spacing: 0.05em;
     }
 
+    /* ── Badges base ─────────────────────────── */
     .rol-badge.admin {
       background: rgba(201,168,76,0.2);
       color: var(--gold);
       border: 1px solid var(--gold);
     }
-
     .rol-badge.usuario {
       background: rgba(108,117,125,0.2);
       color: var(--text-secondary);
       border: 1px solid rgba(108,117,125,0.5);
+    }
+
+    /* ── Badges nuevos ────────────────────────── */
+    .rol-badge.executive {
+      background: rgba(168,85,247,0.2);
+      color: #c084fc;
+      border: 1px solid rgba(168,85,247,0.6);
+    }
+    .rol-badge.division_manager {
+      background: rgba(59,130,246,0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59,130,246,0.6);
+    }
+    .rol-badge.tech_manager {
+      background: rgba(20,184,166,0.2);
+      color: #2dd4bf;
+      border: 1px solid rgba(20,184,166,0.6);
+    }
+    .rol-badge.security_analyst {
+      background: rgba(239,68,68,0.2);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,0.6);
+    }
+    .rol-badge.finops_analyst {
+      background: rgba(34,197,94,0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34,197,94,0.6);
+    }
+    .rol-badge.pmo_manager {
+      background: rgba(245,158,11,0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245,158,11,0.6);
+    }
+    .rol-badge.hr_manager {
+      background: rgba(236,72,153,0.2);
+      color: #f472b6;
+      border: 1px solid rgba(236,72,153,0.6);
     }
 
     .rol-form {
@@ -318,13 +355,62 @@
     <h2 class="section-title">Gestión de Roles de Usuario</h2>
 
     <div class="info-box">
-      <h4>Sistema de Roles Actual</h4>
-      <ul>
-        <li><strong>Usuario:</strong> Acceso básico al portal y divisiones</li>
-        <li><strong>Admin:</strong> Acceso completo, gestión de usuarios y configuración</li>
-      </ul>
-      <p style="margin-top: 12px; font-size: 12px; color: var(--text-muted);">
-        PREPARADO PARA FUTURA EXPANSIÓN: Sistema modular permite agregar roles por división (tech_manager, healthcare_admin, etc.)
+      <h4>Sistema de Roles — Wayne Enterprises</h4>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 32px; margin-top:10px;">
+
+        <!-- Base -->
+        <div style="grid-column:1/-1; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin:8px 0 4px;">Base</div>
+        <div style="font-size:13px; color:var(--text-secondary);">
+          <span class="rol-badge admin" style="font-size:11px;">ADMIN</span>
+          &nbsp;<strong style="color:var(--text-primary);">Administrador</strong> — Acceso total al portal, gestión de usuarios, configuración del sistema.
+        </div>
+        <div style="font-size:13px; color:var(--text-secondary);">
+          <span class="rol-badge usuario" style="font-size:11px;">USUARIO</span>
+          &nbsp;<strong style="color:var(--text-primary);">Usuario</strong> — Acceso básico al portal y visualización de divisiones habilitadas.
+        </div>
+
+        <!-- Ejecutivo -->
+        <div style="grid-column:1/-1; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin:12px 0 4px;">Nivel Ejecutivo</div>
+        <div style="font-size:13px; color:var(--text-secondary); grid-column:1/-1;">
+          <span class="rol-badge executive" style="font-size:11px;">EXECUTIVE</span>
+          &nbsp;<strong style="color:var(--text-primary);">Ejecutivo C-Suite</strong> — CEO, COO, CFO, CIO, CTO, CISO, CDO, CHRO. Visibilidad transversal de todas las divisiones y métricas estratégicas.
+        </div>
+
+        <!-- División -->
+        <div style="grid-column:1/-1; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin:12px 0 4px;">Por División</div>
+        <div style="font-size:13px; color:var(--text-secondary); grid-column:1/-1;">
+          <span class="rol-badge division_manager" style="font-size:11px;">DIVISION MANAGER</span>
+          &nbsp;<strong style="color:var(--text-primary);">Director de División</strong> — Líderes de Wayne Technologies, Industries, Healthcare, Real Estate, Capital, Foundation y Ventures. Acceso completo a su división asignada.
+        </div>
+
+        <!-- Funcionales -->
+        <div style="grid-column:1/-1; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin:12px 0 4px;">Roles Funcionales</div>
+        <div style="font-size:13px; color:var(--text-secondary);">
+          <span class="rol-badge tech_manager" style="font-size:11px;">TECH MANAGER</span>
+          &nbsp;<strong style="color:var(--text-primary);">Gerente de Tecnología</strong> — TI corporativo, DevOps, Platform Engineering. Gestión de infraestructura y pipelines cloud.
+        </div>
+        <div style="font-size:13px; color:var(--text-secondary);">
+          <span class="rol-badge security_analyst" style="font-size:11px;">SECURITY ANALYST</span>
+          &nbsp;<strong style="color:var(--text-primary);">Analista de Seguridad</strong> — CISO área, cumplimiento CMMC/NIST, auditoría y gestión de riesgos de seguridad.
+        </div>
+        <div style="font-size:13px; color:var(--text-secondary);">
+          <span class="rol-badge finops_analyst" style="font-size:11px;">FINOPS ANALYST</span>
+          &nbsp;<strong style="color:var(--text-primary);">Analista FinOps</strong> — Control de costos cloud, optimización de presupuesto AWS/Azure, reportes financieros de infraestructura.
+        </div>
+        <div style="font-size:13px; color:var(--text-secondary);">
+          <span class="rol-badge pmo_manager" style="font-size:11px;">PMO MANAGER</span>
+          &nbsp;<strong style="color:var(--text-primary);">Gerente PMO</strong> — Gestión de proyectos, seguimiento de hitos, coordinación de entregables entre divisiones.
+        </div>
+        <div style="font-size:13px; color:var(--text-secondary); grid-column:1/-1;">
+          <span class="rol-badge hr_manager" style="font-size:11px;">HR MANAGER</span>
+          &nbsp;<strong style="color:var(--text-primary);">Gerente de RRHH</strong> — CHRO área, gestión de talento, capacitación corporativa y cultura organizacional.
+        </div>
+
+      </div>
+
+      <p style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(201,168,76,0.15); font-size:11px; color:var(--text-muted); letter-spacing:.04em;">
+        Sistema modular activo · 9 roles configurados · Jerarquía: Admin → Executive → Division Manager → Funcionales → Usuario
       </p>
     </div>
 
