@@ -4,21 +4,7 @@ Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de
 
 ---
 
-## 📊 Estado del Proyecto - Asignaciones
-
-### Apps Django (Divisiones Corporativas)
-
-| # | División | App | Responsable | Estado | Guía |
-|---|----------|-----|-------------|--------|------|
-| 1 | Wayne Technologies | `tech` | **Cuervo** | ✅ Activo |
-| 2 | Wayne Industries | `industries` | **Diego Granja** | ✅ Activo |
-| 3 | Wayne Healthcare | `healthcare` | **Juan José** | ✅ Activo |
-| 4 | Wayne Real Estate | `realestate` | **Perlaza** | ✅ Activo |
-| 5 | Wayne Capital | `capital` | **Valeria** | ✅ Activo |
-| 6 | Wayne Foundation | `foundation` | **Camilo** | ✅ Activo |
-| 7 | Wayne Ventures | `ventures` | **Juliana** | ✅ Activo |
-
-### Sistemas ETL y Datasets
+## 📊 Sistemas ETL y Datasets
 
 | ID | Responsable | Dataset | Tipo | Descripción | Guía |
 |----|-------------|---------|------|-------------|------|
@@ -41,19 +27,19 @@ Portal modular Django para el conglomerado Wayne Enterprises con 7 divisiones de
 ### Estructura de Carpetas del Proyecto
 
 ```
-Wayne-Enterprises/
-├── apps/                         # Apps Django del proyecto
-│   ├── accounts/                  # Sistema de autenticación
-│   ├── capital/                   # División 5: Capital
-│   ├── core/                       # Portal principal y landing
-│   ├── foundation/                 # División 6: Foundation
-│   ├── healthcare/                 # División 3: Healthcare
-│   ├── industries/                 # División 2: Industries
-│   ├── realestate/                 # División 4: Real Estate
-│   ├── tech/                       # División 1: Technologies
-│   └── ventures/                   # División 7: Ventures
-├── datasets/                      # Datasets y sistemas ETL
+Wayne-Enterprises-2/
+├── apps/                          # Apps Django del proyecto
+│   ├── accounts/                  # Autenticación y roles
+│   ├── capital/                   # División 5: Wayne Capital
+│   ├── core/                      # Portal principal y landing
+│   ├── foundation/                # División 6: Wayne Foundation
+│   ├── healthcare/                # División 3: Wayne Healthcare
+│   ├── industries/                # División 2: Wayne Industries
+│   ├── realestate/                # División 4: Wayne Real Estate
+│   ├── tech/                      # División 1: Wayne Technologies
+│   └── ventures/                  # División 7: Wayne Ventures
 ├── wayne_enterprise/              # Configuración principal Django
+├── manage.py
 └── venv/                          # Entorno virtual (no subir a Git)
 ```
 
@@ -125,41 +111,45 @@ git push -u origin Nombre_Apellido
 
 ---
 
-## 🗄️ Configuración de Base de Datos (XAMPP)
+## 🗄️ Configuración de Base de Datos (MariaDB 10.6+)
 
-### 1. Instalar XAMPP
+> **IMPORTANTE:** Django 4.2+ requiere **MariaDB 10.6 o superior**. XAMPP trae MariaDB 10.4 que **NO es compatible** y causará error al migrar. Sigue los pasos de abajo.
 
-1. Descarga **XAMPP** desde: https://www.apachefriends.org
-2. Ejecuta el instalador
-3. **IMPORTANTE:** Solo instala **MySQL** (desmarca Apache si no lo necesitas)
-4. Completa la instalación
+### 1. Instalar MariaDB 10.6
 
-### 2. Iniciar MySQL
+1. Descarga **MariaDB 10.6** desde: https://mariadb.org/download/?t=mariadb&p=mariadb&r=10.6
+2. Selecciona **Windows** → **MSI Package (x86_64)**
+3. Ejecuta el instalador
+4. En la pantalla **"Modify password for root user"**:
+   - **Desmarca** la casilla (sin contraseña, más simple)
+   - O deja una contraseña que recuerdes y actualiza `settings.py`
+5. En la pantalla **"Database settings"**:
+   - Puerto: `3306`
+   - Deja todo por defecto y haz clic en **Next**
+   - Si dice "puerto en uso", apaga MySQL en XAMPP primero y vuelve a intentar
 
-1. Abre **XAMPP Control Panel** (busca en el menú inicio)
-2. En la fila **MySQL**, clic en **Start**
-3. Espera que diga **Running** en verde
-4. Clic en **Admin** (se abre phpMyAdmin en el navegador)
+> Si ya tienes XAMPP corriendo con MySQL, **detén MySQL en XAMPP** antes de instalar MariaDB 10.6 para evitar conflicto de puertos.
 
-### 3. Crear Base de Datos
+### 2. Crear la Base de Datos
 
-1. En phpMyAdmin, clic en **Nueva** (menú izquierdo)
-2. **Nombre:** `wayne_enterprise`
-3. **Collation:** `utf8mb4_general_ci`
-4. Clic en **Crear**
+Abre **PowerShell** y ejecuta:
 
-### 4. Verificar Configuración
+```powershell
+& "C:\Program Files\MariaDB 10.6\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS wayne_enterprise CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
 
-El archivo `settings.py` ya está configurado. Solo verifica que MySQL esté corriendo.
+### 3. Verificar Configuración
 
-### 5. Crear Tablas
+El archivo `settings.py` ya está configurado para conectarse a `localhost:3306` sin contraseña. Solo verifica que el servicio **MariaDB** esté corriendo (aparece en Servicios de Windows o arranca automáticamente al instalar).
+
+### 4. Crear Tablas
 
 ```bash
 # En la terminal de VS Code (estando en Wayne-Enterprises/)
 python manage.py migrate
 ```
 
-**Verifica en phpMyAdmin**: Debes ver tablas creadas como `auth_user`, `django_session`, etc.
+**Verifica**: Debes ver una lista de migraciones aplicadas sin errores.
 
 ---
 
