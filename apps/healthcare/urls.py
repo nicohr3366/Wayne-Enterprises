@@ -5,4 +5,10 @@ app_name = 'healthcare'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    
+      path(
+        'cybersecurity/',
+        views.cybersecurity_dashboard,
+        name='cybersecurity_dashboard'
+    ),
 ]
