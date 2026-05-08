@@ -1,0 +1,29 @@
+<div class="container mt-4">
+
+    <h1>Wayne Healthcare — Cybersecurity Dashboard</h1>
+
+    <p>
+        Monitoreo de eventos de ciberseguridad y amenazas detectadas.
+    </p>
+
+    <table border="1" cellpadding="8">
+
+        <tr>
+            <th>ID Evento</th>
+            <th>Tipo</th>
+            <th>Severidad</th>
+            <th>Sistema Afectado</th>
+        </tr>
+
+        {% for r in records %}
+        <tr>
+            <td>{{ r.incident_id }}</td>
+            <td>{{ r.threat_type }}</td>
+            <td>{{ r.severity }}</td>
+            <td>{{ r.affected_system }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>

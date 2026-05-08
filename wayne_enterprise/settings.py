@@ -87,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wayne_enterprise',      # Nombre de la base de datos que creaste
         'USER': 'root',                   # Usuario por defecto de XAMPP
-        'PASSWORD': '',                   # Dejar vacío si no configuraste contraseña
+        'PASSWORD': 'root123',                   # Dejar vacío si no configuraste contraseña
         'HOST': 'localhost',              # Servidor local
         'PORT': '3306',                   # Puerto por defecto de MySQL
         'OPTIONS': {
