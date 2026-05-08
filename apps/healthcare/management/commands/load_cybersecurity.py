@@ -26,12 +26,14 @@ class Command(BaseCommand):
                         threat_type=row['Tipo_Evento'],
                         severity=row['Severidad'],
                         affected_system=row['Sistema_Afectado'],
+                        status=row['Estado'],
                     )
                 )
 
         CyberSecurityRecord.objects.bulk_create(
             registros,
             ignore_conflicts=True
+            
         )
 
         self.stdout.write(

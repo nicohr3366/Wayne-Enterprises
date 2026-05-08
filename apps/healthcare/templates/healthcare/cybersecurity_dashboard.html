@@ -1,29 +1,244 @@
-<div class="container mt-4">
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Healthcare — Cybersecurity Dashboard</title>
 
-    <h1>Wayne Healthcare — Cybersecurity Dashboard</h1>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <p>
-        Monitoreo de eventos de ciberseguridad y amenazas detectadas.
+  <link rel="stylesheet" href="{% static 'healthcare/css/healthcare.css' %}">
+</head>
+
+<body style="background:#050507; color:white; font-family:'Rajdhani', sans-serif;">
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header style="padding:30px 60px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center;">
+
+    <div>
+      <h1 style="margin:0; color:#C9A84C; font-family:'Cinzel', serif;">
+        Wayne Healthcare
+      </h1>
+
+      <p style="margin-top:8px; color:#aaa;">
+        Dashboard de Ciberseguridad
+      </p>
+    </div>
+
+    <!-- BOTÓN VOLVER -->
+    <a href="/healthcare/"
+       style="
+       padding:12px 20px;
+       background:#C9A84C;
+       color:black;
+       text-decoration:none;
+       border-radius:8px;
+       font-weight:bold;
+       ">
+       ← Volver a Healthcare
+    </a>
+
+  </header>
+
+  <!-- HERO -->
+  <section style="padding:60px; text-align:center;">
+
+    <p style="
+      color:#C9A84C;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      font-size:12px;
+    ">
+      Registro de Eventos
     </p>
 
-    <table border="1" cellpadding="8">
+    <h1 style="
+      font-size:72px;
+      margin:20px 0;
+      font-family:'Cinzel', serif;
+      color:white;
+    ">
+      Eventos de <br>
+      <span style="color:#C9A84C;">Ciberseguridad</span>
+    </h1>
 
-        <tr>
-            <th>ID Evento</th>
-            <th>Tipo</th>
-            <th>Severidad</th>
-            <th>Sistema Afectado</th>
-        </tr>
+    <p style="color:#aaa; max-width:800px; margin:auto;">
+      Monitoreo en tiempo real de amenazas, eventos y vulnerabilidades detectadas dentro de la infraestructura médica de Wayne Healthcare.
+    </p>
 
-        {% for r in records %}
-        <tr>
-            <td>{{ r.incident_id }}</td>
-            <td>{{ r.threat_type }}</td>
-            <td>{{ r.severity }}</td>
-            <td>{{ r.affected_system }}</td>
-        </tr>
-        {% endfor %}
+  </section>
 
-    </table>
+  <!-- STATS -->
+  <section style="
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    padding:0 60px 60px 60px;
+  ">
+
+    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
+      <h2 style="font-size:42px; color:#C9A84C;">{{ total_records }}</h2>
+      <p>Total eventos</p>
+    </div>
+
+    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
+      <h2 style="font-size:42px; color:red;">{{ critical_count }}</h2>
+      <p>Críticos</p>
+    </div>
+
+    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
+      <h2 style="font-size:42px; color:orange;">{{ blocked_count }}</h2>
+      <p>Alta severidad</p>
+    </div>
+
+    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
+      <h2 style="font-size:42px; color:lime;">{{ resolved_count }}</h2>
+      <p>Baja severidad</p>
+    </div>
+
+  </section>
+
+  <!-- TABLA -->
+  <section style="padding:0 60px 80px 60px;">
+
+    <h2 style="
+      font-size:48px;
+      margin-bottom:30px;
+      font-family:'Cinzel', serif;
+      color:#C9A84C;
+    ">
+      Registro de Amenazas
+    </h2>
+
+    <div style="
+      overflow-x:auto;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.1);
+      background:#111;
+    ">
+
+      <table style="
+        width:100%;
+        border-collapse:collapse;
+        color:white;
+      ">
+
+        <thead style="background:#1b1b1b;">
+
+          <tr>
+
+            <th style="padding:18px; text-align:left;">ID Evento</th>
+
+            <th style="padding:18px; text-align:left;">Amenaza</th>
+
+            <th style="padding:18px; text-align:left;">Severidad</th>
+
+            <th style="padding:18px; text-align:left;">Sistema Afectado</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {% for r in records %}
+
+          <tr style="border-top:1px solid rgba(255,255,255,0.08);">
+
+            <td style="padding:18px;">
+              {{ r.incident_id }}
+            </td>
+
+            <td style="padding:18px;">
+              {{ r.threat_type }}
+            </td>
+
+            <td style="padding:18px;">
+
+              {% if r.severity == 'CRÍTICA' %}
+
+                <span style="
+                  background:red;
+                  color:white;
+                  padding:6px 12px;
+                  border-radius:20px;
+                  font-size:12px;
+                ">
+                  CRÍTICA
+                </span>
+
+              {% elif r.severity == 'ALTA' %}
+
+                <span style="
+                  background:orange;
+                  color:black;
+                  padding:6px 12px;
+                  border-radius:20px;
+                  font-size:12px;
+                ">
+                  ALTA
+                </span>
+
+              {% elif r.severity == 'MEDIA' %}
+
+                <span style="
+                  background:deepskyblue;
+                  color:white;
+                  padding:6px 12px;
+                  border-radius:20px;
+                  font-size:12px;
+                ">
+                  MEDIA
+                </span>
+
+              {% else %}
+
+                <span style="
+                  background:limegreen;
+                  color:white;
+                  padding:6px 12px;
+                  border-radius:20px;
+                  font-size:12px;
+                ">
+                  BAJA
+                </span>
+
+              {% endif %}
+
+            </td>
+
+            <td style="padding:18px;">
+              {{ r.affected_system }}
+            </td>
+
+          </tr>
+
+          {% empty %}
+
+          <tr>
+            <td colspan="4" style="
+              padding:40px;
+              text-align:center;
+              color:#999;
+            ">
+              No hay registros cargados.
+            </td>
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
 
 </div>
+
+</body>
+</html>

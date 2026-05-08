@@ -6,6 +6,7 @@ class CyberSecurityRecord(models.Model):
     severity = models.CharField(max_length=50)
     affected_system = models.CharField(max_length=200)
     detected_at = models.DateTimeField(null=True, blank=True)
+    status = models.CharField(max_length=100)
 
     class Meta:
         ordering = ['-detected_at']
