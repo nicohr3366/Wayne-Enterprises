@@ -5,240 +5,201 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wayne Healthcare — Cybersecurity Dashboard</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="{% static 'healthcare/css/healthcare.css' %}">
+  <link rel="stylesheet" href="{% static 'healthcare/css/cybersecurity.css' %}">
 </head>
 
-<body style="background:#050507; color:white; font-family:'Rajdhani', sans-serif;">
+<body>
 
 <div class="wrapper">
 
   <!-- HEADER -->
-  <header style="padding:30px 60px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center;">
+  <header>
 
-    <div>
-      <h1 style="margin:0; color:#C9A84C; font-family:'Cinzel', serif;">
-        Wayne Healthcare
-      </h1>
-
-      <p style="margin-top:8px; color:#aaa;">
-        Dashboard de Ciberseguridad
-      </p>
+    <div class="logo-group">
+      <div class="logo-text">
+        <h1>Wayne Healthcare</h1>
+        <span>Cybersecurity Division · Monitoring Center</span>
+      </div>
     </div>
 
-    <!-- BOTÓN VOLVER -->
-    <a href="/healthcare/"
-       style="
-       padding:12px 20px;
-       background:#C9A84C;
-       color:black;
-       text-decoration:none;
-       border-radius:8px;
-       font-weight:bold;
-       ">
-       ← Volver a Healthcare
-    </a>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">SECURITY CORE</span>
+      <a href="/healthcare/" class="back-btn">← Volver a Healthcare</a>
+    </div>
 
   </header>
 
   <!-- HERO -->
-  <section style="padding:60px; text-align:center;">
-
-    <p style="
-      color:#C9A84C;
-      letter-spacing:4px;
-      text-transform:uppercase;
-      font-size:12px;
-    ">
-      Registro de Eventos
-    </p>
-
-    <h1 style="
-      font-size:72px;
-      margin:20px 0;
-      font-family:'Cinzel', serif;
-      color:white;
-    ">
+  <section class="hero">
+    <p class="hero-eyebrow">Registro de Eventos</p>
+    <h1>
       Eventos de <br>
-      <span style="color:#C9A84C;">Ciberseguridad</span>
+      <em>Ciberseguridad</em>
     </h1>
-
-    <p style="color:#aaa; max-width:800px; margin:auto;">
-      Monitoreo en tiempo real de amenazas, eventos y vulnerabilidades detectadas dentro de la infraestructura médica de Wayne Healthcare.
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Monitoreo en tiempo real de amenazas, eventos y vulnerabilidades detectadas
+      dentro de la infraestructura médica de Wayne Healthcare.
     </p>
-
   </section>
 
   <!-- STATS -->
-  <section style="
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    padding:0 60px 60px 60px;
-  ">
+  <section class="dashboard-stats">
 
-    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
-      <h2 style="font-size:42px; color:#C9A84C;">{{ total_records }}</h2>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon blue-glow">🖥</div>
+      <h2>{{ total_records }}</h2>
       <p>Total eventos</p>
     </div>
 
-    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
-      <h2 style="font-size:42px; color:red;">{{ critical_count }}</h2>
-      <p>Críticos</p>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon red-glow">⚠</div>
+      <h2 class="critical-text">{{ critical_count }}</h2>
+      <p>Amenazas críticas</p>
     </div>
 
-    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
-      <h2 style="font-size:42px; color:orange;">{{ blocked_count }}</h2>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon orange-glow">🔒</div>
+      <h2 class="warning-text">{{ blocked_count }}</h2>
       <p>Alta severidad</p>
     </div>
 
-    <div style="background:#111; padding:30px; border-radius:12px; text-align:center;">
-      <h2 style="font-size:42px; color:lime;">{{ resolved_count }}</h2>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon green-glow">✔</div>
+      <h2 class="safe-text">{{ resolved_count }}</h2>
       <p>Baja severidad</p>
     </div>
 
   </section>
 
-  <!-- TABLA -->
-  <section style="padding:0 60px 80px 60px;">
+  <!-- OVERVIEW -->
+  <section class="content-section">
 
-    <h2 style="
-      font-size:48px;
-      margin-bottom:30px;
-      font-family:'Cinzel', serif;
-      color:#C9A84C;
-    ">
-      Registro de Amenazas
-    </h2>
+    <div class="section-header reveal">
+      <p class="section-label">Sistema Inteligente</p>
+      <h2 class="section-title">Monitoreo de<br><em>amenazas digitales</em></h2>
+    </div>
 
-    <div style="
-      overflow-x:auto;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.1);
-      background:#111;
-    ">
+    <div class="cyber-grid">
 
-      <table style="
-        width:100%;
-        border-collapse:collapse;
-        color:white;
-      ">
+      <div class="cyber-card reveal">
+        <div class="cyber-top"><span class="cyber-badge">IA DEFENSE</span></div>
+        <h3>Detección Predictiva</h3>
+        <p>Algoritmos inteligentes analizan actividad sospechosa en tiempo real dentro de servidores hospitalarios y sistemas clínicos.</p>
+      </div>
 
-        <thead style="background:#1b1b1b;">
+      <div class="cyber-card reveal">
+        <div class="cyber-top"><span class="cyber-badge">ENCRYPTION</span></div>
+        <h3>Protección de Datos</h3>
+        <p>Cifrado avanzado y monitoreo continuo de historiales médicos y datos confidenciales de pacientes.</p>
+      </div>
 
-          <tr>
-
-            <th style="padding:18px; text-align:left;">ID Evento</th>
-
-            <th style="padding:18px; text-align:left;">Amenaza</th>
-
-            <th style="padding:18px; text-align:left;">Severidad</th>
-
-            <th style="padding:18px; text-align:left;">Sistema Afectado</th>
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          {% for r in records %}
-
-          <tr style="border-top:1px solid rgba(255,255,255,0.08);">
-
-            <td style="padding:18px;">
-              {{ r.incident_id }}
-            </td>
-
-            <td style="padding:18px;">
-              {{ r.threat_type }}
-            </td>
-
-            <td style="padding:18px;">
-
-              {% if r.severity == 'CRÍTICA' %}
-
-                <span style="
-                  background:red;
-                  color:white;
-                  padding:6px 12px;
-                  border-radius:20px;
-                  font-size:12px;
-                ">
-                  CRÍTICA
-                </span>
-
-              {% elif r.severity == 'ALTA' %}
-
-                <span style="
-                  background:orange;
-                  color:black;
-                  padding:6px 12px;
-                  border-radius:20px;
-                  font-size:12px;
-                ">
-                  ALTA
-                </span>
-
-              {% elif r.severity == 'MEDIA' %}
-
-                <span style="
-                  background:deepskyblue;
-                  color:white;
-                  padding:6px 12px;
-                  border-radius:20px;
-                  font-size:12px;
-                ">
-                  MEDIA
-                </span>
-
-              {% else %}
-
-                <span style="
-                  background:limegreen;
-                  color:white;
-                  padding:6px 12px;
-                  border-radius:20px;
-                  font-size:12px;
-                ">
-                  BAJA
-                </span>
-
-              {% endif %}
-
-            </td>
-
-            <td style="padding:18px;">
-              {{ r.affected_system }}
-            </td>
-
-          </tr>
-
-          {% empty %}
-
-          <tr>
-            <td colspan="4" style="
-              padding:40px;
-              text-align:center;
-              color:#999;
-            ">
-              No hay registros cargados.
-            </td>
-          </tr>
-
-          {% endfor %}
-
-        </tbody>
-
-      </table>
+      <div class="cyber-card reveal">
+        <div class="cyber-top"><span class="cyber-badge">NETWORK CORE</span></div>
+        <h3>Infraestructura Segura</h3>
+        <p>Supervisión constante de redes internas, centros médicos y sistemas de acceso remoto.</p>
+      </div>
 
     </div>
 
   </section>
 
+  <!-- TABLA -->
+  <section class="dashboard-table-section">
+
+    <div class="section-header reveal">
+      <p class="section-label">Eventos Registrados</p>
+      <h2 class="section-title">Registro de<br><em>ciberseguridad</em></h2>
+    </div>
+
+    <div class="dashboard-table-wrapper reveal">
+      <table class="dashboard-table">
+
+        <thead>
+          <tr>
+            <th>ID Evento</th>
+            <th>Tipo de Amenaza</th>
+            <th>Severidad</th>
+            <th>Sistema Afectado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for r in records %}
+          <tr>
+            <td><span class="event-id">{{ r.incident_id }}</span></td>
+            <td>
+              <div class="threat-cell">
+                <span class="threat-icon">⚡</span>
+                {{ r.threat_type }}
+              </div>
+            </td>
+            <td>
+              {% if r.severity == 'CRÍTICA' %}
+                <span class="severity critical">CRÍTICA</span>
+              {% elif r.severity == 'ALTA' %}
+                <span class="severity high">ALTA</span>
+              {% elif r.severity == 'MEDIA' %}
+                <span class="severity medium">MEDIA</span>
+              {% else %}
+                <span class="severity low">BAJA</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="system-cell">
+                <span class="system-dot"></span>
+                {{ r.affected_system }}
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="empty-table">No hay registros cargados.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <p class="section-label reveal">Seguridad Wayne Healthcare</p>
+    <h2 class="section-title reveal">Protección digital<br><em>24/7</em></h2>
+    <p class="reveal">Nuestro centro de ciberseguridad monitorea continuamente amenazas para garantizar la integridad y disponibilidad de los sistemas médicos.</p>
+    <a href="mailto:security@waynehealthcare.com" class="btn-primary reveal">Contactar equipo de seguridad</a>
+    <span class="cta-email reveal">security@waynehealthcare.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Healthcare — Cybersecurity Division · Gotham City</div>
+    <div class="footer-links">
+      <a href="/healthcare/">Portal Principal</a>
+      <a href="#">Seguridad</a>
+      <a href="#">Compliance HIPAA</a>
+    </div>
+  </footer>
+
 </div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (el.classList.contains('dashboard-table-wrapper')) {
+      el.classList.add('visible');
+    } else {
+      observer.observe(el);
+    }
+  });
+</script>
 
 </body>
 </html>
