@@ -53,6 +53,7 @@
       pueden integrarse al ecosistema Wayne.
     </p>
     <a href="#sobre" class="btn-primary">Explorar Portafolio</a>
+    <a href="{% url 'ventures:satellites_list' %}" class="btn-primary" style="margin-left: 12px;">Ir a Logs de Satélites</a>
   </section>
 
   <!-- STATS BAR -->
@@ -288,6 +289,8 @@
     <div class="footer-copy">© 2024 Wayne Ventures — Una división de Wayne Enterprises · Gotham City</div>
     <div class="footer-links">
       <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="{% url 'ventures:satellites_list' %}">Logs de Satélites</a>
+      <a href="{% url 'ventures:dashboard' %}">Dashboard Satélites</a>
       <a href="#">Accesibilidad</a>
       <a href="#">Seguridad</a>
     </div>

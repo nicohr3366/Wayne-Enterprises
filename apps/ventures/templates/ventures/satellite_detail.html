@@ -1,0 +1,235 @@
+{% extends "accounts/base_auth.html" %}
+
+{% block title %}Detalle de Log - WayneTech{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+	<!-- Header -->
+	<div class="d-flex justify-content-between align-items-center mb-4">
+		<h1>📋 Detalle del Log de Error</h1>
+		<a href="{% url 'ventures:satellites_list' %}" class="btn btn-secondary">← Volver</a>
+	</div>
+
+	<!-- Información Principal -->
+	<div class="row mb-4">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+							<h5>Identificación del Log</h5>
+							<p>
+								<strong>Log ID:</strong> <code>{{ log.log_id }}</code><br>
+								<strong>Fecha/Hora:</strong> {{ log.timestamp|date:"d/m/Y H:i:s" }}<br>
+								<strong>Duración del Evento:</strong> 
+								{% if log.event_duration_ms %}
+									{{ log.event_duration_ms }} ms
+								{% else %}
+									N/A
+								{% endif %}
+							</p>
+						</div>
+						<div class="col-md-6">
+							<h5>Estado del Error</h5>
+							<p>
+								<strong>Severidad:</strong>
+								{% if log.severity == 'CRITICAL' %}
+									<span class="badge bg-danger">{{ log.severity }}</span>
+								{% elif log.severity == 'HIGH' %}
+									<span class="badge bg-warning text-dark">{{ log.severity }}</span>
+								{% elif log.severity == 'MEDIUM' %}
+									<span class="badge bg-info">{{ log.severity }}</span>
+								{% else %}
+									<span class="badge bg-success">{{ log.severity }}</span>
+								{% endif %}
+								<br>
+								<strong>Estado:</strong>
+								{% if log.resolved %}
+									<span class="badge bg-success">✓ Resuelto</span>
+								{% else %}
+									<span class="badge bg-warning text-dark">Pendiente</span>
+								{% endif %}
+								<br>
+								<strong>Requiere Acción:</strong>
+								{% if log.requires_action %}
+									<span class="badge bg-danger">Sí</span>
+								{% else %}
+									<span class="badge bg-success">No</span>
+								{% endif %}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Información del Satélite -->
+	<div class="row mb-4">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					<h5 class="mb-0">🛰️ Información del Satélite</h5>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-4">
+							<p>
+								<strong>Satélite ID:</strong> {{ log.satellite_id }}<br>
+								<strong>Nombre:</strong> {{ log.satellite_name }}<br>
+								<strong>Tipo:</strong> {{ log.satellite_type }}
+							</p>
+						</div>
+						<div class="col-md-4">
+							<p>
+								<strong>Órbita:</strong> {{ log.orbit_type }}<br>
+								<strong>Operador:</strong> {{ log.operator_id }}<br>
+								<strong>Estación Terrena:</strong> {{ log.ground_station }}
+							</p>
+						</div>
+						<div class="col-md-4">
+							<p>
+								<strong>Subsistema:</strong> {{ log.subsystem }}<br>
+								<strong>Tipo de Enlace:</strong> {{ log.link_type }}<br>
+								<strong>Protocolo:</strong> {{ log.protocol }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Información del Error -->
+	<div class="row mb-4">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header bg-danger text-white">
+					<h5 class="mb-0">⚠️ Información del Error</h5>
+				</div>
+				<div class="card-body">
+					<p>
+						<strong>Código de Error:</strong> <code>{{ log.error_code }}</code><br>
+						<strong>Descripción:</strong> {{ log.error_description }}<br>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Métricas Técnicas -->
+	<div class="row mb-4">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header bg-info text-white">
+					<h5 class="mb-0">📡 Métricas de Comunicación</h5>
+				</div>
+				<div class="card-body">
+					<p>
+						<strong>Frecuencia (MHz):</strong> 
+						{% if log.frequency_mhz %}{{ log.frequency_mhz }} MHz{% else %}N/A{% endif %}<br>
+						<strong>SNR (dB):</strong> 
+						{% if log.snr_db %}{{ log.snr_db }} dB{% else %}N/A{% endif %}<br>
+						<strong>Ángulo de Elevación (°):</strong> 
+						{% if log.elevation_angle_deg %}{{ log.elevation_angle_deg }}°{% else %}N/A{% endif %}<br>
+						<strong>Tasa de Error de Bits:</strong> 
+						{% if log.bit_error_rate %}{{ log.bit_error_rate }}{% else %}N/A{% endif %}<br>
+						<strong>Reintentos:</strong> 
+						{% if log.retry_count %}{{ log.retry_count }}{% else %}0{% endif %}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header bg-info text-white">
+					<h5 class="mb-0">🌤️ Condiciones Ambientales</h5>
+				</div>
+				<div class="card-body">
+					<p>
+						<strong>Condición Climática:</strong> {{ log.weather_condition|default:"N/A" }}<br>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Información de Resolución -->
+	{% if log.resolved %}
+	<div class="row mb-4">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header bg-success text-white">
+					<h5 class="mb-0">✅ Información de Resolución</h5>
+				</div>
+				<div class="card-body">
+					<p>
+						<strong>Acción de Resolución:</strong> {{ log.resolution_action|default:"N/A" }}<br>
+						<strong>Tiempo de Resolución:</strong> 
+						{% if log.resolution_time_min %}{{ log.resolution_time_min }} minutos{% else %}N/A{% endif %}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	<!-- Logs Relacionados del Mismo Satélite -->
+	{% if related_logs %}
+	<div class="row mb-4">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header bg-secondary text-white">
+					<h5 class="mb-0">🔗 Últimos 10 Logs del Satélite {{ log.satellite_name }}</h5>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Fecha/Hora</th>
+									<th>Error Code</th>
+									<th>Severidad</th>
+									<th>Estado</th>
+									<th>Acción</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for rel_log in related_logs %}
+								<tr>
+									<td>{{ rel_log.timestamp|date:"d/m/Y H:i" }}</td>
+									<td><code>{{ rel_log.error_code }}</code></td>
+									<td>
+										{% if rel_log.severity == 'CRITICAL' %}
+											<span class="badge bg-danger">{{ rel_log.severity }}</span>
+										{% elif rel_log.severity == 'HIGH' %}
+											<span class="badge bg-warning text-dark">{{ rel_log.severity }}</span>
+										{% elif rel_log.severity == 'MEDIUM' %}
+											<span class="badge bg-info">{{ rel_log.severity }}</span>
+										{% else %}
+											<span class="badge bg-success">{{ rel_log.severity }}</span>
+										{% endif %}
+									</td>
+									<td>
+										{% if rel_log.resolved %}
+											<span class="badge bg-success">✓</span>
+										{% else %}
+											<span class="badge bg-warning text-dark">✗</span>
+										{% endif %}
+									</td>
+									<td>
+										<a href="{% url 'ventures:satellite_detail' rel_log.log_id %}" class="btn btn-sm btn-outline-primary">Ver</a>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}

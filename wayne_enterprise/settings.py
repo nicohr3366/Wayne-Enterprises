@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -85,11 +86,11 @@ WSGI_APPLICATION = 'wayne_enterprise.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wayne_enterprise',      # Nombre de la base de datos que creaste
-        'USER': 'root',                   # Usuario por defecto de XAMPP
-        'PASSWORD': '',                   # Dejar vacío si no configuraste contraseña
-        'HOST': 'localhost',              # Servidor local
-        'PORT': '3306',                   # Puerto por defecto de MySQL
+        'NAME': os.environ.get('MYSQL_DATABASE', 'satellite_logs'),
+        'USER': os.environ.get('MYSQL_USER', 'root'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'admin'),
+        'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
+        'PORT': os.environ.get('MYSQL_PORT', '3306'),
         'OPTIONS': {
             'charset': 'utf8mb4',
         },
@@ -146,3 +147,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Mantener sesión al cerrar pestaña
 # Configuración CSRF - Prevenir errores 403 frecuentes
 CSRF_COOKIE_AGE = 86400  # 24 horas (token CSRF válido por 1 día)
 CSRF_FAILURE_VIEW = 'apps.accounts.views.csrf_failure'  # Vista personalizada para errores CSRF
+
+
+"""
+'wayne_user'@'localhost' IDENTIFIED BY 'TuClaveSegura';
+"""
+

@@ -338,3 +338,5 @@ git commit -m "docs: actualiza README con instrucciones de capital"
 | `foundation` | 🔲 | 🔲 | 🔲 | 🔲 | Emerick / Drada |
 
 ✅ = implementado · 🔲 = pendiente
+
+que panda haga ET y streamlit el L de ETL
