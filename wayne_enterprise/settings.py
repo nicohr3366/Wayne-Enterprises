@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'foundation',
     'accounts',
     'realestate',
+    'tech',                  # ← Wayne Technologies (Cuervo / Diego)
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'wayne_enterprise.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],   # ← carpeta templates/ compartida
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
