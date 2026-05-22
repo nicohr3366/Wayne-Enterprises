@@ -1,0 +1,346 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Healthcare — Cybersecurity Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'healthcare/css/cybersecurity.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    .filters-bar {
+      background: var(--card-bg); border-bottom: 1px solid var(--border);
+      padding: 16px 32px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .filters-bar form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; }
+    .filters-bar select, .filters-bar input {
+      background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary);
+      padding: 7px 12px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; font-size: 12px; min-width: 150px;
+    }
+    .filters-bar select:focus, .filters-bar input:focus { outline: none; border-color: var(--accent-cyan); }
+    .btn-filter {
+      background: rgba(56,189,248,.15); border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan); padding: 7px 18px; border-radius: 6px; cursor: pointer;
+      font-family: 'Rajdhani', sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .btn-filter:hover { background: rgba(56,189,248,.25); }
+    .btn-clear { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 11px; text-decoration: none; }
+    .btn-export { background: rgba(34,197,94,.1); border: 1px solid var(--success); color: var(--success); padding: 7px 14px; border-radius: 6px; font-size: 11px; text-decoration: none; font-family: 'Rajdhani', sans-serif; letter-spacing: .08em; }
+    .result-count { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+    .charts-section { padding: 32px; background: var(--bg-secondary); }
+    .charts-title { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .2em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .chart-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+    .chart-card.full { grid-column: 1 / -1; }
+    .chart-label { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    canvas { max-height: 240px; }
+    .pagination { display: flex; gap: 6px; align-items: center; padding: 20px 32px; justify-content: center; }
+    .pagination a, .pagination span { padding: 6px 12px; border-radius: 5px; font-size: 12px; text-decoration: none; border: 1px solid var(--border); color: var(--text-muted); transition: all .15s; }
+    .pagination a:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+    .pagination .current { background: var(--accent-cyan); color: #000; border-color: var(--accent-cyan); font-weight: 700; }
+    .no-data { text-align: center; padding: 80px 32px; color: var(--text-muted); font-family: 'Cinzel', serif; }
+    .no-data p { font-family: 'Rajdhani'; font-size: 13px; margin-top: 10px; }
+    .no-data code { background: var(--card-bg); padding: 4px 10px; border-radius: 4px; color: var(--accent-cyan); font-size: 12px; }
+    @media (max-width: 800px) { .charts-grid { grid-template-columns: 1fr; } .chart-card.full { grid-column: 1; } }
+  </style>
+</head>
+
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <div class="logo-text">
+        <h1>Wayne Healthcare</h1>
+        <span>Cybersecurity Division · Monitoring Center</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">SECURITY CORE</span>
+      <a href="{% url 'healthcare:export_csv' %}" class="back-btn">Exportar CSV</a>
+      <a href="/healthcare/" class="back-btn">← Healthcare</a>
+    </div>
+  </header>
+
+  {% if sin_datos %}
+  <div class="no-data">
+    <div style="font-size:48px; margin-bottom:16px;">🛡️</div>
+    <h2>Sin datos cargados</h2>
+    <p>Ejecuta el siguiente comando para cargar los registros:</p><br>
+    <code>python manage.py load_cybersecurity</code>
+  </div>
+  {% else %}
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Registro de Eventos · {{ total_records }} incidentes</p>
+    <h1>Eventos de <br><em>Ciberseguridad</em></h1>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Monitoreo en tiempo real de amenazas, eventos y vulnerabilidades detectadas
+      dentro de la infraestructura médica de Wayne Healthcare.
+    </p>
+  </section>
+
+  <!-- STATS (KPIs) -->
+  <section class="dashboard-stats">
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon blue-glow">🖥</div>
+      <h2>{{ total_records }}</h2>
+      <p>Total eventos</p>
+    </div>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon red-glow">⚠</div>
+      <h2 class="critical-text">{{ critical_count }}</h2>
+      <p>Amenazas críticas</p>
+    </div>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon orange-glow">🔒</div>
+      <h2 class="warning-text">{{ blocked_count }}</h2>
+      <p>Alta severidad</p>
+    </div>
+    <div class="dashboard-card reveal">
+      <div class="dashboard-icon green-glow">✔</div>
+      <h2 class="safe-text">{{ resolved_count }}</h2>
+      <p>Baja severidad</p>
+    </div>
+  </section>
+
+  <!-- GRAFICAS -->
+  <div class="charts-section">
+    <p class="charts-title">Análisis de datos — Cybersecurity Intelligence</p>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-label">Distribución por severidad</div>
+        <canvas id="severityChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-label">Estado de los incidentes</div>
+        <canvas id="statusChart"></canvas>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-label">Top 10 tipos de amenaza</div>
+        <canvas id="threatChart"></canvas>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-label">Top 10 sistemas afectados</div>
+        <canvas id="systemChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filters-bar">
+    <form method="get">
+      <select name="severity">
+        <option value="">Todas las severidades</option>
+        {% for s in severities %}
+          <option value="{{ s }}" {% if s == current_severity %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+      <select name="status">
+        <option value="">Todos los estados</option>
+        {% for s in statuses %}
+          <option value="{{ s }}" {% if s == current_status %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+      <select name="threat">
+        <option value="">Todos los tipos</option>
+        {% for t in threats %}
+          <option value="{{ t }}" {% if t == current_threat %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+      <input type="text" name="search" placeholder="Buscar ID, sistema, amenaza..." value="{{ current_search }}">
+      <button type="submit" class="btn-filter">Filtrar</button>
+      <a href="{% url 'healthcare:cybersecurity_dashboard' %}" class="btn-clear">Limpiar</a>
+      <a href="{% url 'healthcare:export_csv' %}{% if current_severity %}?severity={{ current_severity }}{% endif %}" class="btn-export">Exportar CSV</a>
+      <span class="result-count">{{ total_filtrado }} registro{{ total_filtrado|pluralize:"s" }}</span>
+    </form>
+  </div>
+
+  <!-- TABLA -->
+  <section class="dashboard-table-section">
+    <div class="section-header reveal">
+      <p class="section-label">Eventos Registrados</p>
+      <h2 class="section-title">Registro de<br><em>ciberseguridad</em></h2>
+    </div>
+    <div class="dashboard-table-wrapper reveal">
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>ID Evento</th>
+            <th>Tipo de Amenaza</th>
+            <th>Severidad</th>
+            <th>Sistema Afectado</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in page_obj %}
+          <tr>
+            <td><span class="event-id">{{ r.incident_id }}</span></td>
+            <td>
+              <div class="threat-cell">
+                <span class="threat-icon">⚡</span>
+                {{ r.threat_type }}
+              </div>
+            </td>
+            <td>
+              {% if r.severity == 'CRÍTICA' %}
+                <span class="severity critical">CRÍTICA</span>
+              {% elif r.severity == 'ALTA' %}
+                <span class="severity high">ALTA</span>
+              {% elif r.severity == 'MEDIA' %}
+                <span class="severity medium">MEDIA</span>
+              {% else %}
+                <span class="severity low">BAJA</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="system-cell">
+                <span class="system-dot"></span>
+                {{ r.affected_system }}
+              </div>
+            </td>
+            <td style="font-size:12px; color: var(--text-secondary);">{{ r.status }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="empty-table">No hay registros con esos filtros.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?{% if current_severity %}severity={{ current_severity }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_search %}search={{ current_search }}&{% endif %}page={{ page_obj.previous_page_number }}">← Anterior</a>
+      {% endif %}
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <span class="current">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a href="?{% if current_severity %}severity={{ current_severity }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_search %}search={{ current_search }}&{% endif %}page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <a href="?{% if current_severity %}severity={{ current_severity }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_search %}search={{ current_search }}&{% endif %}page={{ page_obj.next_page_number }}">Siguiente →</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Sistema Inteligente</p>
+      <h2 class="section-title">Monitoreo de<br><em>amenazas digitales</em></h2>
+    </div>
+    <div class="cyber-grid">
+      <div class="cyber-card reveal">
+        <div class="cyber-top"><span class="cyber-badge">IA DEFENSE</span></div>
+        <h3>Detección Predictiva</h3>
+        <p>Algoritmos inteligentes analizan actividad sospechosa en tiempo real dentro de servidores hospitalarios y sistemas clínicos.</p>
+      </div>
+      <div class="cyber-card reveal">
+        <div class="cyber-top"><span class="cyber-badge">ENCRYPTION</span></div>
+        <h3>Protección de Datos</h3>
+        <p>Cifrado avanzado y monitoreo continuo de historiales médicos y datos confidenciales de pacientes.</p>
+      </div>
+      <div class="cyber-card reveal">
+        <div class="cyber-top"><span class="cyber-badge">NETWORK CORE</span></div>
+        <h3>Infraestructura Segura</h3>
+        <p>Supervisión constante de redes internas, centros médicos y sistemas de acceso remoto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <p class="section-label reveal">Seguridad Wayne Healthcare</p>
+    <h2 class="section-title reveal">Protección digital<br><em>24/7</em></h2>
+    <p class="reveal">Nuestro centro de ciberseguridad monitorea continuamente amenazas para garantizar la integridad y disponibilidad de los sistemas médicos.</p>
+    <a href="mailto:security@waynehealthcare.com" class="btn-primary reveal">Contactar equipo de seguridad</a>
+    <span class="cta-email reveal">security@waynehealthcare.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Healthcare — Cybersecurity Division · Gotham City</div>
+    <div class="footer-links">
+      <a href="/healthcare/">Portal Principal</a>
+      <a href="#">Seguridad</a>
+      <a href="#">Compliance HIPAA</a>
+    </div>
+  </footer>
+
+  {% endif %}
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (el.classList.contains('dashboard-table-wrapper')) { el.classList.add('visible'); }
+    else { observer.observe(el); }
+  });
+
+  {% if not sin_datos %}
+  const RED    = '#f87171';
+  const ORANGE = '#f59e0b';
+  const BLUE   = '#38bdf8';
+  const GREEN  = '#22c55e';
+  const PURPLE = '#a78bfa';
+  const COLORS = [RED, ORANGE, BLUE, GREEN, PURPLE, '#ec4899', '#14b8a6', '#8b5cf6', '#f97316', '#06b6d4'];
+
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.borderColor = 'rgba(96,165,250,0.12)';
+  Chart.defaults.font.family = "'Rajdhani', sans-serif";
+
+  function donut(id, data, labelKey, valueKey) {
+    const labels = data.map(d => d[labelKey]);
+    const values = data.map(d => d[valueKey]);
+    new Chart(document.getElementById(id), {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data: values, backgroundColor: COLORS.slice(0, labels.length), borderWidth: 2, borderColor: '#071224' }] },
+      options: { responsive: true, plugins: { legend: { position: 'right', labels: { color: '#cbd5e1', font: { size: 11 }, padding: 10 } } } }
+    });
+  }
+
+  function hbar(id, data, labelKey, valueKey) {
+    const labels = data.map(d => d[labelKey]);
+    const values = data.map(d => d[valueKey]);
+    new Chart(document.getElementById(id), {
+      type: 'bar',
+      data: { labels, datasets: [{ data: values, backgroundColor: COLORS.slice(0, labels.length), borderWidth: 0 }] },
+      options: {
+        indexAxis: 'y', responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'rgba(96,165,250,0.08)' }, ticks: { color: '#94a3b8' } },
+          y: { grid: { display: false }, ticks: { color: '#cbd5e1', font: { size: 11 } } }
+        }
+      }
+    });
+  }
+
+  const bySeverity = {{ by_severity_json|safe }};
+  const byStatus   = {{ by_status_json|safe }};
+  const byThreat   = {{ by_threat_json|safe }};
+  const bySystem   = {{ by_system_json|safe }};
+
+  donut('severityChart', bySeverity, 'severity',        'count');
+  donut('statusChart',   byStatus,   'status',          'count');
+  hbar('threatChart',    byThreat,   'threat_type',     'count');
+  hbar('systemChart',    bySystem,   'affected_system', 'count');
+  {% endif %}
+</script>
+
+</body>
+</html>
