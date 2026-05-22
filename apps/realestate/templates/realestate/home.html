@@ -37,6 +37,8 @@
     </div>
     <div class="header-right">
       <div class="status-dot">Sistemas activos</div>
+      <a href="{% url 'realestate:dashboard' %}" class="division-badge" style="text-decoration:none; cursor:pointer; transition: opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">📊 Dashboard</a>
+      <a href="{% url 'realestate:list' %}" class="division-badge" style="text-decoration:none; cursor:pointer; transition: opacity .2s;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">🏙️ Propiedades</a>
       <span class="division-badge">División 04</span>
     </div>
   </header>
