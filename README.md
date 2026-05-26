@@ -334,7 +334,7 @@ git commit -m "docs: actualiza README con instrucciones de capital"
 | `capital` | 🔲 | 🔲 | 🔲 | 🔲 | Camilo |
 | `tech` | 🔲 | 🔲 | 🔲 | 🔲 | Cuervo / Diego |
 | `industries` | 🔲 | 🔲 | 🔲 | 🔲 | Juan José |
-| `healthcare` | 🔲 | 🔲 | 🔲 | 🔲 | Danna |
+| `healthcare` | ✅ | ✅ | ✅ | ✅ | Danna |
 | `foundation` | 🔲 | 🔲 | 🔲 | 🔲 | Emerick / Drada |
 
 ✅ = implementado · 🔲 = pendiente
