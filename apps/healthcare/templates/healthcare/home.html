@@ -51,7 +51,15 @@
       Wayne Healthcare combina investigación biomédica de vanguardia, tecnología médica avanzada
       y atención sanitaria de excelencia para transformar el futuro de la salud humana.
     </p>
-    <a href="#sobre" class="btn-primary">Conocer más</a>
+    <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 20px;">
+  <a href="#sobre" class="btn-primary">Conocer más</a>
+
+  <a href="{% url 'healthcare:cybersecurity_dashboard' %}" 
+     class="btn-primary"
+     style="background: transparent; border: 1px solid #C9A84C;">
+     Abrir Cybersecurity Dashboard
+  </a>
+</div>
   </section>
 
   <!-- STATS BAR -->
