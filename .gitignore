@@ -57,7 +57,7 @@ htmlcov/
 # ── Archivos de datos / Datasets ─────────────────────
 # Los CSV y Excel van en apps/[app]/data/ y NO se suben a git
 # (pueden ser grandes y cada quien los genera localmente)
-apps/*/data/*.csv
+
 apps/*/data/*.xlsx
 apps/*/data/*.xls
 apps/*/data/*.json
