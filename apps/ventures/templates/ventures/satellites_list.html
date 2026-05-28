@@ -90,15 +90,15 @@
 				</div>
 				<div>
 					<label class="form-label">Desde</label>
-					<input type="date" name="date_from" class="form-control" value="{{ current_date_from }}">
+					<input type="date" name="date_from" class="form-control" value="{{ current_date_from }}" autocomplete="off">
 				</div>
 				<div>
 					<label class="form-label">Hasta</label>
-					<input type="date" name="date_to" class="form-control" value="{{ current_date_to }}">
+					<input type="date" name="date_to" class="form-control" value="{{ current_date_to }}" autocomplete="off">
 				</div>
 				<div>
 					<label class="form-label">Buscar</label>
-					<input type="text" name="search" class="form-control" placeholder="Log ID, satélite, código, subsistema..." value="{{ current_search }}">
+					<input type="text" name="search" class="form-control" placeholder="Log ID, satélite, código, subsistema..." value="{{ current_search }}" autocomplete="off">
 				</div>
 				<div class="filter-actions">
 					<button type="submit" class="btn btn-primary">Filtrar</button>
