@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, Sum, Avg
 from django.core.paginator import Paginator
+from datetime import datetime
 from .models import SatelliteErrorLog
 
 
@@ -99,6 +100,9 @@ def satellites_list(request):
 	satellite_filter = request.GET.get('satellite')
 	resolved_filter = request.GET.get('resolved')
 	critical_filter = request.GET.get('critical')
+	subsystem_filter = request.GET.get('subsystem')
+	date_from = request.GET.get('date_from')
+	date_to = request.GET.get('date_to')
 	
 	if severity_filter:
 		logs = logs.filter(severity=severity_filter)
@@ -110,24 +114,58 @@ def satellites_list(request):
 		logs = logs.filter(resolved=False)
 	if critical_filter == 'true':
 		logs = logs.filter(Q(severity='CRITICAL') | Q(requires_action=True))
+	if subsystem_filter:
+		logs = logs.filter(subsystem=subsystem_filter)
+	if date_from:
+		try:
+			date_from_obj = datetime.strptime(date_from, '%Y-%m-%d')
+			logs = logs.filter(timestamp__date__gte=date_from_obj.date())
+		except ValueError:
+			pass
+	if date_to:
+		try:
+			date_to_obj = datetime.strptime(date_to, '%Y-%m-%d')
+			logs = logs.filter(timestamp__date__lte=date_to_obj.date())
+		except ValueError:
+			pass
 	
 	# Paginación
 	paginator = Paginator(logs, 30)
 	page_num = request.GET.get('page', 1)
 	page_obj = paginator.get_page(page_num)
 	
-	# Opciones para filtros
-	severities = SatelliteErrorLog.objects.values_list('severity', flat=True).distinct()
-	satellites = SatelliteErrorLog.objects.values('satellite_id', 'satellite_name').distinct()
+	# Opciones para filtros (deduplicadas y ordenadas)
+	severities = SatelliteErrorLog.objects.values_list('severity', flat=True).distinct().order_by('severity')
+	satellites = SatelliteErrorLog.objects.values('satellite_id', 'satellite_name').distinct().order_by('satellite_name')
+	subsystems = SatelliteErrorLog.objects.values_list('subsystem', flat=True).distinct().order_by('subsystem')
+	
+	# Estadísticas de severidad
+	from django.db.models import Count
+	severity_stats = (
+		SatelliteErrorLog.objects
+		.values('severity')
+		.annotate(count=Count('severity'))
+		.order_by('-count')
+	)
+	
+	# Logs únicos por satélite (sin repetir)
+	unique_satellites_count = SatelliteErrorLog.objects.values('satellite_id').distinct().count()
 	
 	context = {
 		'page_obj': page_obj,
 		'severities': severities,
 		'satellites': satellites,
+		'subsystems': subsystems,
 		'current_severity': severity_filter,
 		'current_satellite': satellite_filter,
 		'current_resolved': resolved_filter,
 		'current_critical': critical_filter,
+		'current_subsystem': subsystem_filter,
+		'current_date_from': date_from,
+		'current_date_to': date_to,
+		'severity_stats': severity_stats,
+		'unique_satellites_count': unique_satellites_count,
+		'total_logs': logs.count(),
 	}
 	
 	return render(request, 'ventures/satellites_list.html', context)
