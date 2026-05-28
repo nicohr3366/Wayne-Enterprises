@@ -24,3 +24,27 @@ class Property(models.Model):
         verbose_name = 'Property'
         verbose_name_plural = 'Properties'
         ordering = ['-created_at']
+
+class UrbanProject(models.Model):
+
+    project_id = models.CharField(max_length=20, unique=True)
+    project_name = models.CharField(max_length=255)
+
+    district = models.CharField(max_length=100)
+    project_type = models.CharField(max_length=100)
+
+    status = models.CharField(max_length=50)
+    priority = models.CharField(max_length=50)
+
+    total_budget_musd = models.FloatField()
+    executed_cost_musd = models.FloatField()
+
+    physical_progress_pct = models.IntegerField()
+    financial_progress_pct = models.IntegerField()
+
+    security_incidents = models.IntegerField()
+
+    contractor = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.project_name
