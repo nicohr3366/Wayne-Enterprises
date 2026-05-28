@@ -10,7 +10,10 @@
 {% block content %}
 <div class="container-fluid py-4">
 	<div class="section-header">
-		<h1>📡 Logs de Errores de Satélites</h1>
+		<div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+			<h1>📡 Logs de Errores de Satélites</h1>
+			<a href="http://127.0.0.1:8501" target="_blank" class="btn btn-success" style="font-size: 12px; padding: 8px 14px;">📊 Ver Dashboard Streamlit</a>
+		</div>
 		<div class="section-stats">
 			<span class="stat-badge">{{ total_logs }} Eventos</span>
 			<span class="stat-badge">{{ unique_satellites_count }} Satélites</span>
@@ -205,3 +208,13 @@
 	{% endif %}
 </div>
 {% endblock %}
+
+<!--
+cd "c:\Users\juhor\Desktop\Programacion\Electiva de Programacion\Corte 2\waynetech-landing"
+.\.venv\Scripts\Activate.ps1
+python manage.py runserver
+
+cd "c:\Users\juhor\Desktop\Programacion\Electiva de Programacion\Corte 2\waynetech-landing"
+.\.venv\Scripts\Activate.ps1
+streamlit run apps/ventures/dashboard/satellite_dashboard.py
+-->
