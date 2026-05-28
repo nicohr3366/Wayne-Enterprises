@@ -189,6 +189,20 @@ input[type="date"]::placeholder,
   box-shadow: 0 0 16px rgba(212, 170, 80, 0.2);
 }
 
+/* Botón Éxito (Exportar) */
+.btn-success {
+  background: transparent;
+  border: 1px solid var(--success);
+  color: var(--success);
+}
+
+.btn-success:hover {
+  border-color: var(--success);
+  color: #000;
+  background: var(--success);
+  box-shadow: 0 0 16px rgba(81, 207, 102, 0.3);
+}
+
 /* Botón Info (Ver detalles) */
 .btn-outline-primary,
 .btn-info {

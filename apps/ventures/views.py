@@ -1,8 +1,10 @@
 import json
+import csv
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, Sum, Avg
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 from datetime import datetime
 from .models import SatelliteErrorLog
 
@@ -103,6 +105,7 @@ def satellites_list(request):
 	subsystem_filter = request.GET.get('subsystem')
 	date_from = request.GET.get('date_from')
 	date_to = request.GET.get('date_to')
+	search_query = request.GET.get('search', '')
 	
 	if severity_filter:
 		logs = logs.filter(severity=severity_filter)
@@ -128,6 +131,14 @@ def satellites_list(request):
 			logs = logs.filter(timestamp__date__lte=date_to_obj.date())
 		except ValueError:
 			pass
+	if search_query:
+		logs = logs.filter(
+			Q(log_id__icontains=search_query) |
+			Q(satellite_name__icontains=search_query) |
+			Q(error_code__icontains=search_query) |
+			Q(error_description__icontains=search_query) |
+			Q(subsystem__icontains=search_query)
+		)
 	
 	# Paginación
 	paginator = Paginator(logs, 30)
@@ -163,6 +174,7 @@ def satellites_list(request):
 		'current_subsystem': subsystem_filter,
 		'current_date_from': date_from,
 		'current_date_to': date_to,
+		'current_search': search_query,
 		'severity_stats': severity_stats,
 		'unique_satellites_count': unique_satellites_count,
 		'total_logs': logs.count(),
@@ -191,4 +203,57 @@ def satellite_detail(request, log_id):
 	}
 	
 	return render(request, 'ventures/satellite_detail.html', context)
+
+
+@login_required
+def export_csv(request):
+	"""Exporta logs de satélites filtrados a CSV."""
+	response = HttpResponse(content_type='text/csv; charset=utf-8')
+	response['Content-Disposition'] = 'attachment; filename="satellite_error_logs.csv"'
+	response.write('\ufeff')  # BOM para Excel
+	
+	logs = SatelliteErrorLog.objects.all().order_by('-timestamp')
+	
+	# Aplicar los mismos filtros que en la lista
+	if request.GET.get('severity'):
+		logs = logs.filter(severity=request.GET['severity'])
+	if request.GET.get('satellite'):
+		logs = logs.filter(satellite_id=request.GET['satellite'])
+	if request.GET.get('resolved') == 'true':
+		logs = logs.filter(resolved=True)
+	elif request.GET.get('resolved') == 'false':
+		logs = logs.filter(resolved=False)
+	if request.GET.get('subsystem'):
+		logs = logs.filter(subsystem=request.GET['subsystem'])
+	if request.GET.get('search'):
+		search = request.GET['search']
+		logs = logs.filter(
+			Q(log_id__icontains=search) |
+			Q(satellite_name__icontains=search) |
+			Q(error_code__icontains=search) |
+			Q(error_description__icontains=search) |
+			Q(subsystem__icontains=search)
+		)
+	
+	writer = csv.writer(response)
+	writer.writerow([
+		'Log ID', 'Fecha/Hora', 'Satélite', 'Error Code', 'Descripción Error',
+		'Severidad', 'Subsistema', 'Estado', 'Requiere Acción', 'Resolución'
+	])
+	
+	for log in logs:
+		writer.writerow([
+			log.log_id,
+			log.timestamp.strftime('%d/%m/%Y %H:%M'),
+			log.satellite_name,
+			log.error_code,
+			log.error_description,
+			log.severity,
+			log.subsystem,
+			'Resuelto' if log.resolved else 'Pendiente',
+			'Sí' if log.requires_action else 'No',
+			log.resolution_action or 'N/A'
+		])
+	
+	return response
 

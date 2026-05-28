@@ -93,9 +93,15 @@
 					<label class="form-label">Hasta</label>
 					<input type="date" name="date_to" class="form-control" value="{{ current_date_to }}">
 				</div>
+				<div>
+					<label class="form-label">Buscar</label>
+					<input type="text" name="search" class="form-control" placeholder="Log ID, satélite, código, subsistema..." value="{{ current_search }}">
+				</div>
 				<div class="filter-actions">
 					<button type="submit" class="btn btn-primary">Filtrar</button>
 					<a href="{% url 'ventures:satellites_list' %}" class="btn btn-secondary">Limpiar</a>
+					{% url 'ventures:export_csv' as export_url %}
+					<a href="{{ export_url }}{% if current_severity %}?severity={{ current_severity }}{% endif %}{% if current_satellite %}{% if current_severity %}&{% else %}?{% endif %}satellite={{ current_satellite }}{% endif %}{% if current_resolved %}{% if current_severity or current_satellite %}&{% else %}?{% endif %}resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}{% if current_severity or current_satellite or current_resolved %}&{% else %}?{% endif %}subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}{% if current_severity or current_satellite or current_resolved or current_subsystem %}&{% else %}?{% endif %}date_from={{ current_date_from }}{% endif %}{% if current_date_to %}{% if current_severity or current_satellite or current_resolved or current_subsystem or current_date_from %}&{% else %}?{% endif %}date_to={{ current_date_to }}{% endif %}{% if current_search %}{% if current_severity or current_satellite or current_resolved or current_subsystem or current_date_from or current_date_to %}&{% else %}?{% endif %}search={{ current_search }}{% endif %}" class="btn btn-success">📥 Exportar CSV</a>
 				</div>
 			</form>
 		</div>
@@ -171,10 +177,10 @@
 		<ul class="pagination justify-content-center">
 			{% if page_obj.has_previous %}
 			<li class="page-item">
-				<a class="page-link" href="?page=1">Primera</a>
+				<a class="page-link" href="?page=1{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Primera</a>
 			</li>
 			<li class="page-item">
-				<a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+				<a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Anterior</a>
 			</li>
 			{% endif %}
 
@@ -182,16 +188,16 @@
 				{% if page_obj.number == num %}
 				<li class="page-item active"><span class="page-link">{{ num }}</span></li>
 				{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-				<li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+				<li class="page-item"><a class="page-link" href="?page={{ num }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">{{ num }}</a></li>
 				{% endif %}
 			{% endfor %}
 
 			{% if page_obj.has_next %}
 			<li class="page-item">
-				<a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+				<a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Siguiente</a>
 			</li>
 			<li class="page-item">
-				<a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+				<a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Última</a>
 			</li>
 			{% endif %}
 		</ul>
