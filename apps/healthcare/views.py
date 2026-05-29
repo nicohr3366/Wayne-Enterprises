@@ -60,9 +60,9 @@ def cybersecurity_dashboard(request):
         'page_obj':       page_obj,
         'total_records':  total_records,
         'total_filtrado': total_filtrado,
-        'critical_count': all_records.filter(severity='CRÍTICA').count(),
-        'blocked_count':  all_records.filter(severity__in=['CRÍTICA', 'ALTA']).count(),
-        'resolved_count': all_records.filter(severity='BAJA').count(),
+        'critical_count': all_records.filter(severity='Critical').count(),
+        'blocked_count':  all_records.filter(severity__in=['Critical', 'High']).count(),
+        'resolved_count': all_records.filter(status='Resolved').count(),
 
         'by_severity_json': qs_to_json(by_severity, 'severity',       'count'),
         'by_status_json':   qs_to_json(by_status,   'status',         'count'),

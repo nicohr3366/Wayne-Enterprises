@@ -8,58 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'healthcare/css/cybersecurity.css' %}">
   <style>
-    .filters-bar {
-      background: var(--card-bg); border-bottom: 1px solid var(--border);
-      padding: 16px 32px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    @media (max-width: 800px) {
+      .charts-section > div { grid-template-columns: 1fr !important; }
     }
-    .filters-bar form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; }
-    .filters-bar select, .filters-bar input {
-      background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary);
-      padding: 7px 12px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; font-size: 12px; min-width: 150px;
-    }
-    .filters-bar select:focus, .filters-bar input:focus { outline: none; border-color: var(--accent-cyan); }
-    .btn-filter {
-      background: rgba(56,189,248,.15); border: 1px solid var(--accent-cyan);
-      color: var(--accent-cyan); padding: 7px 18px; border-radius: 6px; cursor: pointer;
-      font-family: 'Rajdhani', sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
-    }
-    .btn-filter:hover { background: rgba(56,189,248,.25); }
-    .btn-clear { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 11px; text-decoration: none; }
-    .btn-export { background: rgba(34,197,94,.1); border: 1px solid var(--success); color: var(--success); padding: 7px 14px; border-radius: 6px; font-size: 11px; text-decoration: none; font-family: 'Rajdhani', sans-serif; letter-spacing: .08em; }
-    .result-count { font-size: 11px; color: var(--text-muted); margin-left: auto; }
-
-    /* ── Sección Streamlit iframe ── */
-    .charts-section {
-      padding: 32px;
-      background: var(--bg-secondary);
-    }
-    .charts-title {
-      font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .2em;
-      color: var(--text-muted); text-transform: uppercase;
-      margin-bottom: 24px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
-    }
-    .streamlit-frame {
-      width: 100%;
-      height: 950px;
-      border: none;
-      border-radius: 10px;
-      display: block;
-    }
-    .streamlit-loading {
-      display: flex; align-items: center; justify-content: center;
-      height: 200px; color: var(--text-muted);
-      font-family: 'Rajdhani', sans-serif; font-size: 13px; letter-spacing: .1em;
-      border: 1px dashed var(--border); border-radius: 10px;
-    }
-
-    .pagination { display: flex; gap: 6px; align-items: center; padding: 20px 32px; justify-content: center; }
-    .pagination a, .pagination span { padding: 6px 12px; border-radius: 5px; font-size: 12px; text-decoration: none; border: 1px solid var(--border); color: var(--text-muted); transition: all .15s; }
-    .pagination a:hover { color: var(--accent-cyan); border-color: var(--accent-cyan); }
-    .pagination .current { background: var(--accent-cyan); color: #000; border-color: var(--accent-cyan); font-weight: 700; }
-    .no-data { text-align: center; padding: 80px 32px; color: var(--text-muted); font-family: 'Cinzel', serif; }
-    .no-data p { font-family: 'Rajdhani'; font-size: 13px; margin-top: 10px; }
-    .no-data code { background: var(--card-bg); padding: 4px 10px; border-radius: 4px; color: var(--accent-cyan); font-size: 12px; }
-    @media (max-width: 800px) { .streamlit-frame { height: 1200px; } }
   </style>
 </head>
 
@@ -126,15 +77,29 @@
     </div>
   </section>
 
-  <!-- GRAFICAS — Streamlit Dashboard (Python + Pandas + Plotly) -->
+  <!-- GRAFICAS Chart.js -->
   <div class="charts-section">
     <p class="charts-title">Análisis de datos — Cybersecurity Intelligence</p>
-    <iframe
-      id="streamlit-dashboard"
-      class="streamlit-frame"
-      src="http://localhost:8501"
-      title="Wayne Healthcare Cybersecurity Dashboard">
-    </iframe>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;">
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:28px;">
+        <p style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;margin-bottom:18px;">Por Severidad</p>
+        <canvas id="chartSeveridad" height="220"></canvas>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:28px;">
+        <p style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;margin-bottom:18px;">Por Estado</p>
+        <canvas id="chartEstado" height="220"></canvas>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:28px;">
+        <p style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;margin-bottom:18px;">Top Tipos de Amenaza</p>
+        <canvas id="chartThreat" height="260"></canvas>
+      </div>
+      <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:28px;">
+        <p style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;margin-bottom:18px;">Sistemas más Afectados</p>
+        <canvas id="chartSystem" height="260"></canvas>
+      </div>
+    </div>
   </div>
 
   <!-- FILTROS -->
@@ -194,14 +159,14 @@
               </div>
             </td>
             <td>
-              {% if r.severity == 'CRÍTICA' %}
-                <span class="severity critical">CRÍTICA</span>
-              {% elif r.severity == 'ALTA' %}
-                <span class="severity high">ALTA</span>
-              {% elif r.severity == 'MEDIA' %}
-                <span class="severity medium">MEDIA</span>
+              {% if r.severity == 'Critical' %}
+                <span class="severity critical">Critical</span>
+              {% elif r.severity == 'High' %}
+                <span class="severity high">High</span>
+              {% elif r.severity == 'Medium' %}
+                <span class="severity medium">Medium</span>
               {% else %}
-                <span class="severity low">BAJA</span>
+                <span class="severity low">Low</span>
               {% endif %}
             </td>
             <td>
@@ -287,14 +252,82 @@
   {% endif %}
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-  // Animaciones de scroll
+  // ── Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.05 });
   document.querySelectorAll('.reveal').forEach(el => {
     if (el.classList.contains('dashboard-table-wrapper')) { el.classList.add('visible'); }
     else { observer.observe(el); }
+  });
+
+  // ── Chart.js defaults
+  Chart.defaults.color = '#b0a690';
+  Chart.defaults.font.family = "'Rajdhani', sans-serif";
+
+  const GOLD   = '#D4AA50';
+  const COLORS = ['#ff5f6d','#ffb347','#D4AA50','#56f0b0','#a78bfa','#38bdf8','#f472b6','#fb923c'];
+
+  // ── Severidad (donut)
+  const sevData = JSON.parse('{{ by_severity_json|escapejs }}');
+  new Chart(document.getElementById('chartSeveridad'), {
+    type: 'doughnut',
+    data: {
+      labels: sevData.map(d => d.severity),
+      datasets: [{ data: sevData.map(d => d.count), backgroundColor: COLORS, borderWidth: 0 }]
+    },
+    options: { plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 13 } } } } }
+  });
+
+  // ── Estado (donut)
+  const statData = JSON.parse('{{ by_status_json|escapejs }}');
+  new Chart(document.getElementById('chartEstado'), {
+    type: 'doughnut',
+    data: {
+      labels: statData.map(d => d.status),
+      datasets: [{ data: statData.map(d => d.count), backgroundColor: COLORS, borderWidth: 0 }]
+    },
+    options: { plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 13 } } } } }
+  });
+
+  // ── Top amenazas (hbar)
+  const thrData = JSON.parse('{{ by_threat_json|escapejs }}');
+  new Chart(document.getElementById('chartThreat'), {
+    type: 'bar',
+    data: {
+      labels: thrData.map(d => d.threat_type),
+      datasets: [{ label: 'Incidentes', data: thrData.map(d => d.count),
+        backgroundColor: 'rgba(212,170,80,0.55)', borderColor: GOLD, borderWidth: 1, borderRadius: 6 }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(212,170,80,0.08)' }, ticks: { font: { size: 12 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  // ── Sistemas afectados (hbar)
+  const sysData = JSON.parse('{{ by_system_json|escapejs }}');
+  new Chart(document.getElementById('chartSystem'), {
+    type: 'bar',
+    data: {
+      labels: sysData.map(d => d.affected_system),
+      datasets: [{ label: 'Incidentes', data: sysData.map(d => d.count),
+        backgroundColor: 'rgba(255,95,109,0.45)', borderColor: '#ff5f6d', borderWidth: 1, borderRadius: 6 }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(212,170,80,0.08)' }, ticks: { font: { size: 12 } } },
+        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
   });
 </script>
 
