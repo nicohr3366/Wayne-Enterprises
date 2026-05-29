@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Industries — Dashboard ETL</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #06070b;
+      --panel: #10131b;
+      --panel-2: #151a24;
+      --line: rgba(212,170,80,0.18);
+      --gold: #D4AA50;
+      --gold-soft: #F2D58A;
+      --text: #eff4ff;
+      --muted: #a6b0c5;
+      --green: #3ecf8e;
+      --blue: #4a9eff;
+      --purple: #a78bfa;
+      --orange: #f59e0b;
+      --red: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Rajdhani', sans-serif; background: radial-gradient(circle at top, #121722 0%, var(--bg) 35%); color: var(--text); }
+    a { color: inherit; text-decoration: none; }
+    .page { max-width: 1400px; margin: 0 auto; padding: 24px 18px 48px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:18px; }
+    .brand h1 { font-family: 'Cinzel', serif; font-size: 20px; color: var(--gold); letter-spacing: .18em; text-transform: uppercase; }
+    .brand p { color: var(--muted); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
+    .nav a { margin-left: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; font-size: 12px; }
+    .nav a.active, .nav a:hover { color: var(--gold); }
+    .hero { display:grid; grid-template-columns: 1.2fr .8fr; gap:18px; margin-bottom:18px; }
+    .panel { background: linear-gradient(180deg, rgba(16,19,27,0.98), rgba(10,14,20,0.98)); border:1px solid var(--line); border-radius: 18px; padding: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .eyebrow { text-transform: uppercase; letter-spacing: .25em; color: var(--gold); font-size: 11px; }
+    .hero h2 { font-family: 'Cinzel', serif; font-size: 28px; margin-top: 6px; color: var(--text); }
+    .hero p { color: var(--muted); margin-top: 8px; line-height: 1.5; }
+    .pill { display:inline-block; margin-top: 10px; padding: 8px 12px; border: 1px solid rgba(212,170,80,0.4); color: var(--gold-soft); border-radius: 999px; background: rgba(212,170,80,0.08); font-size: 12px; text-transform: uppercase; letter-spacing: .14em; }
+    .status-card ul { list-style: none; display:grid; gap:10px; margin-top: 12px; }
+    .status-card li { border:1px solid var(--line); border-radius: 12px; padding: 10px 12px; background: rgba(255,255,255,0.02); color: var(--muted); font-size: 13px; }
+    .kpi-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-bottom:18px; }
+    .kpi { background: linear-gradient(180deg, rgba(16,19,27,0.98), rgba(9,12,17,0.98)); border:1px solid var(--line); border-radius: 16px; padding: 14px; }
+    .kpi .label { text-transform: uppercase; letter-spacing: .18em; color: var(--muted); font-size: 10px; }
+    .kpi .value { font-family:'Cinzel', serif; font-size: 28px; color: var(--gold); margin-top: 6px; }
+    .kpi .sub { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-bottom:18px; }
+    .chart-box { min-height: 320px; }
+    .chart-box canvas { max-height: 280px; }
+    .list-box ul { list-style: none; display:grid; gap:8px; margin-top: 8px; }
+    .list-box li { display:flex; justify-content:space-between; gap:10px; background: rgba(255,255,255,0.03); border:1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 13px; color: var(--muted); }
+    .list-box li strong { color: var(--text); font-weight: 600; }
+    .warning { border:1px dashed rgba(248,113,113,0.35); background: rgba(248,113,113,0.08); padding: 12px; border-radius: 12px; color: #fecaca; margin-top: 10px; }
+    .footer-note { text-align:center; color: var(--muted); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin-top: 14px; }
+    @media (max-width: 1100px) { .hero, .grid, .kpi-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Wayne Industries</h1>
+        <p>Dashboard ETL · Red Eléctrica + Logística Shipping</p>
+      </div>
+      <nav class="nav">
+        <a href="{% url 'industries:home' %}">División</a>
+        <a href="{% url 'industries:dashboard' %}" class="active">Dashboard</a>
+        <a href="{% url 'accounts:logout' %}">Salir</a>
+      </nav>
+    </div>
+
+    <section class="hero">
+      <article class="panel">
+        <div class="eyebrow">Wayne Enterprises · Data Intelligence</div>
+        <h2>Dashboard operativo para tus dos datasets</h2>
+        <p>Esta vista lee automáticamente los archivos Excel que tengas en <strong>apps/industries/data/</strong> y te deja una primera capa de KPIs, categorías y métricas base para comenzar a analizar Red Eléctrica Gotham y Logística Shipping.</p>
+        <div class="pill">2 datasets · 1 vista · 0 cambios en base de datos</div>
+      </article>
+      <article class="panel status-card">
+        <div class="eyebrow">Estado de lectura</div>
+        <ul>
+          {% for ds in datasets %}
+            <li>
+              <strong>{{ ds.name|title }}</strong> —
+              {% if ds.available %}
+                {{ ds.rows }} filas · {{ ds.columns }} columnas · {{ ds.sheets|length }} hoja(s)
+              {% else %}
+                {{ ds.error }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        {% if not datasets.0.available and not datasets.1.available %}
+          <div class="warning">Coloca tus dos archivos Excel en <strong>apps/industries/data/</strong> con los nombres: <strong>wayne_red_electrica_gotham_5000.xlsx</strong> y <strong>wayne_logistica_shipping_5000.xlsx</strong>.</div>
+        {% endif %}
+      </article>
+    </section>
+
+    <section class="kpi-grid">
+      <article class="kpi">
+        <div class="label">Dataset 1</div>
+        <div class="value">{{ red_dataset.rows|default:0 }}</div>
+        <div class="sub">filas · Red Eléctrica Gotham</div>
+      </article>
+      <article class="kpi">
+        <div class="label">Dataset 2</div>
+        <div class="value">{{ shipping_dataset.rows|default:0 }}</div>
+        <div class="sub">filas · Logística Shipping</div>
+      </article>
+      <article class="kpi">
+        <div class="label">Total columnas</div>
+        <div class="value">{{ red_dataset.columns|default:0|add:shipping_dataset.columns|default:0 }}</div>
+        <div class="sub">columnas analizadas entre ambos</div>
+      </article>
+      <article class="kpi">
+        <div class="label">Estado</div>
+        <div class="value">OK</div>
+        <div class="sub">lista lista para visualizar</div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel chart-box">
+        <div class="eyebrow">Top categorías · Red Eléctrica</div>
+        <canvas id="redChart"></canvas>
+      </article>
+      <article class="panel chart-box">
+        <div class="eyebrow">Top categorías · Logística</div>
+        <canvas id="shippingChart"></canvas>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="panel list-box">
+        <div class="eyebrow">Resumen · Red Eléctrica</div>
+        <ul>
+          {% for item in red_dataset.categories.top_values|default:'' %}
+            <li><strong>{{ item.column }}</strong><span>{{ item.items|length }} categorías</span></li>
+          {% empty %}
+            <li><strong>Sin datos</strong><span>Adjunta el archivo Excel para ver el resumen.</span></li>
+          {% endfor %}
+        </ul>
+      </article>
+      <article class="panel list-box">
+        <div class="eyebrow">Resumen · Logística Shipping</div>
+        <ul>
+          {% for item in shipping_dataset.categories.top_values|default:'' %}
+            <li><strong>{{ item.column }}</strong><span>{{ item.items|length }} categorías</span></li>
+          {% empty %}
+            <li><strong>Sin datos</strong><span>Adjunta el archivo Excel para ver el resumen.</span></li>
+          {% endfor %}
+        </ul>
+      </article>
+    </section>
+
+    <div class="footer-note">Wayne Industries — Dashboard base listo para extender con filtros, KPIs y tablas detalladas</div>
+  </div>
+
+  <script>
+    const datasets = {{ datasets_json|safe }};
+    const COLORS = ['#4a9eff', '#3ecf8e', '#a78bfa', '#f59e0b', '#f87171', '#22d3ee', '#D4AA50'];
+
+    function buildBarChart(canvasId, datasetName, label) {
+      const ds = datasets.find(x => x.name === datasetName) || {};
+      const entries = (ds.categories && ds.categories.top_values) ? ds.categories.top_values : [];
+      const barData = entries.flatMap(item => item.items || []);
+      const labels = barData.map(x => String(x.label).slice(0, 28));
+      const values = barData.map(x => Number(x.value) || 0);
+
+      if (!labels.length) {
+        document.getElementById(canvasId).parentNode.innerHTML += '<div class="warning">No hay categorías para graficar en ' + label + '.</div>';
+        return;
+      }
+
+      new Chart(document.getElementById(canvasId), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label,
+            data: values,
+            backgroundColor: COLORS.slice(0, labels.length),
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: '#a6b0c5' }, grid: { color: 'rgba(212,170,80,0.08)' } },
+            y: { ticks: { color: '#a6b0c5' }, grid: { color: 'rgba(212,170,80,0.08)' } }
+          }
+        }
+      });
+    }
+
+    buildBarChart('redChart', 'red_electrica', 'Red Eléctrica');
+    buildBarChart('shippingChart', 'logistica', 'Logística Shipping');
+  </script>
+</body>
+</html>

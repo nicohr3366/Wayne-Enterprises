@@ -125,7 +125,7 @@
     <!-- CEO Central -->
     <div class="org-ceo-wrap">
       {% for e in executives %}{% if e.level == 'CEO' %}
-      <div class="org-ceo-card" onclick="openModal('executive', {{ e.pk }})">
+      <div class="org-ceo-card" onclick="openModal('executive', '{{ e.pk }}')">
         <div class="org-ceo-img">
           {% if e.image %}<img src="{{ e.image.url }}" alt="{{ e.name }}">
           {% else %}<div class="org-placeholder"><span>{{ e.role }}</span></div>{% endif %}
@@ -146,7 +146,7 @@
     <!-- C-Levels Grid -->
     <div class="org-grid">
       {% for e in executives %}{% if e.level == 'C_LEVEL' %}
-      <div class="org-card" onclick="openModal('executive', {{ e.pk }})">
+      <div class="org-card" onclick="openModal('executive', '{{ e.pk }}')">
         <div class="org-card-img">
           {% if e.image %}<img src="{{ e.image.url }}" alt="{{ e.name }}">
           {% else %}<div class="org-placeholder-sm"><span>{{ e.role }}</span></div>{% endif %}
@@ -191,7 +191,7 @@
     <p class="sec-desc">Las 7 divisiones principales de WayneTech, cada una con su propio enfoque estratégico, responsabilidades operativas y relevancia específica en la migración a la nube.</p>
     <div class="div-grid">
       {% for d in divisions %}
-      <div class="div-card" onclick="openModal('division', {{ d.pk }})">
+      <div class="div-card" onclick="openModal('division', '{{ d.pk }}')">
         <div class="div-card-top">
           <div class="div-icon">{{ d.icon }}</div>
           <div class="div-priority cloud-{{ d.cloud_priority }}">{{ d.get_cloud_priority_display }}</div>
@@ -224,7 +224,7 @@
 
     <div class="card-grid">
       {% for g in gadgets %}
-      <div class="gcard" onclick="openModal('gadget', {{ g.pk }})">
+      <div class="gcard" onclick="openModal('gadget', '{{ g.pk }}')">
         <div class="card-img-wrap">
           <div class="scan-line"></div>
           {% if g.image %}<img src="{{ g.image.url }}" alt="{{ g.name }}" class="card-img">
@@ -272,7 +272,7 @@
 
     <div class="card-grid">
       {% for v in villains %}
-      <div class="vcard" onclick="openModal('villain', {{ v.pk }})">
+      <div class="vcard" onclick="openModal('villain', '{{ v.pk }}')">
         <div class="card-img-wrap">
           <div class="scan-line"></div>
           {% if v.image %}<img src="{{ v.image.url }}" alt="{{ v.alias }}" class="card-img">
@@ -455,7 +455,7 @@
           <p class="kpi-desc">{{ kpi.description }}</p>
           <div class="kpi-progress-wrap">
             <div class="kpi-progress-bar">
-              <div class="kpi-fill" style="width:{{ kpi.progress }}%"></div>
+              <div class="kpi-fill" data-progress="{{ kpi.progress }}"></div>
             </div>
             <span class="kpi-pct">{{ kpi.progress }}%</span>
           </div>

@@ -139,6 +139,11 @@ document.querySelectorAll('.gcard,.vcard,.div-card,.org-card,.kpi-card,.phase,.c
 // Animate KPI bars when visible
 const kpiFills = document.querySelectorAll('.kpi-fill');
 const kpiObs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.style.width=e.target.dataset.width; kpiObs.unobserve(e.target); }});
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.style.width = e.target.dataset.width; kpiObs.unobserve(e.target); }});
 },{threshold:0.1});
-kpiFills.forEach(el=>{ const w=el.style.width; el.style.width='0'; el.dataset.width=w; kpiObs.observe(el); });
+kpiFills.forEach(el=>{
+  const progress = el.dataset.progress || '0';
+  el.style.width = '0';
+  el.dataset.width = `${progress}%`;
+  kpiObs.observe(el);
+});

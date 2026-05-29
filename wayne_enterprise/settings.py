@@ -85,9 +85,9 @@ WSGI_APPLICATION = 'wayne_enterprise.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wayne_enterprise',      # Nombre de la base de datos que creaste
+        'NAME': 'wayne_enterprise',      # Base de datos creada en XAMPP/MySQL
         'USER': 'root',                   # Usuario por defecto de XAMPP
-        'PASSWORD': 'root123',                   # Dejar vacío si no configuraste contraseña
+        'PASSWORD': '',                   # XAMPP suele usar contraseña vacía para root
         'HOST': 'localhost',              # Servidor local
         'PORT': '3306',                   # Puerto por defecto de MySQL
         'OPTIONS': {
