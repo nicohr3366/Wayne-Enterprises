@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wayne Manor — RRHH</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#C9A84C; --bg:#050507; --card:#0d0d12; --border:rgba(201,168,76,0.2); --text:#e8e8f0; --muted:#888899; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+    .top-bar { background:linear-gradient(90deg,#0a0a10,#0d0d15); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; }
+    .brand h1 { font-family:'Cinzel',serif; font-size:14px; color:var(--gold); letter-spacing:.15em; }
+    .brand span { font-size:11px; color:var(--muted); letter-spacing:.1em; }
+    nav a { color:var(--muted); text-decoration:none; font-size:12px; letter-spacing:.08em; margin-left:24px; transition:color .2s; }
+    nav a:hover, nav a.active { color:var(--gold); }
+    .hero { flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:60px 32px; background:radial-gradient(ellipse at center, #0f0f1a 0%, #050507 70%); }
+    .hero-eyebrow { font-size:11px; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-bottom:16px; }
+    .hero h2 { font-family:'Cinzel',serif; font-size:36px; color:var(--text); margin-bottom:8px; }
+    .hero h2 span { color:var(--gold); }
+    .hero-sub { font-size:14px; color:var(--muted); letter-spacing:.08em; margin-bottom:40px; }
+    .hero-btns { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+    .btn-gold { background:var(--gold); color:#050507; padding:12px 28px; font-family:'Cinzel',serif; font-size:12px; letter-spacing:.1em; text-decoration:none; border-radius:4px; transition:opacity .2s; }
+    .btn-gold:hover { opacity:.85; }
+    .btn-outline { border:1px solid var(--border); color:var(--gold); padding:12px 28px; font-family:'Rajdhani',sans-serif; font-size:13px; letter-spacing:.08em; text-decoration:none; border-radius:4px; transition:border-color .2s; }
+    .btn-outline:hover { border-color:var(--gold); }
+    .stats { display:flex; gap:40px; margin-top:48px; flex-wrap:wrap; justify-content:center; }
+    .stat { text-align:center; }
+    .stat-val { font-family:'Cinzel',serif; font-size:28px; color:var(--gold); }
+    .stat-lbl { font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; margin-top:4px; }
+    footer { text-align:center; padding:16px; font-size:11px; color:var(--muted); border-top:1px solid var(--border); }
+  </style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="brand">
+    <h1>Wayne Enterprises</h1>
+    <span>Wayne Manor — Recursos Humanos</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'manor:dashboard' %}">Dashboard</a>
+    <a href="{% url 'manor:list' %}">Empleados</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <p class="hero-eyebrow">Wayne Manor · RRHH · RBAC</p>
+  <h2>Gestión de <span>Capital Humano</span></h2>
+  <p class="hero-sub">Sistema de Recursos Humanos con Control de Acceso Basado en Roles (RBAC)</p>
+  <div class="hero-btns">
+    <a href="{% url 'manor:dashboard' %}" class="btn-gold">Ver Dashboard</a>
+    <a href="{% url 'manor:list' %}" class="btn-outline">Ver Empleados</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-val">9</div><div class="stat-lbl">Roles RBAC</div></div>
+    <div class="stat"><div class="stat-val">8</div><div class="stat-lbl">Divisiones</div></div>
+    <div class="stat"><div class="stat-val">80</div><div class="stat-lbl">Empleados</div></div>
+    <div class="stat"><div class="stat-val">12+</div><div class="stat-lbl">Departamentos</div></div>
+  </div>
+</div>
+
+<footer>© Wayne Enterprises · Wayne Manor HR System · RBAC v2.0</footer>
+</body>
+</html>

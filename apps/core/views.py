@@ -16,6 +16,7 @@ DIVISION_APPS = [
     'apps.capital',
     'apps.foundation',
     'apps.ventures',
+    'apps.manor',
 ]
 
 

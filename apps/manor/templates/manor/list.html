@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empleados — Wayne Manor RRHH</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --gold:#C9A84C; --bg:#050507; --card:#0d0d12; --border:rgba(201,168,76,0.2); --text:#e8e8f0; --muted:#888899; --green:#3ecf8e; --blue:#4a9eff; --purple:#a78bfa; --orange:#f59e0b; --red:#f87171; --cyan:#22d3ee; --pink:#ec4899; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; font-size:14px; }
+    .top-bar { background:linear-gradient(90deg,#0a0a10,#0d0d15); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; }
+    .brand h1 { font-family:'Cinzel',serif; font-size:14px; color:var(--gold); letter-spacing:.15em; }
+    .brand span { font-size:11px; color:var(--muted); letter-spacing:.1em; }
+    nav a { color:var(--muted); text-decoration:none; font-size:12px; letter-spacing:.08em; margin-left:24px; transition:color .2s; }
+    nav a:hover, nav a.active { color:var(--gold); }
+    .filters { background:#070709; border-bottom:1px solid var(--border); padding:16px 32px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .filters select, .filters input { background:var(--card); border:1px solid var(--border); color:var(--text); padding:6px 12px; font-family:'Rajdhani',sans-serif; font-size:12px; border-radius:4px; }
+    .filters select:focus, .filters input:focus { outline:none; border-color:var(--gold); }
+    .btn-filter { background:var(--gold); color:#050507; border:none; padding:7px 20px; font-family:'Cinzel',serif; font-size:11px; letter-spacing:.08em; cursor:pointer; border-radius:4px; }
+    .btn-clear { background:none; border:1px solid var(--border); color:var(--muted); padding:7px 14px; font-family:'Rajdhani',sans-serif; font-size:12px; cursor:pointer; border-radius:4px; }
+    .btn-export { background:none; border:1px solid var(--border); color:var(--gold); padding:7px 14px; font-family:'Rajdhani',sans-serif; font-size:12px; text-decoration:none; border-radius:4px; }
+    .table-header { padding:12px 32px; display:flex; justify-content:space-between; align-items:center; background:#070709; }
+    .table-header span { font-size:12px; color:var(--muted); }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th { background:var(--card); color:var(--muted); font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); font-weight:400; }
+    td { padding:10px 16px; border-bottom:1px solid rgba(201,168,76,0.06); font-size:13px; }
+    tr:hover td { background:rgba(201,168,76,0.04); }
+    .badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:11px; font-weight:600; letter-spacing:.06em; }
+    .badge-admin         { background:rgba(248,113,113,0.15); color:#f87171; }
+    .badge-executive     { background:rgba(245,158,11,0.15); color:#f59e0b; }
+    .badge-division_manager { background:rgba(167,139,250,0.15); color:#a78bfa; }
+    .badge-tech_manager  { background:rgba(74,158,255,0.15); color:#4a9eff; }
+    .badge-security_analyst { background:rgba(34,211,238,0.15); color:#22d3ee; }
+    .badge-finops_analyst { background:rgba(62,207,142,0.15); color:#3ecf8e; }
+    .badge-pmo_manager   { background:rgba(201,168,76,0.15); color:#C9A84C; }
+    .badge-hr_manager    { background:rgba(236,72,153,0.15); color:#ec4899; }
+    .badge-usuario       { background:rgba(136,136,153,0.15); color:#888899; }
+    .badge-activo   { background:rgba(62,207,142,0.15); color:#3ecf8e; }
+    .badge-inactivo { background:rgba(136,136,153,0.15); color:#888899; }
+    .badge-permiso  { background:rgba(245,158,11,0.15); color:#f59e0b; }
+    .badge-desvinculado { background:rgba(248,113,113,0.15); color:#f87171; }
+    .pag { display:flex; justify-content:center; gap:8px; padding:20px; }
+    .pag a, .pag span { padding:6px 14px; border:1px solid var(--border); color:var(--muted); text-decoration:none; font-size:12px; border-radius:4px; }
+    .pag a:hover { border-color:var(--gold); color:var(--gold); }
+    .pag .current { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,0.1); }
+  </style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="brand">
+    <h1>Wayne Enterprises</h1>
+    <span>Wayne Manor — RRHH · Empleados</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'manor:dashboard' %}">Dashboard</a>
+    <a href="{% url 'manor:list' %}" class="active">Empleados</a>
+    <a href="{% url 'manor:export' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<form method="get" class="filters">
+  <select name="division">
+    <option value="">Todas las divisiones</option>
+    {% for d in divisiones %}<option value="{{ d }}" {% if d == current_division %}selected{% endif %}>{{ d }}</option>{% endfor %}
+  </select>
+  <select name="rol">
+    <option value="">Todos los roles</option>
+    {% for r in roles %}<option value="{{ r }}" {% if r == current_rol %}selected{% endif %}>{{ r }}</option>{% endfor %}
+  </select>
+  <select name="depto">
+    <option value="">Todos los departamentos</option>
+    {% for dp in deptos %}<option value="{{ dp }}" {% if dp == current_depto %}selected{% endif %}>{{ dp }}</option>{% endfor %}
+  </select>
+  <select name="estado">
+    <option value="">Todos los estados</option>
+    {% for e in estados %}<option value="{{ e }}" {% if e == current_estado %}selected{% endif %}>{{ e }}</option>{% endfor %}
+  </select>
+  <input type="text" name="search" placeholder="Buscar por nombre o cargo..." value="{{ current_search }}">
+  <button type="submit" class="btn-filter">Filtrar</button>
+  <a href="{% url 'manor:list' %}" class="btn-clear">Limpiar</a>
+  <a href="{% url 'manor:export' %}?division={{ current_division }}&rol={{ current_rol }}&estado={{ current_estado }}" class="btn-export">Exportar CSV</a>
+</form>
+
+<div class="table-header">
+  <span>{{ total_filtrado }} empleado{% if total_filtrado != 1 %}s{% endif %} encontrado{% if total_filtrado != 1 %}s{% endif %}</span>
+  <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Nombre</th><th>Cargo</th><th>Rol RBAC</th>
+        <th>División</th><th>Departamento</th><th>Estado</th>
+        <th>Salario Anual</th><th>Experiencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in page_obj %}
+      <tr>
+        <td style="color:var(--muted);font-size:11px;">{{ e.employee_id }}</td>
+        <td><strong>{{ e.nombre }} {{ e.apellido }}</strong><br><span style="font-size:11px;color:var(--muted);">{{ e.email }}</span></td>
+        <td>{{ e.cargo }}</td>
+        <td><span class="badge badge-{{ e.nivel_rbac }}">{{ e.get_nivel_rbac_display }}</span></td>
+        <td>{{ e.get_division_display }}</td>
+        <td style="font-size:12px;">{{ e.departamento }}</td>
+        <td><span class="badge badge-{{ e.estado }}">{{ e.get_estado_display }}</span></td>
+        <td style="color:var(--gold);">${{ e.salario_anual|floatformat:0 }}</td>
+        <td style="text-align:center;">{{ e.anos_experiencia }} años</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="9" style="text-align:center;padding:40px;color:var(--muted);">No se encontraron empleados con los filtros seleccionados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="pag">
+  {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&division={{ current_division }}&rol={{ current_rol }}&depto={{ current_depto }}&estado={{ current_estado }}&search={{ current_search }}">‹ Anterior</a>{% endif %}
+  {% for n in page_obj.paginator.page_range %}
+    {% if n == page_obj.number %}<span class="current">{{ n }}</span>
+    {% elif n >= page_obj.number|add:-2 and n <= page_obj.number|add:2 %}<a href="?page={{ n }}&division={{ current_division }}&rol={{ current_rol }}&depto={{ current_depto }}&estado={{ current_estado }}&search={{ current_search }}">{{ n }}</a>{% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&division={{ current_division }}&rol={{ current_rol }}&depto={{ current_depto }}&estado={{ current_estado }}&search={{ current_search }}">Siguiente ›</a>{% endif %}
+</div>
+{% endif %}
+
+</body>
+</html>
