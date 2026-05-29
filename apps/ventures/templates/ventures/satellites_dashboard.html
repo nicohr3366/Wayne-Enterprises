@@ -1,0 +1,241 @@
+{% extends "accounts/base_auth.html" %}
+{% load static %}
+
+{% block title %}Dashboard de Logs de Errores - WayneTech{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ventures/css/satellites.css' %}">
+<style>
+	.stats-card {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		padding: 24px;
+		text-align: center;
+		transition: all 0.3s ease;
+	}
+
+	.stats-card:hover {
+		border-color: var(--gold);
+		transform: translateY(-4px);
+		box-shadow: 0 12px 32px rgba(212, 170, 80, 0.1);
+	}
+
+	.stats-card .stat-label {
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--text-secondary);
+		margin-bottom: 12px;
+	}
+
+	.stats-card .stat-value {
+		font-family: 'Cinzel', serif;
+		font-size: 36px;
+		font-weight: 900;
+		color: var(--gold);
+		line-height: 1;
+		margin-bottom: 4px;
+		text-shadow: 0 0 20px rgba(212, 170, 80, 0.2);
+	}
+
+	.stats-card .stat-detail {
+		font-size: 11px;
+		color: var(--text-muted);
+	}
+
+	.chart-container {
+		position: relative;
+		height: 300px;
+		margin-top: 20px;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+	<div class="section-header">
+		<h1>📡 Dashboard de Logs de Errores</h1>
+		<div class="section-stats">
+			<span class="stat-badge">WayneTech Monitoring System</span>
+		</div>
+	</div>
+
+	{% if sin_datos %}
+	<div class="alert alert-info">
+		<strong>ℹ️ Sin datos</strong> - No hay logs de errores cargados aún. Importa datos para comenzar a monitorear.
+	</div>
+	{% else %}
+	<!-- Tarjetas de Estadísticas -->
+	<div class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+		<div class="stats-card">
+			<div class="stat-label">Total de Logs</div>
+			<div class="stat-value">{{ total_logs }}</div>
+			<div class="stat-detail">eventos registrados</div>
+		</div>
+		<div class="stats-card">
+			<div class="stat-label">Errores Críticos</div>
+			<div class="stat-value">{{ critical }}</div>
+			<div class="stat-detail">{{ critical_pct }}% del total</div>
+		</div>
+		<div class="stats-card">
+			<div class="stat-label">No Resueltos</div>
+			<div class="stat-value">{{ unresolved }}</div>
+			<div class="stat-detail">requieren atención</div>
+		</div>
+		<div class="stats-card">
+			<div class="stat-label">Requieren Acción</div>
+			<div class="stat-value">{{ requires_action }}</div>
+			<div class="stat-detail">intervención pendiente</div>
+		</div>
+		<div class="stats-card">
+			<div class="stat-label">Resueltos</div>
+			<div class="stat-value">{{ resolved }}</div>
+			<div class="stat-detail">{{ resolved_pct }}% completados</div>
+		</div>
+		<div class="stats-card">
+			<div class="stat-label">Satélites Únicos</div>
+			<div class="stat-value">{{ unique_satellites }}</div>
+			<div class="stat-detail">en monitoreo</div>
+		</div>
+	</div>
+
+	<!-- Acciones Rápidas -->
+	<div class="card" style="margin-bottom: 32px;">
+		<div class="card-header">
+			<h5 class="card-title">⚡ Acciones Rápidas</h5>
+		</div>
+		<div class="card-body" style="display: flex; gap: 12px; flex-wrap: wrap;">
+			<a href="{% url 'ventures:satellites_list' %}" class="btn btn-primary">Ver Todos los Logs</a>
+			<a href="{% url 'ventures:satellites_list' %}?critical=true" class="btn btn-danger">Ver Críticos</a>
+			<a href="{% url 'ventures:satellites_list' %}?resolved=false" class="btn btn-warning">No Resueltos</a>
+		</div>
+	</div>
+
+	<!-- Gráficos -->
+	<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
+		<div class="card">
+			<div class="card-header">
+				<h5 class="card-title">📊 Por Severidad</h5>
+			</div>
+			<div class="card-body">
+				<div class="chart-container">
+					<canvas id="severityChart"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<h5 class="card-title">🛰️ Por Tipo de Satélite</h5>
+			</div>
+			<div class="card-body">
+				<div class="chart-container">
+					<canvas id="satTypeChart"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mt-4">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Top 10 Códigos de Error</h5>
+					<div style="max-height: 400px; overflow-y: auto;">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Descripción</th>
+									<th>Ocurrencias</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for item in by_error_code %}
+								<tr>
+									<td><code>{{ item.error_code }}</code></td>
+									<td>{{ item.error_description|truncatewords:5 }}</td>
+									<td><span class="badge bg-primary">{{ item.count }}</span></td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Top 10 Satélites Más Activos</h5>
+					<div style="max-height: 400px; overflow-y: auto;">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Satélite</th>
+									<th>Logs</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for item in by_satellite %}
+								<tr>
+									<td>{{ item.satellite_name }}</td>
+									<td><span class="badge bg-warning">{{ item.count }}</span></td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+		// Gráfico de Severidad
+		const severityCtx = document.getElementById('severityChart').getContext('2d');
+		const severityData = {{ by_severity_json|safe }};
+		new Chart(severityCtx, {
+			type: 'doughnut',
+			data: {
+				labels: severityData.map(d => d.severity),
+				datasets: [{
+					data: severityData.map(d => d.count),
+					backgroundColor: ['#dc3545', '#ffc107', '#0d6efd', '#6c757d']
+				}]
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					legend: { position: 'bottom' }
+				}
+			}
+		});
+
+		// Gráfico de Tipo de Satélite
+		const satTypeCtx = document.getElementById('satTypeChart').getContext('2d');
+		const satTypeData = {{ by_sat_type_json|safe }};
+		new Chart(satTypeCtx, {
+			type: 'bar',
+			data: {
+				labels: satTypeData.map(d => d.satellite_type),
+				datasets: [{
+					label: 'Cantidad de Logs',
+					data: satTypeData.map(d => d.count),
+					backgroundColor: '#0d6efd'
+				}]
+			},
+			options: {
+				responsive: true,
+				scales: {
+					y: { beginAtZero: true }
+				}
+			}
+		});
+	</script>
+	{% endif %}
+</div>
+{% endblock %}

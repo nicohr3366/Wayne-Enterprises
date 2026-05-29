@@ -146,3 +146,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Mantener sesión al cerrar pestaña
 # Configuración CSRF - Prevenir errores 403 frecuentes
 CSRF_COOKIE_AGE = 86400  # 24 horas (token CSRF válido por 1 día)
 CSRF_FAILURE_VIEW = 'apps.accounts.views.csrf_failure'  # Vista personalizada para errores CSRF
+
+
+

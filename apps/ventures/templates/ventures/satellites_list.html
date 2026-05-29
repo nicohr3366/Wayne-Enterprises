@@ -1,0 +1,220 @@
+{% extends "accounts/base_auth.html" %}
+{% load static %}
+
+{% block title %}Logs de Errores de Satélites - WayneTech{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ventures/css/satellites.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+	<div class="section-header">
+		<div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+			<h1>📡 Logs de Errores de Satélites</h1>
+			<a href="http://127.0.0.1:8501" target="_blank" class="btn btn-success" style="font-size: 12px; padding: 8px 14px;">📊 Ver Dashboard Streamlit</a>
+		</div>
+		<div class="section-stats">
+			<span class="stat-badge">{{ total_logs }} Eventos</span>
+			<span class="stat-badge">{{ unique_satellites_count }} Satélites</span>
+		</div>
+	</div>
+
+	<!-- Estadísticas de Severidad -->
+	{% if severity_stats %}
+	<div class="card" style="margin-bottom: 24px;">
+		<div class="card-header">
+			<h5 class="card-title">📊 Resumen por Severidad</h5>
+		</div>
+		<div class="card-body" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px;">
+			{% for stat in severity_stats %}
+				<div style="text-align: center; padding: 12px; background: rgba(212, 170, 80, 0.05); border: 1px solid rgba(212, 170, 80, 0.2); border-radius: 4px;">
+					{% if stat.severity == 'CRITICAL' %}
+						<div style="color: #ff6b6b; font-weight: 600; font-size: 14px; text-transform: uppercase;">{{ stat.severity }}</div>
+					{% elif stat.severity == 'HIGH' %}
+						<div style="color: #ffd93d; font-weight: 600; font-size: 14px; text-transform: uppercase;">{{ stat.severity }}</div>
+					{% elif stat.severity == 'MEDIUM' %}
+						<div style="color: #74c0fc; font-weight: 600; font-size: 14px; text-transform: uppercase;">{{ stat.severity }}</div>
+					{% else %}
+						<div style="color: #51cf66; font-weight: 600; font-size: 14px; text-transform: uppercase;">{{ stat.severity }}</div>
+					{% endif %}
+					<div style="font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900; color: var(--gold); margin-top: 6px;">{{ stat.count }}</div>
+					<div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">eventos</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+
+	<!-- Filtros -->
+	<div class="card filter-section">
+		<div class="card-header">
+			<h5 class="card-title">🔍 Filtrar Datos</h5>
+		</div>
+		<div class="card-body">
+			<form method="get" class="filter-row">
+				<div>
+					<label class="form-label">Severidad</label>
+					<select name="severity" class="form-select">
+						<option value="">Todas</option>
+						{% for severity in severities %}
+						<option value="{{ severity }}" {% if severity == current_severity %}selected{% endif %}>{{ severity }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div>
+					<label class="form-label">Satélite</label>
+					<select name="satellite" class="form-select">
+						<option value="">Todos</option>
+						{% for sat in satellites %}
+						<option value="{{ sat.satellite_id }}" {% if sat.satellite_id == current_satellite %}selected{% endif %}>{{ sat.satellite_name }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div>
+					<label class="form-label">Subsistema</label>
+					<select name="subsystem" class="form-select">
+						<option value="">Todos</option>
+						{% for subsystem in subsystems %}
+						<option value="{{ subsystem }}" {% if subsystem == current_subsystem %}selected{% endif %}>{{ subsystem }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div>
+					<label class="form-label">Estado</label>
+					<select name="resolved" class="form-select">
+						<option value="">Todos</option>
+						<option value="true" {% if current_resolved == 'true' %}selected{% endif %}>Resueltos</option>
+						<option value="false" {% if current_resolved == 'false' %}selected{% endif %}>No Resueltos</option>
+					</select>
+				</div>
+				<div>
+					<label class="form-label">Desde</label>
+					<input type="date" name="date_from" class="form-control" value="{{ current_date_from }}" autocomplete="off">
+				</div>
+				<div>
+					<label class="form-label">Hasta</label>
+					<input type="date" name="date_to" class="form-control" value="{{ current_date_to }}" autocomplete="off">
+				</div>
+				<div>
+					<label class="form-label">Buscar</label>
+					<input type="text" name="search" class="form-control" placeholder="Log ID, satélite, código, subsistema..." value="{{ current_search }}" autocomplete="off">
+				</div>
+				<div class="filter-actions">
+					<button type="submit" class="btn btn-primary">Filtrar</button>
+					<a href="{% url 'ventures:satellites_list' %}" class="btn btn-secondary">Limpiar</a>
+					{% url 'ventures:export_csv' as export_url %}
+					<a href="{{ export_url }}{% if current_severity %}?severity={{ current_severity }}{% endif %}{% if current_satellite %}{% if current_severity %}&{% else %}?{% endif %}satellite={{ current_satellite }}{% endif %}{% if current_resolved %}{% if current_severity or current_satellite %}&{% else %}?{% endif %}resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}{% if current_severity or current_satellite or current_resolved %}&{% else %}?{% endif %}subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}{% if current_severity or current_satellite or current_resolved or current_subsystem %}&{% else %}?{% endif %}date_from={{ current_date_from }}{% endif %}{% if current_date_to %}{% if current_severity or current_satellite or current_resolved or current_subsystem or current_date_from %}&{% else %}?{% endif %}date_to={{ current_date_to }}{% endif %}{% if current_search %}{% if current_severity or current_satellite or current_resolved or current_subsystem or current_date_from or current_date_to %}&{% else %}?{% endif %}search={{ current_search }}{% endif %}" class="btn btn-success">📥 Exportar CSV</a>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Tabla de Logs -->
+	<div class="card" style="margin-top: 24px;">
+		<div class="card-header">
+			<h5 class="card-title">📋 Listado de Logs ({{ page_obj.paginator.count }} resultados)</h5>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover mb-0">
+				<thead class="table-dark">
+					<tr>
+						<th>Log ID</th>
+						<th>Fecha/Hora</th>
+						<th>Satélite</th>
+						<th>Error Code</th>
+						<th>Severidad</th>
+						<th>Estado</th>
+						<th>Subsistema</th>
+						<th>Acción</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for log in page_obj %}
+					<tr>
+						<td><code>{{ log.log_id|truncatechars:12 }}</code></td>
+						<td>{{ log.timestamp|date:"d/m/Y H:i" }}</td>
+						<td>
+							<small>{{ log.satellite_name }}</small>
+						</td>
+						<td><code>{{ log.error_code }}</code></td>
+						<td>
+							{% if log.severity == 'CRITICAL' %}
+								<span class="badge bg-danger">{{ log.severity }}</span>
+							{% elif log.severity == 'HIGH' %}
+								<span class="badge bg-warning">{{ log.severity }}</span>
+							{% elif log.severity == 'MEDIUM' %}
+								<span class="badge bg-info">{{ log.severity }}</span>
+							{% else %}
+								<span class="badge bg-success">{{ log.severity }}</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if log.resolved %}
+								<span class="badge bg-success">✓ Resuelto</span>
+							{% else %}
+								<span class="badge bg-warning">Pendiente</span>
+							{% endif %}
+						</td>
+						<td><small>{{ log.subsystem }}</small></td>
+						<td>
+							<a href="{% url 'ventures:satellite_detail' log.log_id %}" class="btn btn-sm btn-outline-primary">Ver</a>
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="8" class="empty-state">
+							<div class="empty-state-icon">📭</div>
+							<div class="empty-state-text">No hay logs que coincidan con los filtros</div>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Paginación -->
+	{% if page_obj.has_other_pages %}
+	<nav aria-label="Page navigation" class="mt-4">
+		<ul class="pagination justify-content-center">
+			{% if page_obj.has_previous %}
+			<li class="page-item">
+				<a class="page-link" href="?page=1{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Primera</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Anterior</a>
+			</li>
+			{% endif %}
+
+			{% for num in page_obj.paginator.page_range %}
+				{% if page_obj.number == num %}
+				<li class="page-item active"><span class="page-link">{{ num }}</span></li>
+				{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+				<li class="page-item"><a class="page-link" href="?page={{ num }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">{{ num }}</a></li>
+				{% endif %}
+			{% endfor %}
+
+			{% if page_obj.has_next %}
+			<li class="page-item">
+				<a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Siguiente</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_severity %}&severity={{ current_severity }}{% endif %}{% if current_satellite %}&satellite={{ current_satellite }}{% endif %}{% if current_resolved %}&resolved={{ current_resolved }}{% endif %}{% if current_subsystem %}&subsystem={{ current_subsystem }}{% endif %}{% if current_date_from %}&date_from={{ current_date_from }}{% endif %}{% if current_date_to %}&date_to={{ current_date_to }}{% endif %}{% if current_search %}&search={{ current_search }}{% endif %}">Última</a>
+			</li>
+			{% endif %}
+		</ul>
+	</nav>
+	{% endif %}
+</div>
+{% endblock %}
+
+<!--
+cd "c:\Users\juhor\Desktop\Programacion\Electiva de Programacion\Corte 2\waynetech-landing"
+.\.venv\Scripts\Activate.ps1
+python manage.py runserver
+
+cd "c:\Users\juhor\Desktop\Programacion\Electiva de Programacion\Corte 2\waynetech-landing"
+.\.venv\Scripts\Activate.ps1
+streamlit run apps/ventures/dashboard/satellite_dashboard.py
+-->
