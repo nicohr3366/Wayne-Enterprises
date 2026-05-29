@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Wayne Capital | Stock Market</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>W</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.15);
+      --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff; --purple: #a78bfa;
+      --orange: #f59e0b; --red: #f87171; --cyan: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em;
+      margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+    .hero {
+      background: linear-gradient(180deg, #0a0a12 0%, #070709 100%);
+      border-bottom: 1px solid var(--border); padding: 28px 32px 20px;
+    }
+    .hero-eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .hero h2 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+    .hero h2 span { color: var(--gold); }
+    .hero-sub { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+    .kpi { background: var(--card); padding: 20px 24px; }
+    .kpi-label { font-size: 10px; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+    .kpi-val { font-family: 'Cinzel', serif; font-size: 28px; color: var(--gold); line-height: 1; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .dash-cell { background: var(--card); padding: 24px; }
+    .dash-cell.full { grid-column: 1 / -1; }
+    .cell-title {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    canvas { max-height: 260px; }
+    .no-data { text-align: center; padding: 80px 32px; }
+    .no-data h3 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 20px; margin-bottom: 12px; }
+    .no-data p { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 16px 32px; text-align: center; font-size: 11px; color: var(--muted); letter-spacing: .05em; }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>WAYNE CAPITAL</h1>
+    <span>STOCK MARKET ANALYTICS</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'capital:home' %}">Inicio</a>
+    <a href="{% url 'capital:dashboard' %}" class="active">Dashboard</a>
+    <a href="{% url 'capital:stocks_list' %}">Acciones</a>
+    <a href="{% url 'capital:export_csv' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Wayne Capital Investments &mdash; ETL Analytics</div>
+  <h2>Stock Market <span>Dashboard</span></h2>
+  <div class="hero-sub">Analisis de mercado accionario de subsidiarias Wayne Enterprises &mdash; 2022-2025</div>
+</div>
+
+{% if sin_datos %}
+<div class="no-data">
+  <h3>Sin Datos</h3>
+  <p>Ejecute: <code>python manage.py load_stocks --clear</code></p>
+</div>
+{% else %}
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">Total Registros</div>
+    <div class="kpi-val">{{ total_records }}</div>
+    <div class="kpi-sub">Entradas en base de datos</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Tickers Activos</div>
+    <div class="kpi-val">{{ tickers }}</div>
+    <div class="kpi-sub">Subsidiarias en bolsa</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Precio Cierre Prom.</div>
+    <div class="kpi-val">${{ avg_close }}</div>
+    <div class="kpi-sub">Promedio historico USD</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Rango Fechas</div>
+    <div class="kpi-val" style="font-size:16px;">{{ date_min }} / {{ date_max }}</div>
+    <div class="kpi-sub">Periodo de analisis</div>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <div class="dash-cell">
+    <div class="cell-title">Precio Cierre Promedio por Ticker</div>
+    <canvas id="chartTicker"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Registros por Sector</div>
+    <canvas id="chartSector"></canvas>
+  </div>
+  <div class="dash-cell full">
+    <div class="cell-title">Evolucion de Precio de Cierre (Top 5 Tickers)</div>
+    <canvas id="chartEvolution" style="max-height:320px;"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Volumen Total por Ticker</div>
+    <canvas id="chartVolume"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Capitalizacion de Mercado Promedio por Division (Bn USD)</div>
+    <canvas id="chartDivision"></canvas>
+  </div>
+</div>
+{% endif %}
+
+<footer>WAYNE CAPITAL &mdash; CONFIDENTIAL &mdash; WAYNE ENTERPRISES &copy; 2025</footer>
+
+<script>
+const GOLD = '#C9A84C', BLUE = '#4a9eff', GREEN = '#3ecf8e', PURPLE = '#a78bfa',
+      ORANGE = '#f59e0b', RED = '#f87171', CYAN = '#22d3ee';
+const PALETTE = [GOLD, BLUE, GREEN, PURPLE, ORANGE, RED, CYAN,
+                 '#e879f9','#34d399','#60a5fa','#fbbf24','#f472b6'];
+
+const gridOpts = {
+  color: 'rgba(201,168,76,0.08)',
+  borderColor: 'rgba(201,168,76,0.15)',
+};
+const labelColor = '#888899';
+const baseFont = { family: 'Rajdhani', size: 11 };
+
+{% if not sin_datos %}
+const tickerData = {{ by_ticker_json|safe }};
+new Chart(document.getElementById('chartTicker'), {
+  type: 'bar',
+  data: {
+    labels: tickerData.map(d => d.ticker),
+    datasets: [{
+      label: 'Avg Close USD',
+      data: tickerData.map(d => d.avg_close),
+      backgroundColor: tickerData.map((_, i) => PALETTE[i % PALETTE.length] + 'cc'),
+      borderColor: tickerData.map((_, i) => PALETTE[i % PALETTE.length]),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const sectorData = {{ by_sector_json|safe }};
+new Chart(document.getElementById('chartSector'), {
+  type: 'doughnut',
+  data: {
+    labels: sectorData.map(d => d.sector),
+    datasets: [{
+      data: sectorData.map(d => d.count),
+      backgroundColor: sectorData.map((_, i) => PALETTE[i % PALETTE.length] + 'cc'),
+      borderColor: sectorData.map((_, i) => PALETTE[i % PALETTE.length]),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } }
+    }
+  }
+});
+
+const evoData = {{ evolution_json|safe }};
+const tickers = Object.keys(evoData);
+let allDates = [];
+tickers.forEach(t => evoData[t].forEach(p => { if(!allDates.includes(p.date)) allDates.push(p.date); }));
+allDates.sort();
+const evoDatasets = tickers.map((ticker, i) => {
+  const map = {};
+  evoData[ticker].forEach(p => { map[p.date] = p.close; });
+  return {
+    label: ticker,
+    data: allDates.map(d => map[d] || null),
+    borderColor: PALETTE[i % PALETTE.length],
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    pointRadius: 2,
+    tension: 0.3,
+    spanGaps: true,
+  };
+});
+new Chart(document.getElementById('chartEvolution'), {
+  type: 'line',
+  data: { labels: allDates, datasets: evoDatasets },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } }
+    },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont, maxRotation: 45 }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const volData = {{ by_volume_json|safe }};
+new Chart(document.getElementById('chartVolume'), {
+  type: 'bar',
+  data: {
+    labels: volData.map(d => d.ticker),
+    datasets: [{
+      label: 'Volumen Total',
+      data: volData.map(d => d.total_vol),
+      backgroundColor: BLUE + 'aa',
+      borderColor: BLUE,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const divData = {{ by_division_json|safe }};
+new Chart(document.getElementById('chartDivision'), {
+  type: 'bar',
+  data: {
+    labels: divData.map(d => d.division),
+    datasets: [{
+      label: 'Cap. Mercado Prom. (Bn USD)',
+      data: divData.map(d => d.avg_cap),
+      backgroundColor: GOLD + 'aa',
+      borderColor: GOLD,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+{% endif %}
+</script>
+</body>
+</html>

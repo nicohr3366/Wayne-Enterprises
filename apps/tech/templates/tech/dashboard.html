@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Wayne Technologies | Telemetria Tumbler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.15);
+      --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff; --purple: #a78bfa;
+      --orange: #f59e0b; --red: #f87171; --cyan: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em;
+      margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+    .hero {
+      background: linear-gradient(180deg, #0a0a12 0%, #070709 100%);
+      border-bottom: 1px solid var(--border); padding: 28px 32px 20px;
+    }
+    .hero-eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .hero h2 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+    .hero h2 span { color: var(--gold); }
+    .hero-sub { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+    .kpi { background: var(--card); padding: 20px 24px; }
+    .kpi-label { font-size: 10px; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+    .kpi-val { font-family: 'Cinzel', serif; font-size: 28px; color: var(--gold); line-height: 1; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .dash-cell { background: var(--card); padding: 24px; }
+    .dash-cell.full { grid-column: 1 / -1; }
+    .cell-title {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    canvas { max-height: 260px; }
+    .no-data { text-align: center; padding: 80px 32px; }
+    .no-data h3 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 20px; margin-bottom: 12px; }
+    footer { border-top: 1px solid var(--border); padding: 16px 32px; text-align: center; font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>WAYNE TECHNOLOGIES</h1>
+    <span>TELEMETRIA VEHICULOS BATMAN</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'tech:home' %}">Inicio</a>
+    <a href="{% url 'tech:dashboard' %}" class="active">Dashboard</a>
+    <a href="{% url 'tech:telemetry_list' %}">Telemetria</a>
+    <a href="{% url 'tech:export_csv' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Wayne Technologies Inc &mdash; ETL Analytics Clasificado</div>
+  <h2>Telemetria Tumbler <span>Dashboard</span></h2>
+  <div class="hero-sub">Analisis de datos de telemetria vehiculos Batman &mdash; 2022-2024</div>
+</div>
+
+{% if sin_datos %}
+<div class="no-data">
+  <h3>Sin Datos</h3>
+  <p>Ejecute: <code>python manage.py load_telemetry --clear</code></p>
+</div>
+{% else %}
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">Total Registros</div>
+    <div class="kpi-val">{{ total_records }}</div>
+    <div class="kpi-sub">Lecturas de telemetria</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Vehiculos</div>
+    <div class="kpi-val">{{ vehicles }}</div>
+    <div class="kpi-sub">Unidades activas</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Misiones</div>
+    <div class="kpi-val">{{ missions }}</div>
+    <div class="kpi-sub">Operaciones registradas</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Alertas</div>
+    <div class="kpi-val" style="color:var(--red);">{{ alerts }}</div>
+    <div class="kpi-sub">Eventos de alerta</div>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <div class="dash-cell">
+    <div class="cell-title">Registros por Modelo de Vehiculo</div>
+    <canvas id="chartModel"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Registros por Tipo de Mision</div>
+    <canvas id="chartMission"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Tipos de Alerta (Donut)</div>
+    <canvas id="chartAlert"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Actividad por Zona de Gotham</div>
+    <canvas id="chartZone"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Velocidad Promedio por Tipo de Mision (km/h)</div>
+    <canvas id="chartSpeed"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Distribucion Nivel de Combustible</div>
+    <canvas id="chartFuel"></canvas>
+  </div>
+</div>
+{% endif %}
+
+<footer>WAYNE TECHNOLOGIES &mdash; CLASIFICADO &mdash; WAYNE ENTERPRISES &copy; 2025</footer>
+
+<script>
+const GOLD = '#C9A84C', BLUE = '#4a9eff', GREEN = '#3ecf8e', PURPLE = '#a78bfa',
+      ORANGE = '#f59e0b', RED = '#f87171', CYAN = '#22d3ee';
+const PALETTE = [GOLD, BLUE, GREEN, PURPLE, ORANGE, RED, CYAN, '#e879f9', '#34d399', '#60a5fa'];
+const gridOpts = { color: 'rgba(201,168,76,0.08)', borderColor: 'rgba(201,168,76,0.15)' };
+const labelColor = '#888899';
+const baseFont = { family: 'Rajdhani', size: 11 };
+
+{% if not sin_datos %}
+const modelData = {{ by_model_json|safe }};
+new Chart(document.getElementById('chartModel'), {
+  type: 'bar',
+  data: {
+    labels: modelData.map(d => d.model),
+    datasets: [{
+      label: 'Registros',
+      data: modelData.map(d => d.count),
+      backgroundColor: modelData.map((_, i) => PALETTE[i % PALETTE.length] + 'cc'),
+      borderColor: modelData.map((_, i) => PALETTE[i % PALETTE.length]),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const missionData = {{ by_mission_json|safe }};
+new Chart(document.getElementById('chartMission'), {
+  type: 'bar',
+  data: {
+    labels: missionData.map(d => d.mission),
+    datasets: [{
+      label: 'Misiones',
+      data: missionData.map(d => d.count),
+      backgroundColor: BLUE + 'aa',
+      borderColor: BLUE,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const alertData = {{ by_alert_json|safe }};
+const alertColors = { none: GREEN + 'cc', warning: ORANGE + 'cc', critical: RED + 'cc', system_failure: PURPLE + 'cc' };
+new Chart(document.getElementById('chartAlert'), {
+  type: 'doughnut',
+  data: {
+    labels: alertData.map(d => d.alert),
+    datasets: [{
+      data: alertData.map(d => d.count),
+      backgroundColor: alertData.map(d => alertColors[d.alert] || CYAN + 'cc'),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } } }
+  }
+});
+
+const zoneData = {{ by_zone_json|safe }};
+new Chart(document.getElementById('chartZone'), {
+  type: 'bar',
+  data: {
+    labels: zoneData.map(d => d.zone),
+    datasets: [{
+      label: 'Registros',
+      data: zoneData.map(d => d.count),
+      backgroundColor: PURPLE + 'aa',
+      borderColor: PURPLE,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const speedData = {{ avg_speed_json|safe }};
+new Chart(document.getElementById('chartSpeed'), {
+  type: 'bar',
+  data: {
+    labels: speedData.map(d => d.mission),
+    datasets: [{
+      label: 'Velocidad Prom. (km/h)',
+      data: speedData.map(d => d.avg_spd),
+      backgroundColor: ORANGE + 'aa',
+      borderColor: ORANGE,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const fuelData = {{ fuel_json|safe }};
+new Chart(document.getElementById('chartFuel'), {
+  type: 'pie',
+  data: {
+    labels: fuelData.map(d => d.range),
+    datasets: [{
+      data: fuelData.map(d => d.count),
+      backgroundColor: [RED + 'cc', ORANGE + 'cc', GOLD + 'cc', GREEN + 'cc'],
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } } }
+  }
+});
+{% endif %}
+</script>
+</body>
+</html>

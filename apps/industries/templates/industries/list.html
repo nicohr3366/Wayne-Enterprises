@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Electrica - Wayne Industries</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.15);
+      --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px;
+      margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+    .filters {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 16px 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .filters select {
+      background: #0a0a10; border: 1px solid var(--border); color: var(--text);
+      padding: 7px 12px; font-family: 'Rajdhani', sans-serif; font-size: 13px;
+      border-radius: 4px; min-width: 140px;
+    }
+    .filters button {
+      background: var(--gold); color: #050507; border: none;
+      padding: 7px 20px; font-family: 'Cinzel', serif; font-size: 11px;
+      letter-spacing: .1em; border-radius: 4px; cursor: pointer;
+    }
+    .filters a { color: var(--muted); font-size: 12px; text-decoration: none; }
+    .filters a:hover { color: var(--gold); }
+    .table-wrap { padding: 24px 32px; }
+    .info-bar { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th {
+      background: var(--card2); color: var(--gold); font-family: 'Cinzel', serif;
+      font-size: 10px; letter-spacing: .12em; padding: 10px 12px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr { border-bottom: 1px solid rgba(201,168,76,0.07); transition: background .15s; }
+    tbody tr:hover { background: var(--gold-dim); }
+    tbody td { padding: 9px 12px; }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 3px;
+      font-size: 10px; font-weight: 600;
+    }
+    .badge-green { background: rgba(62,207,142,0.15); color: var(--green); }
+    .badge-blue { background: rgba(74,158,255,0.15); color: var(--blue); }
+    .badge-gold { background: rgba(201,168,76,0.15); color: var(--gold); }
+    .pagination { display: flex; gap: 8px; padding: 16px 32px; align-items: center; }
+    .pagination a, .pagination span {
+      padding: 6px 12px; font-size: 12px; border: 1px solid var(--border);
+      border-radius: 4px; color: var(--muted); text-decoration: none; background: var(--card);
+    }
+    .pagination a:hover { color: var(--gold); border-color: var(--gold); }
+    .pagination .current { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
+    footer { border-top: 1px solid var(--border); padding: 16px 32px; text-align: center; font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>WAYNE INDUSTRIES</h1>
+    <span>RED ELECTRICA GOTHAM CITY</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'industries:home' %}">Inicio</a>
+    <a href="{% url 'industries:dashboard' %}">Dashboard</a>
+    <a href="{% url 'industries:grid_list' %}" class="active">Red Electrica</a>
+    <a href="{% url 'industries:export_csv' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<form method="get" class="filters">
+  <select name="district">
+    <option value="">Todos los distritos</option>
+    {% for d in districts %}
+    <option value="{{ d }}" {% if current_district == d %}selected{% endif %}>{{ d }}</option>
+    {% endfor %}
+  </select>
+  <select name="fuel">
+    <option value="">Todos los combustibles</option>
+    {% for f in fuels %}
+    <option value="{{ f }}" {% if current_fuel == f %}selected{% endif %}>{{ f }}</option>
+    {% endfor %}
+  </select>
+  <select name="type">
+    <option value="">Todos los tipos</option>
+    {% for t in types %}
+    <option value="{{ t }}" {% if current_type == t %}selected{% endif %}>{{ t }}</option>
+    {% endfor %}
+  </select>
+  <select name="year">
+    <option value="">Todos los años</option>
+    {% for y in years %}
+    <option value="{{ y }}" {% if current_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filtrar</button>
+  <a href="{% url 'industries:grid_list' %}">Limpiar</a>
+</form>
+
+<div class="table-wrap">
+  <div class="info-bar">{{ total_filtrado }} registros encontrados</div>
+  <table>
+    <thead>
+      <tr>
+        <th>RECORD ID</th>
+        <th>FECHA</th>
+        <th>ESTACION</th>
+        <th>NOMBRE</th>
+        <th>DISTRITO</th>
+        <th>TIPO</th>
+        <th>GENERADA (MWh)</th>
+        <th>CONSUMIDA (MWh)</th>
+        <th>RENOVABLE %</th>
+        <th>COMBUSTIBLE</th>
+        <th>AÑO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in page_obj %}
+      <tr>
+        <td><strong style="color:var(--gold);">{{ e.record_id }}</strong></td>
+        <td>{{ e.date }}</td>
+        <td>{{ e.station_id }}</td>
+        <td>{{ e.station_name }}</td>
+        <td>{{ e.gotham_district }}</td>
+        <td><span class="badge badge-blue">{{ e.station_type }}</span></td>
+        <td>{{ e.energy_generated_mwh }}</td>
+        <td>{{ e.energy_consumed_mwh }}</td>
+        <td>
+          {% if e.renewable_pct %}
+            <span style="color:{% if e.renewable_pct >= 50 %}var(--green){% else %}var(--muted){% endif %};">
+              {{ e.renewable_pct }}%
+            </span>
+          {% else %}-{% endif %}
+        </td>
+        <td><span class="badge badge-gold">{{ e.fuel_type }}</span></td>
+        <td>{{ e.fiscal_year }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="11" style="text-align:center;color:var(--muted);padding:40px;">Sin registros</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}&district={{ current_district }}&fuel={{ current_fuel }}&type={{ current_type }}&year={{ current_year }}">&laquo; Anterior</a>
+  {% endif %}
+  <span class="current">Pag. {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}&district={{ current_district }}&fuel={{ current_fuel }}&type={{ current_type }}&year={{ current_year }}">Siguiente &raquo;</a>
+  {% endif %}
+</div>
+{% endif %}
+
+<footer>WAYNE INDUSTRIES &mdash; CONFIDENTIAL &mdash; WAYNE ENTERPRISES &copy; 2025</footer>
+</body>
+</html>

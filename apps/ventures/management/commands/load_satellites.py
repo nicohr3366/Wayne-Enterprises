@@ -17,14 +17,14 @@ class Command(BaseCommand):
 		if options['clear']:
 			count = SatelliteErrorLog.objects.count()
 			SatelliteErrorLog.objects.all().delete()
-			self.stdout.write(f'  ✓ Borrados {count} registros existentes.')
+			self.stdout.write(f'  OK: Borrados {count} registros existentes.')
 
 		# Leer CSV con pandas
 		try:
 			df = pd.read_csv(csv_file, encoding='utf-8-sig')
-			self.stdout.write(f'  ✓ Archivo cargado: {len(df)} filas')
+			self.stdout.write(f'  OK: Archivo cargado: {len(df)} filas')
 		except FileNotFoundError:
-			self.stdout.write(self.style.ERROR(f'✗ No se encontró: {csv_file}'))
+			self.stdout.write(self.style.ERROR(f'ERROR: No se encontro: {csv_file}'))
 			return
 
 		# Validar que existan las columnas requeridas
@@ -33,7 +33,7 @@ class Command(BaseCommand):
 		
 		missing = [col for col in required_cols if col not in df.columns]
 		if missing:
-			self.stdout.write(self.style.ERROR(f'✗ Columnas faltantes: {", ".join(missing)}'))
+			self.stdout.write(self.style.ERROR(f'ERROR: Columnas faltantes: {", ".join(missing)}'))
 			self.stdout.write(f'  Columnas disponibles: {", ".join(df.columns)}')
 			return
 
@@ -128,5 +128,5 @@ class Command(BaseCommand):
 			self.stdout.write(f'  {cargados}/{total} logs...')
 
 		self.stdout.write(self.style.SUCCESS(
-			f'\n✓ {cargados} logs cargados. {duplicados} duplicados. {errores} filas con error.'
+			f'\nOK: {cargados} logs cargados. {duplicados} duplicados. {errores} filas con error.'
 		))

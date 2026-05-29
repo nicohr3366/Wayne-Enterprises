@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Wayne Industries | Red Electrica Gotham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.15);
+      --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff; --purple: #a78bfa;
+      --orange: #f59e0b; --red: #f87171; --cyan: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em;
+      margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+    .hero {
+      background: linear-gradient(180deg, #0a0a12 0%, #070709 100%);
+      border-bottom: 1px solid var(--border); padding: 28px 32px 20px;
+    }
+    .hero-eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .hero h2 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+    .hero h2 span { color: var(--gold); }
+    .hero-sub { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+    .kpi { background: var(--card); padding: 20px 24px; }
+    .kpi-label { font-size: 10px; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+    .kpi-val { font-family: 'Cinzel', serif; font-size: 28px; color: var(--gold); line-height: 1; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .dash-cell { background: var(--card); padding: 24px; }
+    .dash-cell.full { grid-column: 1 / -1; }
+    .cell-title {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    canvas { max-height: 260px; }
+    .no-data { text-align: center; padding: 80px 32px; }
+    .no-data h3 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 20px; margin-bottom: 12px; }
+    footer { border-top: 1px solid var(--border); padding: 16px 32px; text-align: center; font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>WAYNE INDUSTRIES</h1>
+    <span>RED ELECTRICA GOTHAM CITY</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'industries:home' %}">Inicio</a>
+    <a href="{% url 'industries:dashboard' %}" class="active">Dashboard</a>
+    <a href="{% url 'industries:grid_list' %}">Red Electrica</a>
+    <a href="{% url 'industries:export_csv' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Wayne Industries Inc &mdash; ETL Analytics</div>
+  <h2>Red Electrica <span>Dashboard</span></h2>
+  <div class="hero-sub">Analisis de la infraestructura electrica de Gotham City &mdash; 2022-2024</div>
+</div>
+
+{% if sin_datos %}
+<div class="no-data">
+  <h3>Sin Datos</h3>
+  <p>Ejecute: <code>python manage.py load_electric --clear</code></p>
+</div>
+{% else %}
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">Total Registros</div>
+    <div class="kpi-val">{{ total_records }}</div>
+    <div class="kpi-sub">Lecturas de estaciones</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Estaciones</div>
+    <div class="kpi-val">{{ stations }}</div>
+    <div class="kpi-sub">Nodos de la red</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Energia Generada</div>
+    <div class="kpi-val">{{ total_generated_gwh }} GWh</div>
+    <div class="kpi-sub">Total historico</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Renovable Prom.</div>
+    <div class="kpi-val" style="color:var(--green);">{{ avg_renewable }}%</div>
+    <div class="kpi-sub">Porcentaje energias limpias</div>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <div class="dash-cell full">
+    <div class="cell-title">Energia Generada vs Consumida por Distrito (GWh)</div>
+    <canvas id="chartDistrict" style="max-height:300px;"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Generacion por Tipo de Combustible (GWh)</div>
+    <canvas id="chartFuel"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Tipos de Estacion</div>
+    <canvas id="chartStationType"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Tendencia Energia Renovable por Año (%)</div>
+    <canvas id="chartRenewable"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Horas de Apagado por Distrito</div>
+    <canvas id="chartOutage"></canvas>
+  </div>
+</div>
+{% endif %}
+
+<footer>WAYNE INDUSTRIES &mdash; CONFIDENTIAL &mdash; WAYNE ENTERPRISES &copy; 2025</footer>
+
+<script>
+const GOLD = '#C9A84C', BLUE = '#4a9eff', GREEN = '#3ecf8e', PURPLE = '#a78bfa',
+      ORANGE = '#f59e0b', RED = '#f87171', CYAN = '#22d3ee';
+const PALETTE = [GOLD, BLUE, GREEN, PURPLE, ORANGE, RED, CYAN, '#e879f9', '#34d399', '#60a5fa'];
+const gridOpts = { color: 'rgba(201,168,76,0.08)', borderColor: 'rgba(201,168,76,0.15)' };
+const labelColor = '#888899';
+const baseFont = { family: 'Rajdhani', size: 11 };
+
+{% if not sin_datos %}
+const distData = {{ by_district_json|safe }};
+new Chart(document.getElementById('chartDistrict'), {
+  type: 'bar',
+  data: {
+    labels: distData.map(d => d.district),
+    datasets: [
+      {
+        label: 'Generada (GWh)',
+        data: distData.map(d => d.generated),
+        backgroundColor: GOLD + 'aa',
+        borderColor: GOLD,
+        borderWidth: 1,
+      },
+      {
+        label: 'Consumida (GWh)',
+        data: distData.map(d => d.consumed),
+        backgroundColor: BLUE + 'aa',
+        borderColor: BLUE,
+        borderWidth: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const fuelData = {{ by_fuel_json|safe }};
+new Chart(document.getElementById('chartFuel'), {
+  type: 'doughnut',
+  data: {
+    labels: fuelData.map(d => d.fuel),
+    datasets: [{
+      data: fuelData.map(d => d.total),
+      backgroundColor: fuelData.map((_, i) => PALETTE[i % PALETTE.length] + 'cc'),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } } }
+  }
+});
+
+const stData = {{ by_station_type_json|safe }};
+new Chart(document.getElementById('chartStationType'), {
+  type: 'pie',
+  data: {
+    labels: stData.map(d => d.type),
+    datasets: [{
+      data: stData.map(d => d.count),
+      backgroundColor: [GOLD + 'cc', BLUE + 'cc', GREEN + 'cc'],
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } } }
+  }
+});
+
+const renData = {{ renewable_trend_json|safe }};
+new Chart(document.getElementById('chartRenewable'), {
+  type: 'line',
+  data: {
+    labels: renData.map(d => d.year),
+    datasets: [{
+      label: 'Renovable %',
+      data: renData.map(d => d.avg),
+      borderColor: GREEN,
+      backgroundColor: GREEN + '33',
+      borderWidth: 2,
+      fill: true,
+      tension: 0.3,
+      pointRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const outData = {{ outage_json|safe }};
+new Chart(document.getElementById('chartOutage'), {
+  type: 'bar',
+  data: {
+    labels: outData.map(d => d.district),
+    datasets: [{
+      label: 'Horas Apagado',
+      data: outData.map(d => d.hours),
+      backgroundColor: RED + 'aa',
+      borderColor: RED,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+{% endif %}
+</script>
+</body>
+</html>

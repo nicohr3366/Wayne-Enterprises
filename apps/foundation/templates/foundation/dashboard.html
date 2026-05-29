@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Wayne Foundation | Donaciones</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.15);
+      --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff; --purple: #a78bfa;
+      --orange: #f59e0b; --red: #f87171; --cyan: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em;
+      margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+    .hero {
+      background: linear-gradient(180deg, #0a0a12 0%, #070709 100%);
+      border-bottom: 1px solid var(--border); padding: 28px 32px 20px;
+    }
+    .hero-eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .hero h2 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+    .hero h2 span { color: var(--gold); }
+    .hero-sub { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+    .kpi { background: var(--card); padding: 20px 24px; }
+    .kpi-label { font-size: 10px; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+    .kpi-val { font-family: 'Cinzel', serif; font-size: 28px; color: var(--gold); line-height: 1; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .dash-cell { background: var(--card); padding: 24px; }
+    .dash-cell.full { grid-column: 1 / -1; }
+    .cell-title {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    canvas { max-height: 260px; }
+    .no-data { text-align: center; padding: 80px 32px; }
+    .no-data h3 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 20px; margin-bottom: 12px; }
+    .no-data p { color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 16px 32px; text-align: center; font-size: 11px; color: var(--muted); letter-spacing: .05em; }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>WAYNE FOUNDATION</h1>
+    <span>DONACIONES &amp; FILANTROPÍA</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'foundation:home' %}">Inicio</a>
+    <a href="{% url 'foundation:dashboard' %}" class="active">Dashboard</a>
+    <a href="{% url 'foundation:donaciones_list' %}">Donaciones</a>
+    <a href="{% url 'foundation:export_csv' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">Wayne Foundation &mdash; ETL Analytics</div>
+  <h2>Donaciones <span>Dashboard</span></h2>
+  <div class="hero-sub">Analisis del impacto filantropico en Gotham City &mdash; 2022-2024</div>
+</div>
+
+{% if sin_datos %}
+<div class="no-data">
+  <h3>Sin Datos</h3>
+  <p>Ejecute: <code>python manage.py load_donaciones --clear</code></p>
+</div>
+{% else %}
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">Total Donaciones</div>
+    <div class="kpi-val">{{ total_registros }}</div>
+    <div class="kpi-sub">Registros en base de datos</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Monto Total</div>
+    <div class="kpi-val">${{ total_amount_m }}M</div>
+    <div class="kpi-sub">USD donados</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Donacion Promedio</div>
+    <div class="kpi-val">${{ avg_amount }}K</div>
+    <div class="kpi-sub">USD promedio por donacion</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Top Categoria</div>
+    <div class="kpi-val" style="font-size:16px;text-transform:capitalize;">{{ top_category }}</div>
+    <div class="kpi-sub">Mayor inversion por categoria</div>
+  </div>
+</div>
+
+<div class="dash-grid">
+  <div class="dash-cell">
+    <div class="cell-title">Monto por Categoria de Proyecto (Miles USD)</div>
+    <canvas id="chartCategory"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Monto por Tipo de Donante</div>
+    <canvas id="chartDonorType"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Donaciones por Año Fiscal (Millones USD)</div>
+    <canvas id="chartYear"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Top 10 Distritos de Gotham (Miles USD)</div>
+    <canvas id="chartDistrict"></canvas>
+  </div>
+  <div class="dash-cell full">
+    <div class="cell-title">Top 10 Donantes (Millones USD)</div>
+    <canvas id="chartTopDonors" style="max-height:300px;"></canvas>
+  </div>
+</div>
+{% endif %}
+
+<footer>WAYNE FOUNDATION &mdash; CONFIDENTIAL &mdash; WAYNE ENTERPRISES &copy; 2025</footer>
+
+<script>
+const GOLD = '#C9A84C', BLUE = '#4a9eff', GREEN = '#3ecf8e', PURPLE = '#a78bfa',
+      ORANGE = '#f59e0b', RED = '#f87171', CYAN = '#22d3ee';
+const PALETTE = [GOLD, BLUE, GREEN, PURPLE, ORANGE, RED, CYAN, '#e879f9', '#34d399', '#60a5fa'];
+const gridOpts = { color: 'rgba(201,168,76,0.08)', borderColor: 'rgba(201,168,76,0.15)' };
+const labelColor = '#888899';
+const baseFont = { family: 'Rajdhani', size: 11 };
+
+{% if not sin_datos %}
+const catData = {{ by_category_json|safe }};
+new Chart(document.getElementById('chartCategory'), {
+  type: 'bar',
+  data: {
+    labels: catData.map(d => d.category),
+    datasets: [{
+      label: 'Monto (K USD)',
+      data: catData.map(d => d.total),
+      backgroundColor: catData.map((_, i) => PALETTE[i % PALETTE.length] + 'cc'),
+      borderColor: catData.map((_, i) => PALETTE[i % PALETTE.length]),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const dtData = {{ by_donor_type_json|safe }};
+new Chart(document.getElementById('chartDonorType'), {
+  type: 'doughnut',
+  data: {
+    labels: dtData.map(d => d.donor_type),
+    datasets: [{
+      data: dtData.map(d => d.total),
+      backgroundColor: dtData.map((_, i) => PALETTE[i % PALETTE.length] + 'cc'),
+      borderColor: dtData.map((_, i) => PALETTE[i % PALETTE.length]),
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { labels: { color: labelColor, font: baseFont, boxWidth: 12 } } }
+  }
+});
+
+const yearData = {{ by_year_json|safe }};
+new Chart(document.getElementById('chartYear'), {
+  type: 'bar',
+  data: {
+    labels: yearData.map(d => d.year),
+    datasets: [{
+      label: 'Monto (M USD)',
+      data: yearData.map(d => d.total),
+      backgroundColor: GREEN + 'aa',
+      borderColor: GREEN,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const distData = {{ by_district_json|safe }};
+new Chart(document.getElementById('chartDistrict'), {
+  type: 'bar',
+  data: {
+    labels: distData.map(d => d.district),
+    datasets: [{
+      label: 'Monto (K USD)',
+      data: distData.map(d => d.total),
+      backgroundColor: PURPLE + 'aa',
+      borderColor: PURPLE,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+
+const donorData = {{ top_donors_json|safe }};
+new Chart(document.getElementById('chartTopDonors'), {
+  type: 'bar',
+  data: {
+    labels: donorData.map(d => d.donor),
+    datasets: [{
+      label: 'Monto (M USD)',
+      data: donorData.map(d => d.total),
+      backgroundColor: GOLD + 'aa',
+      borderColor: GOLD,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts },
+      y: { ticks: { color: labelColor, font: baseFont }, grid: gridOpts }
+    }
+  }
+});
+{% endif %}
+</script>
+</body>
+</html>
