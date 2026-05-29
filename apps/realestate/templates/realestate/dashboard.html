@@ -1,0 +1,367 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Wayne Real Estate · Desarrollo Urbano Gotham</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-dim: rgba(201,168,76,0.15);
+      --bg: #050507;
+      --card: #0d0d12;
+      --card2: #111118;
+      --border: rgba(201,168,76,0.2);
+      --text: #e8e8f0;
+      --muted: #888899;
+      --green: #3ecf8e;
+      --blue: #4a9eff;
+      --purple: #a78bfa;
+      --orange: #f59e0b;
+      --red: #f87171;
+      --cyan: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em;
+      margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+
+    .hero {
+      background: linear-gradient(180deg, #0a0a12 0%, #070709 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 32px 20px;
+    }
+    .hero-eyebrow { font-size: 10px; letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .hero h2 { font-family: 'Cinzel', serif; font-size: 22px; color: var(--text); margin-bottom: 4px; }
+    .hero h2 span { color: var(--gold); }
+    .hero-sub { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+
+    .pipeline {
+      display: flex; align-items: center;
+      padding: 20px 32px; border-bottom: 1px solid var(--border);
+      background: #070709; overflow-x: auto; gap: 0;
+    }
+    .pipe-step {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 18px; min-width: 120px; text-align: center;
+    }
+    .pipe-step .label { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+    .pipe-step .sub { font-size: 10px; color: var(--muted); }
+    .pipe-step.collect .label  { color: var(--blue); }
+    .pipe-step.validate .label { color: var(--green); }
+    .pipe-step.enrich .label   { color: var(--purple); }
+    .pipe-step.load .label     { color: var(--orange); }
+    .pipe-step.report .label   { color: var(--gold); }
+    .pipe-arrow { color: var(--muted); font-size: 18px; padding: 0 8px; flex-shrink: 0; }
+
+    .kpis {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--border); border-bottom: 1px solid var(--border);
+    }
+    .kpi { background: var(--card); padding: 20px 24px; }
+    .kpi-label { font-size: 10px; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+    .kpi-val { font-family: 'Cinzel', serif; font-size: 28px; color: var(--gold); line-height: 1; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .dash-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+    }
+    .dash-cell { background: var(--card); padding: 24px; }
+    .dash-cell.full { grid-column: 1 / -1; }
+    .cell-title {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    canvas { max-height: 260px; }
+
+    .flags-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .flag-item { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 16px; text-align: center; }
+    .flag-pct { font-family: 'Cinzel', serif; font-size: 26px; margin-bottom: 4px; }
+    .flag-item:nth-child(1) .flag-pct { color: var(--green); }
+    .flag-item:nth-child(2) .flag-pct { color: var(--blue); }
+    .flag-item:nth-child(3) .flag-pct { color: var(--gold); }
+    .flag-label { font-size: 11px; color: var(--muted); }
+
+    .dash-footer {
+      text-align: center; padding: 20px; font-size: 11px; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    .dash-footer a { color: var(--gold); text-decoration: none; }
+
+    .no-data { text-align: center; padding: 80px 32px; font-family: 'Cinzel', serif; color: var(--muted); }
+    .no-data p { margin-top: 12px; font-family: 'Rajdhani'; font-size: 13px; }
+    .no-data code { background: var(--card); padding: 4px 10px; border-radius: 4px; color: var(--gold); font-size: 12px; }
+
+    @media (max-width: 800px) {
+      .kpis { grid-template-columns: 1fr 1fr; }
+      .dash-grid { grid-template-columns: 1fr; }
+      .dash-cell.full { grid-column: 1; }
+      .flags-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>Wayne Real Estate</h1>
+    <span>Desarrollo Urbano Gotham · Dataset Analytics</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'realestate:home' %}">División</a>
+    <a href="{% url 'realestate:dashboard' %}" class="active">Dashboard</a>
+    <a href="{% url 'realestate:list' %}">Propiedades</a>
+    <a href="{% url 'realestate:export' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+{% if sin_datos %}
+<div class="no-data">
+  <div style="font-size:48px; margin-bottom:16px;">🏙️</div>
+  <h2>Sin datos cargados</h2>
+  <p>Ejecuta el siguiente comando en la terminal para cargar las propiedades:</p>
+  <br>
+  <code>python manage.py load_properties</code>
+</div>
+{% else %}
+
+<div class="hero">
+  <p class="hero-eyebrow">Wayne Real Estate — Urban Analytics Platform</p>
+  <h2>Desarrollo Urbano <span>Gotham City</span> Dashboard</h2>
+  <p class="hero-sub">Portfolio Inmobiliario · {{ total }} propiedades · Financial District · Diamond District · Midtown · South Gotham · 14 distritos</p>
+</div>
+
+<!-- Pipeline de datos -->
+<div class="pipeline">
+  <div class="pipe-step collect">
+    <span class="label">Collect</span>
+    <span class="sub">14 distritos</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-step validate">
+    <span class="label">Validate</span>
+    <span class="sub">Zoning · Status</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-step enrich">
+    <span class="label">Enrich</span>
+    <span class="sub">PropTech · GIS</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-step load">
+    <span class="label">Load</span>
+    <span class="sub">{{ total }} registros</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-step report">
+    <span class="label">Report</span>
+    <span class="sub">${{ total_value_b }}B total</span>
+  </div>
+</div>
+
+<!-- KPIs -->
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">Propiedades totales</div>
+    <div class="kpi-val">{{ total }}</div>
+    <div class="kpi-sub">18 campos por registro</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Valor de mercado</div>
+    <div class="kpi-val">${{ total_value_b }}B</div>
+    <div class="kpi-sub">Portfolio Gotham City</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Ocupación promedio</div>
+    <div class="kpi-val">{{ avg_occupancy }}%</div>
+    <div class="kpi-sub">Activos completados y activos</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">En desarrollo</div>
+    <div class="kpi-val">{{ in_development }}</div>
+    <div class="kpi-sub">En construcción + planificados</div>
+  </div>
+</div>
+
+<!-- Gráficas -->
+<div class="dash-grid">
+
+  <div class="dash-cell">
+    <div class="cell-title">Propiedades por tipo</div>
+    <canvas id="typeChart"></canvas>
+  </div>
+
+  <div class="dash-cell">
+    <div class="cell-title">Estado del portfolio</div>
+    <canvas id="statusChart"></canvas>
+  </div>
+
+  <div class="dash-cell full">
+    <div class="cell-title">Distribución por distrito — Top 12 distritos de Gotham</div>
+    <canvas id="districtChart"></canvas>
+  </div>
+
+  <div class="dash-cell">
+    <div class="cell-title">Top 10 desarrolladores — Proyectos</div>
+    <canvas id="developerChart"></canvas>
+  </div>
+
+  <div class="dash-cell">
+    <div class="cell-title">Valor de mercado por tipo ($B)</div>
+    <canvas id="valueChart"></canvas>
+  </div>
+
+  <div class="dash-cell full">
+    <div class="cell-title">Proyectos por año de construcción — Gotham Urban Timeline</div>
+    <canvas id="yearChart"></canvas>
+  </div>
+
+  <div class="dash-cell">
+    <div class="cell-title">Indicadores de sostenibilidad y tecnología</div>
+    <div class="flags-grid" style="margin-top: 8px;">
+      <div class="flag-item">
+        <div class="flag-pct">{{ green_pct }}%</div>
+        <div class="flag-label">Certificación Verde (LEED / BREEAM)</div>
+      </div>
+      <div class="flag-item">
+        <div class="flag-pct">{{ smart_pct }}%</div>
+        <div class="flag-label">Smart Building (IoT / BMS)</div>
+      </div>
+      <div class="flag-item">
+        <div class="flag-pct">{{ available_pct }}%</div>
+        <div class="flag-label">Disponibles en mercado</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="dash-footer">
+  © Wayne Real Estate — Gotham Urban Analytics ·
+  <a href="{% url 'realestate:list' %}">Ver todas las propiedades</a> ·
+  <a href="{% url 'realestate:export' %}">Exportar dataset</a>
+</div>
+
+{% endif %}
+
+<script>
+const GOLD   = '#C9A84C';
+const BLUE   = '#4a9eff';
+const GREEN  = '#3ecf8e';
+const PURPLE = '#a78bfa';
+const ORANGE = '#f59e0b';
+const RED    = '#f87171';
+const CYAN   = '#22d3ee';
+const COLORS = [BLUE, GREEN, PURPLE, ORANGE, RED, CYAN, GOLD, '#ec4899', '#14b8a6', '#8b5cf6',
+                '#f97316', '#06b6d4', '#84cc16', '#e11d48'];
+
+Chart.defaults.color = '#888899';
+Chart.defaults.borderColor = 'rgba(201,168,76,0.1)';
+Chart.defaults.font.family = "'Rajdhani', sans-serif";
+
+function donut(id, data, labelKey, valueKey) {
+  const labels = data.map(d => d[labelKey]);
+  const values = data.map(d => d[valueKey]);
+  new Chart(document.getElementById(id), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data: values, backgroundColor: COLORS.slice(0, labels.length), borderWidth: 2, borderColor: '#050507' }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'right', labels: { color: '#c8c8d8', font: { size: 11 }, padding: 12 } }
+      }
+    }
+  });
+}
+
+function hbar(id, data, labelKey, valueKey, color) {
+  const labels = data.map(d => d[labelKey]);
+  const values = data.map(d => d[valueKey]);
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data: values, backgroundColor: color || COLORS.slice(0, labels.length), borderWidth: 0 }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(201,168,76,0.08)' }, ticks: { color: '#888899' } },
+        y: { grid: { display: false }, ticks: { color: '#c8c8d8', font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+function vbar(id, data, labelKey, valueKey, color, tickCallback) {
+  const labels = data.map(d => String(d[labelKey]));
+  const values = data.map(d => +d[valueKey]);
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data: values, backgroundColor: color || BLUE, borderWidth: 0 }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#888899' } },
+        y: { grid: { color: 'rgba(201,168,76,0.08)' }, ticks: { color: '#888899', callback: tickCallback || (v => v) } }
+      }
+    }
+  });
+}
+
+{% if not sin_datos %}
+const byType      = {{ by_type_json|safe }};
+const byStatus    = {{ by_status_json|safe }};
+const byDistrict  = {{ by_district_json|safe }};
+const byDeveloper = {{ by_developer_json|safe }};
+const byValue     = {{ by_value_json|safe }};
+const byYear      = {{ by_year_json|safe }};
+
+const TYPE_LABELS = { residential: 'Residencial', commercial: 'Comercial', industrial: 'Industrial', mixed: 'Uso Mixto' };
+const STATUS_LABELS = { completed: 'Completado', active: 'Activo', under_construction: 'En Construcción', planned: 'Planificado' };
+
+byType.forEach(d => { d.property_type = TYPE_LABELS[d.property_type] || d.property_type; });
+byStatus.forEach(d => { d.project_status = STATUS_LABELS[d.project_status] || d.project_status; });
+byValue.forEach(d => { d.property_type = TYPE_LABELS[d.property_type] || d.property_type; });
+
+donut('typeChart',   byType,   'property_type',   'count');
+donut('statusChart', byStatus, 'project_status',  'count');
+hbar('districtChart',  byDistrict,  'district',        'count',  COLORS);
+hbar('developerChart', byDeveloper, 'developer',       'count',  COLORS);
+hbar('valueChart',     byValue,     'property_type',   'total',  [BLUE, GREEN, ORANGE, PURPLE]);
+vbar('yearChart',      byYear,      'year_built',      'count',  GOLD, v => v + ' proy.');
+{% endif %}
+</script>
+
+</body>
+</html>

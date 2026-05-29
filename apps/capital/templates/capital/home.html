@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Capital — Portal Corporativo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'capital/css/capital.css' %}">
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Capital · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 05</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Private Equity & Wealth Management</p>
+    <h1>Wayne<br><em>Capital</em></h1>
+    <p class="hero-sub">Building Wealth. Securing Legacies.</p>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Wayne Capital es la división financiera de Wayne Enterprises, especializada en gestión de patrimonio,
+      private equity y estructuración de inversiones estratégicas. Administramos activos por más de $15 billones
+      para clientes institucionales, family offices y emprendedores visionarios.
+    </p>
+    <a href="#servicios" class="btn-primary">Explorar Servicios</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">$15.2B</div>
+      <div class="stat-label">Activos bajo gestión</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">180+</div>
+      <div class="stat-label">Clientes institucionales</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">28</div>
+      <div class="stat-label">Años de trayectoria</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">42</div>
+      <div class="stat-label">Países con presencia</div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Gestión financiera de<br><em>escala global</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Capital es el brazo financiero de Wayne Enterprises, ofreciendo soluciones integrales de
+        wealth management, private equity, y asesoría estratégica de fusiones y adquisiciones. Nuestro enfoque
+        combina análisis cuantitativo riguroso con visión de largo plazo.
+      </p>
+      <p>
+        Desde nuestros inicios en 1996, hemos sido pioneros en inversiones sostenibles y tecnológicas,
+        identificando oportunidades antes que el mercado. Nuestro equipo de más de 500 profesionales
+        opera desde centros financieros en Gotham, Nueva York, Londres, Singapur y Dubái.
+      </p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Preservar y multiplicar el patrimonio de nuestros clientes mediante estrategias de inversión
+          innovadoras, sostenibles y alineadas con los valores de excelencia de Wayne Enterprises.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser la firma de gestión de capital más confiable del mundo, reconocida por resultados
+          consistentes, integridad absoluta y contribución al desarrollo económico sostenible.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Servicios y Productos</p>
+      <h2 class="section-title">Soluciones<br><em>financieras integrales</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#128176;</div>
+        <h3>Private Equity</h3>
+        <p>Inversiones en empresas privadas con alto potencial de crecimiento. Ticket sizes desde $50M hasta $500M.</p>
+        <span class="service-tag">Growth · Buyout · Venture</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128200;</div>
+        <h3>Wealth Management</h3>
+        <p>Gestión personalizada de patrimonio para ultra high net worth individuals y family offices.</p>
+        <span class="service-tag">Family Offices · UHNWI</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128260;</div>
+        <h3>M&A Advisory</h3>
+        <p>Asesoría estratégica en fusiones, adquisiciones y reestructuraciones corporativas.</p>
+        <span class="service-tag">M&A · Due Diligence</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127942;</div>
+        <h3>Real Assets</h3>
+        <p>Inversiones en infraestructura, energía renovable y bienes raíces comerciales de primer nivel.</p>
+        <span class="service-tag">Infraestructura · ESG</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128161;</div>
+        <h3>Wayne Ventures Fund</h3>
+        <p>Fondo de capital de riesgo corporativo que invierte en startups sinérgicas con el ecosistema Wayne.</p>
+        <span class="service-tag">CVC · Deep Tech</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128178;</div>
+        <h3>Capital Markets</h3>
+        <p>Estructuración de deuda, emisiones de bonos y acceso a mercados de capitales internacionales.</p>
+        <span class="service-tag">Deuda · Equity</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Ecosistema Wayne Enterprises</h3>
+          <p>Acceso exclusivo a oportunidades de inversión a través de las 7 divisiones de Wayne Enterprises,
+             desde tecnología disruptiva hasta activos inmobiliarios premium.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Track Record Probado</h3>
+          <p>Promedio de retorno del 18% anual durante los últimos 15 años, superando consistentemente
+             benchmarks del mercado con menor volatilidad.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Inversiones Sostenibles</h3>
+          <p>Pioneros en ESG investing. 100% de nuestros fondos cumplen criterios de sostenibilidad
+             y generan impacto positivo medible en comunidades.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Inteligencia de Mercado</h3>
+          <p>Plataforma propietaria de análisis de datos financieros con IA predictiva, desarrollada
+             por Wayne Technologies, que anticipa tendencias de mercado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>hablan</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="15">0</div>
+        <div class="big-stat-suffix">.2B</div>
+        <div class="big-stat-label">USD en activos gestionados</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="18">0</div>
+        <div class="big-stat-suffix">%</div>
+        <div class="big-stat-label">Retorno anual promedio (15 años)</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="340">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Transacciones M&A asesoradas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás de las inversiones</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">RH</div>
+        <h3>Richard Harrison</h3>
+        <p class="team-role">CEO — Wayne Capital</p>
+        <p class="team-desc">25 años de experiencia en private equity y gestión de activos institucionales.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">EW</div>
+        <h3>Emily Wong</h3>
+        <p class="team-role">Directora de Inversiones</p>
+        <p class="team-desc">Lidera estrategia de private equity y evaluación de oportunidades.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">JK</div>
+        <h3>James King</h3>
+        <p class="team-role">Director de M&A</p>
+        <p class="team-desc">Especialista en fusiones y adquisiciones con trayectoria en Wall Street.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">MP</div>
+        <h3>Maria Perez</h3>
+        <p class="team-role">Directora de Wealth Management</p>
+        <p class="team-desc">Gestiona relaciones con family offices y clientes institucionales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Listo para<br><em>hacer crecer tu patrimonio?</em></h2>
+    <p class="reveal">
+      Conecta con nuestro equipo de asesores. Analizamos tu perfil de riesgo y objetivos para
+      diseñar una estrategia de inversión personalizada.
+    </p>
+    <a href="mailto:capital@wayneenterprises.com" class="btn-primary reveal">
+      Hablar con un asesor
+    </a>
+    <span class="cta-email reveal">capital@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Capital — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'capital/js/capital.js' %}"></script>
+
+</body>
+</html>

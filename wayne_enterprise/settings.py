@@ -37,11 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'ventures',
-    'foundation',
-    'accounts',
-    'realestate',
+    'apps.core',
+    'apps.ventures',
+    'apps.foundation',
+    'apps.accounts',
+    'apps.realestate',
+    'apps.capital',
+    'apps.industries',
+    'apps.healthcare',
+    'apps.tech',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'ventures.context_processors.ventures_nav',
+                'apps.ventures.context_processors.ventures_nav',
             ],
         },
     },
@@ -83,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wayne_enterprise',      # Nombre de la base de datos que creaste
         'USER': 'root',                   # Usuario por defecto de XAMPP
-        'PASSWORD': '',                   # Dejar vacío si no configuraste contraseña
+        'PASSWORD': 'root123',                   # Dejar vacío si no configuraste contraseña
         'HOST': 'localhost',              # Servidor local
         'PORT': '3306',                   # Puerto por defecto de MySQL
         'OPTIONS': {
@@ -138,3 +142,7 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 SESSION_COOKIE_AGE = 1800  # 30 minutos en segundos
 SESSION_SAVE_EVERY_REQUEST = True  # Renovar sesión en cada petición
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Mantener sesión al cerrar pestaña
+
+# Configuración CSRF - Prevenir errores 403 frecuentes
+CSRF_COOKIE_AGE = 86400  # 24 horas (token CSRF válido por 1 día)
+CSRF_FAILURE_VIEW = 'apps.accounts.views.csrf_failure'  # Vista personalizada para errores CSRF

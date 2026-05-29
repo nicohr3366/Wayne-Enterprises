@@ -1,0 +1,274 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ prop.name }} — Wayne Real Estate</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C; --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff; --orange: #f59e0b; --red: #f87171; --purple: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border); padding: 12px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px;
+      letter-spacing: .08em; margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover { color: var(--gold); }
+
+    .detail-wrap { max-width: 1100px; margin: 0 auto; padding: 36px 32px; }
+
+    .breadcrumb { font-size: 11px; color: var(--muted); margin-bottom: 24px; letter-spacing: .06em; }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .detail-header {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 32px; margin-bottom: 24px;
+    }
+    .detail-eyebrow { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .detail-title { font-family: 'Cinzel', serif; font-size: 28px; color: var(--text); margin-bottom: 6px; line-height: 1.2; }
+    .detail-subtitle { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .detail-id { font-size: 11px; color: var(--muted); letter-spacing: .1em; font-family: monospace; }
+
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 5px;
+      font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; margin-right: 8px;
+    }
+    .badge-residential { background: rgba(74,158,255,.15); color: var(--blue); }
+    .badge-commercial   { background: rgba(201,168,76,.15); color: var(--gold); }
+    .badge-industrial   { background: rgba(245,158,11,.15); color: var(--orange); }
+    .badge-mixed        { background: rgba(167,139,250,.15); color: var(--purple); }
+    .badge-completed         { background: rgba(62,207,142,.15); color: var(--green); }
+    .badge-active            { background: rgba(74,158,255,.15); color: var(--blue); }
+    .badge-under_construction{ background: rgba(245,158,11,.15); color: var(--orange); }
+    .badge-planned           { background: rgba(136,136,153,.15); color: var(--muted); }
+
+    .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .metric-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 20px; text-align: center;
+    }
+    .metric-label { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .metric-val { font-family: 'Cinzel', serif; font-size: 22px; color: var(--gold); }
+    .metric-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .detail-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .info-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px;
+    }
+    .info-title { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid rgba(201,168,76,0.06); }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+    .info-val { font-size: 13px; font-weight: 600; color: var(--text); text-align: right; max-width: 60%; }
+
+    .desc-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 24px; margin-bottom: 24px;
+    }
+    .desc-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+    .flags-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .flag-badge {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 6px; font-size: 12px;
+    }
+    .flag-active { background: rgba(62,207,142,.1); border: 1px solid rgba(62,207,142,.3); color: var(--green); }
+    .flag-inactive { background: var(--card2); border: 1px solid var(--border); color: var(--muted); }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--gold); text-decoration: none; font-size: 12px;
+      letter-spacing: .08em; border: 1px solid var(--border); padding: 8px 18px;
+      border-radius: 6px; margin-top: 8px; transition: all .2s;
+    }
+    .back-btn:hover { background: rgba(201,168,76,.1); border-color: var(--gold); }
+
+    @media (max-width: 800px) {
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>Wayne Real Estate</h1>
+    <span>Detalle de Propiedad</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'realestate:dashboard' %}">Dashboard</a>
+    <a href="{% url 'realestate:list' %}">Propiedades</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="detail-wrap">
+
+  <div class="breadcrumb">
+    <a href="{% url 'realestate:list' %}">← Propiedades</a> &nbsp;/&nbsp; {{ prop.name }}
+  </div>
+
+  <!-- Header del proyecto -->
+  <div class="detail-header">
+    <p class="detail-eyebrow">{{ prop.district }} · {{ prop.project_id }}</p>
+    <h1 class="detail-title">{{ prop.name }}</h1>
+    <p class="detail-subtitle">{{ prop.location }}</p>
+    <div style="margin-bottom: 12px;">
+      <span class="badge badge-{{ prop.property_type }}">
+        {% if prop.property_type == 'residential' %}Residencial
+        {% elif prop.property_type == 'commercial' %}Comercial
+        {% elif prop.property_type == 'industrial' %}Industrial
+        {% else %}Uso Mixto{% endif %}
+      </span>
+      <span class="badge badge-{{ prop.project_status }}">
+        {% if prop.project_status == 'completed' %}Completado
+        {% elif prop.project_status == 'active' %}Activo
+        {% elif prop.project_status == 'under_construction' %}En Construcción
+        {% elif prop.project_status == 'planned' %}Planificado
+        {% else %}{{ prop.project_status }}{% endif %}
+      </span>
+    </div>
+    <p class="detail-id">PROJECT ID: {{ prop.project_id|default:"—" }} &nbsp;·&nbsp; ZONING: {{ prop.zoning_code|default:"—" }}</p>
+  </div>
+
+  <!-- Métricas principales -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Valor de mercado</div>
+      <div class="metric-val">
+        {% if prop.market_value_usd %}
+          {% if prop.market_value_usd >= 1000000000 %}${{ prop.market_value_usd|floatformat:"-0" }}
+          {% else %}${{ prop.market_value_usd|floatformat:"-0" }}{% endif %}
+        {% else %}—{% endif %}
+      </div>
+      <div class="metric-sub">USD</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Precio de venta</div>
+      <div class="metric-val">
+        {% if prop.price_usd %}${{ prop.price_usd|floatformat:"-0" }}{% else %}—{% endif %}
+      </div>
+      <div class="metric-sub">USD</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Tasa de ocupación</div>
+      <div class="metric-val">
+        {% if prop.occupancy_rate is not None %}{{ prop.occupancy_rate }}%{% else %}—{% endif %}
+      </div>
+      <div class="metric-sub">
+        {% if prop.project_status == 'planned' or prop.project_status == 'under_construction' %}No aplicable{% else %}Ocupación actual{% endif %}
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Área total</div>
+      <div class="metric-val">
+        {% if prop.area_sqft %}{{ prop.area_sqft|floatformat:"0" }}{% else %}—{% endif %}
+      </div>
+      <div class="metric-sub">sqft</div>
+    </div>
+  </div>
+
+  <!-- Detalle + Flags -->
+  <div class="detail-grid">
+    <div class="info-card">
+      <div class="info-title">Información del proyecto</div>
+      <div class="info-row">
+        <span class="info-key">Desarrollador</span>
+        <span class="info-val">{{ prop.developer|default:"—" }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Distrito</span>
+        <span class="info-val">{{ prop.district|default:"—" }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Ubicación</span>
+        <span class="info-val">{{ prop.location|default:"—" }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Año de construcción</span>
+        <span class="info-val">{{ prop.year_built|default:"—" }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Número de pisos</span>
+        <span class="info-val">{{ prop.floors|default:"—" }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Código de zonificación</span>
+        <span class="info-val">{{ prop.zoning_code|default:"—" }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Disponible</span>
+        <span class="info-val">{% if prop.available %}Sí{% else %}No{% endif %}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">Registrado el</span>
+        <span class="info-val">{{ prop.created_at|date:"d/m/Y" }}</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="info-card" style="margin-bottom: 16px;">
+        <div class="info-title">Certificaciones y tecnología</div>
+        <div class="flags-row" style="margin-top: 8px;">
+          <span class="flag-badge {% if prop.green_certified %}flag-active{% else %}flag-inactive{% endif %}">
+            🌿 Certificación Verde (LEED/BREEAM)
+            {% if prop.green_certified %}Activa{% else %}No aplica{% endif %}
+          </span>
+          <span class="flag-badge {% if prop.smart_building %}flag-active{% else %}flag-inactive{% endif %}">
+            🏙️ Smart Building (IoT/BMS)
+            {% if prop.smart_building %}Activo{% else %}No aplica{% endif %}
+          </span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-title">Valor vs precio</div>
+        {% if prop.market_value_usd and prop.price_usd %}
+          {% with ratio=prop.market_value_usd|floatformat:"0" %}
+          <div class="info-row">
+            <span class="info-key">Precio de venta</span>
+            <span class="info-val" style="color: var(--blue);">${{ prop.price_usd|floatformat:"-0" }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Valor de mercado</span>
+            <span class="info-val" style="color: var(--gold);">${{ prop.market_value_usd|floatformat:"-0" }}</span>
+          </div>
+          {% endwith %}
+        {% else %}
+          <p style="color: var(--muted); font-size: 12px; padding: 8px 0;">Sin datos financieros disponibles</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Descripción -->
+  {% if prop.description %}
+  <div class="desc-card">
+    <div class="info-title">Descripción del proyecto</div>
+    <p class="desc-text">{{ prop.description }}</p>
+  </div>
+  {% endif %}
+
+  <a href="{% url 'realestate:list' %}" class="back-btn">← Volver al listado</a>
+
+</div>
+
+</body>
+</html>

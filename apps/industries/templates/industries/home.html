@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wayne Industries — Portal Corporativo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'industries/css/industries.css' %}">
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Industries · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 02</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Manufactura e Industria Pesada</p>
+    <h1>Wayne<br><em>Industries</em></h1>
+    <p class="hero-sub">Fabricando el Futuro. Forjando el Progreso.</p>
+    <div class="gold-line"></div>
+    <p class="hero-desc">
+      Desde 1939, Wayne Industries lidera la manufactura de precisión, ingeniería avanzada y
+      producción industrial a escala global. La columna vertebral del progreso tecnológico de Gotham.
+    </p>
+    <a href="#sobre" class="btn-primary">Conocer más</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">85+</div>
+      <div class="stat-label">Años de innovación</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">47</div>
+      <div class="stat-label">Plantas industriales</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">23</div>
+      <div class="stat-label">Países con operaciones</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$12B</div>
+      <div class="stat-label">USD en activos</div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Manufactura de<br><em>escala mundial</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Industries es la división manufacturera e industrial de Wayne Enterprises. Desde nuestra
+        fundación en 1939, hemos sido pioneros en la producción de componentes de precisión, maquinaria
+        industrial y soluciones de ingeniería para sectores críticos como aeroespacial, defensa,
+        energía y transporte.
+      </p>
+      <p>
+        Nuestras instalaciones en Gotham City, Detroit, Stuttgart y Singapur representan la vanguardia
+        de la industria 4.0, integrando robótica avanzada, IA predictiva y sostenibilidad ambiental
+        en cada proceso productivo.
+      </p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Proveer soluciones industriales de clase mundial que impulsen el progreso tecnológico
+          y económico, manteniendo los más altos estándares de calidad, seguridad y sostenibilidad.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser la empresa manufacturera más innovadora y sostenible del hemisferio occidental,
+          líder indiscutible en industria 4.0 para 2030.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Servicios y Productos</p>
+      <h2 class="section-title">Nuestros<br><em>pilares industriales</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#128736;</div>
+        <h3>Manufactura de Precisión</h3>
+        <p>Componentes de alta precisión para aeroespacial, médico y automotriz con tolerancias micrométricas.</p>
+        <span class="service-tag">CNC · Additive Manufacturing</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#9889;</div>
+        <h3>Sistemas de Energía</h3>
+        <p>Turbinas eólicas, sistemas de almacenamiento de energía y soluciones de generación distribuida.</p>
+        <span class="service-tag">Renovable · Eficiencia</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128640;</div>
+        <h3>Ingeniería Aeroespacial</h3>
+        <p>Componentes estructurales y de propulsión para aviación comercial y exploración espacial.</p>
+        <span class="service-tag">Aviación · Espacio</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128163;</div>
+        <h3>Materiales Compuestos</h3>
+        <p>Fibras de carbono, aleaciones ligeras y materiales inteligentes para aplicaciones de alta resistencia.</p>
+        <span class="service-tag">Lightweight · Durable</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#129302;</div>
+        <h3>Automatización Industrial</h3>
+        <p>Brazos robóticos, sistemas de visión artificial y líneas de producción autónomas.</p>
+        <span class="service-tag">Robótica · IA</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128119;</div>
+        <h3>Consultoría Industrial</h3>
+        <p>Optimización de procesos, transformación digital y certificación de estándares de calidad.</p>
+        <span class="service-tag">Industria 4.0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Integración Vertical con Wayne Technologies</h3>
+          <p>Acceso directo a los centros de I+D más avanzados del mundo. Cada producto incorpora
+             las últimas innovaciones en materiales, sensores y conectividad.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Infraestructura Global Certificada</h3>
+          <p>Todas nuestras plantas cuentan con certificaciones ISO 9001, ISO 14001 y AS9100.
+             Capacidad de producción en 5 continentes con estándares uniformes.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Compromiso con la Sostenibilidad</h3>
+          <p>100% de energía renovable en nuestras operaciones desde 2023. Programa de economía
+             circular y neutralidad de carbono para 2030.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Cadena de Suministro Resiliente</h3>
+          <p>Redundancia estratégica en proveedores y alianzas con Wayne Shipping para logística
+             global garantizada incluso en condiciones adversas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>hablan</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="50000">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Empleados globales</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="99">0</div>
+        <div class="big-stat-suffix">.7%</div>
+        <div class="big-stat-label">Precisión en fabricación</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="450">0</div>
+        <div class="big-stat-suffix"></div>
+        <div class="big-stat-label">Patentes activas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás de la producción</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">LF</div>
+        <h3>Lucius Fox</h3>
+        <p class="team-role">CEO — Wayne Industries</p>
+        <p class="team-desc">Visionario tecnológico y líder de la transformación industrial 4.0.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">TN</div>
+        <h3>Terrence Nolan</h3>
+        <p class="team-role">Director de Operaciones</p>
+        <p class="team-desc">Especialista en optimización de cadenas de suministro globales.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">MK</div>
+        <h3>Maria Kostas</h3>
+        <p class="team-role">Directora de I+D Industrial</p>
+        <p class="team-desc">Lidera el desarrollo de nuevos materiales y procesos de fabricación.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">JS</div>
+        <h3>James Sterling</h3>
+        <p class="team-role">Director de Sostenibilidad</p>
+        <p class="team-desc">Responsable de la transición hacia manufactura carbono-neutral.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Listo para fabricar<br><em>el futuro?</em></h2>
+    <p class="reveal">
+      Conecta con nuestro equipo de ingeniería. Diseñamos soluciones industriales a medida
+      para tus desafíos más complejos.
+    </p>
+    <a href="mailto:industries@wayneenterprises.com" class="btn-primary reveal">
+      Solicitar cotización
+    </a>
+    <span class="cta-email reveal">industries@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 2024 Wayne Industries — Una división de Wayne Enterprises · Gotham City</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'industries/js/industries.js' %}"></script>
+
+</body>
+</html>

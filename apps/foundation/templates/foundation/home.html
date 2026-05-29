@@ -1,0 +1,294 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wayne Foundation — Portal Corporativo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'foundation/css/foundation.css' %}">
+</head>
+<body>
+
+<div class="city-bg"></div>
+<div class="spotlight"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-group">
+      <svg class="bat-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 38C24 38 4 32 4 18C4 14 8 10 12 12C14 13 14 16 14 16C14 16 17 12 24 12C31 12 34 16 34 16C34 16 34 13 36 12C40 10 44 14 44 18C44 32 24 38 24 38Z" fill="#C9A84C" opacity="0.9"/>
+        <path d="M24 36C24 36 8 30 8 19C12 20 14 16 14 16C14 16 17 22 24 22C31 22 34 16 34 16C34 16 36 20 40 19C40 30 24 36 24 36Z" fill="#050507"/>
+        <path d="M24 26L22 22H26L24 26Z" fill="#C9A84C" opacity="0.5"/>
+      </svg>
+      <div class="logo-text">
+        <h1>Wayne Enterprises</h1>
+        <span>Wayne Foundation · División Corporativa</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot">Sistemas activos</div>
+      <span class="division-badge">División 06</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Responsabilidad Social Corporativa</p>
+    <h1>Wayne<br><em>Foundation</em></h1>
+    <p class="hero-sub">Filantropía, becas educativas y desarrollo comunitario en Gotham</p>
+    <div class="gold-line"></div>
+    <a href="#servicios" class="btn-primary">Conocer Iniciativas</a>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val">+120</div>
+      <div class="stat-label">Proyectos activos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$4.2M</div>
+      <div class="stat-label">Fondos donados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">+8K</div>
+      <div class="stat-label">Personas beneficiadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">1941</div>
+      <div class="stat-label">Fundada en Gotham</div>
+    </div>
+  </div>
+
+  <!-- SOBRE LA DIVISIÓN -->
+  <section id="sobre" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">La División</p>
+      <h2 class="section-title">Filantropía de<br><em>impacto real</em></h2>
+    </div>
+    <div class="section-body reveal">
+      <p>
+        Wayne Foundation es el brazo filantrópico de Wayne Enterprises, dedicado a mejorar
+        la calidad de vida en Gotham City y el mundo. Desde 1941, hemos canalizado recursos
+        hacia educación, salud pública, desarrollo comunitario y protección del medio ambiente.
+      </p>
+      <p>
+        Nuestro enfoque combina capital filantrópico con la experiencia operativa de las
+        divisiones Wayne, creando soluciones sostenibles que trascienden la simple donación.
+      </p>
+    </div>
+
+    <!-- MISION Y VISION -->
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <h3>Misión</h3>
+        <p>
+          Empoderar comunidades mediante educación, salud y desarrollo sostenible,
+          construyendo un Gotham más justo y próspero para todas las generaciones.
+        </p>
+      </div>
+      <div class="mv-card reveal">
+        <h3>Visión</h3>
+        <p>
+          Ser el modelo de responsabilidad social corporativa, donde el éxito empresarial
+          y el bienestar comunitario se refuerzan mutuamente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INICIATIVAS -->
+  <section id="servicios" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Programas</p>
+      <h2 class="section-title">Nuestras<br><em>iniciativas</em></h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">&#127979;</div>
+        <h3>Programa de Becas Thomas Wayne</h3>
+        <p>Becas completas para estudiantes talentosos de bajos recursos en Gotham City.</p>
+        <span class="service-tag">Educación · Universidades</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127973;</div>
+        <h3>Clínicas Móviles</h3>
+        <p>Unidades médicas que atienden comunidades desatendidas en toda Gotham.</p>
+        <span class="service-tag">Salud · Comunidad</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127807;</div>
+        <h3>Revitalización Urbana</h3>
+        <p>Transformación de espacios abandonados en parques y áreas recreativas.</p>
+        <span class="service-tag">Medio Ambiente</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#128187;</div>
+        <h3>Centros Tech</h3>
+        <p>Programas de alfabetización digital y coding para jóvenes de Gotham.</p>
+        <span class="service-tag">Tecnología · Juventud</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127749;</div>
+        <h3>Arte en las Calles</h3>
+        <p>Apoyo a artistas locales y embellecimiento de vecindarios mediante murales.</p>
+        <span class="service-tag">Cultura · Arte</span>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-icon">&#127775;</div>
+        <h3>Wayne Scholars</h3>
+        <p>Programa de mentoría que conecta jóvenes con líderes de Wayne Enterprises.</p>
+        <span class="service-tag">Liderazgo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENTAJAS -->
+  <section id="valor" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Ventajas que nos<br><em>distinguen</em></h2>
+    </div>
+
+    <div class="value-list">
+      <div class="value-item reveal">
+        <span class="value-num">01</span>
+        <div class="value-content">
+          <h3>Transparencia Total</h3>
+          <p>Reportes trimestrales detallados de todas nuestras operaciones. Cada dólar donado es rastreable
+             y demostrable, con auditorías independientes que certifican nuestro impacto real.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">02</span>
+        <div class="value-content">
+          <h3>Multiplicador de Impacto</h3>
+          <p>Por cada dólar donado, movilizamos recursos adicionales del ecosistema Wayne. Acceso a tecnología,
+             infraestructura y expertise que multiplican el alcance de cada proyecto.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">03</span>
+        <div class="value-content">
+          <h3>Sostenibilidad Comprobada</h3>
+          <p>Programas diseñados para ser autosuficientes a largo plazo. No creamos dependencias, creamos
+             capacidades que perduran generaciones.</p>
+        </div>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-num">04</span>
+        <div class="value-content">
+          <h3>Red Global de Partners</h3>
+          <p>Alianzas con organizaciones líderes, gobiernos locales y comunidades. Una red que amplifica
+             nuestro alcance y garantiza soluciones contextualizadas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIFRAS DESTACADAS -->
+  <section id="cifras" class="content-section section-dark">
+    <div class="section-header reveal">
+      <p class="section-label">Datos Impactantes</p>
+      <h2 class="section-title">Números que<br><em>demuestran impacto</em></h2>
+    </div>
+
+    <div class="big-stats-grid">
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="5000">0</div>
+        <div class="big-stat-suffix">+</div>
+        <div class="big-stat-label">Estudiantes becados</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="45">0</div>
+        <div class="big-stat-suffix"></div>
+        <div class="big-stat-label">Parques renovados</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-number" data-target="250">0</div>
+        <div class="big-stat-suffix"></div>
+        <div class="big-stat-label">Emprendimientos apoyados</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section id="equipo" class="content-section">
+    <div class="section-header reveal">
+      <p class="section-label">Liderazgo</p>
+      <h2 class="section-title">El equipo<br><em>detrás del cambio</em></h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">BF</div>
+        <h3>Bruce Wayne</h3>
+        <p class="team-role">Presidente</p>
+        <p class="team-desc">Lidera la visión estratégica de la fundación y su misión en Gotham.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">LF</div>
+        <h3>Lucius Fox</h3>
+        <p class="team-role">Director Ejecutivo</p>
+        <p class="team-desc">Gestiona las operaciones y alianzas de la fundación.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">MG</div>
+        <h3>Martha Elliot</h3>
+        <p class="team-role">Directora de Programas</p>
+        <p class="team-desc">Supervisa la ejecución de las iniciativas comunitarias.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">JD</div>
+        <h3>James Douglas</h3>
+        <p class="team-role">Director de Relaciones</p>
+        <p class="team-desc">Coordina partnerships con organizaciones sin fines de lucro.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section id="contacto" class="cta-section">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">¿Quieres hacer<br><em>la diferencia?</em></h2>
+    <p class="reveal">
+      Únete a nuestras iniciativas como voluntario, donante o socio corporativo.
+      Juntos construimos un mejor Gotham.
+    </p>
+    <a href="mailto:foundation@wayneenterprises.com" class="btn-primary reveal">
+      Conecta con nosotros
+    </a>
+    <span class="cta-email reveal">foundation@wayneenterprises.com</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copy">© 1939 Wayne Enterprises · Gotham City · Todos los derechos reservados</div>
+    <div class="footer-links">
+      <a href="{% url 'home' %}">Portal Principal</a>
+      <a href="#">Accesibilidad</a>
+      <a href="#">Seguridad</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'foundation/js/foundation.js' %}"></script>
+
+</body>
+</html>
