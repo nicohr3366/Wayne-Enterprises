@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RRHH Dashboard — Wayne Manor</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --gold:#C9A84C; --gold-dim:rgba(201,168,76,0.15);
+      --bg:#050507; --card:#0d0d12; --card2:#111118;
+      --border:rgba(201,168,76,0.2); --text:#e8e8f0; --muted:#888899;
+      --green:#3ecf8e; --blue:#4a9eff; --purple:#a78bfa;
+      --orange:#f59e0b; --red:#f87171; --cyan:#22d3ee;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:'Rajdhani',sans-serif; font-size:14px; }
+    .top-bar { background:linear-gradient(90deg,#0a0a10,#0d0d15); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; }
+    .brand h1 { font-family:'Cinzel',serif; font-size:14px; color:var(--gold); letter-spacing:.15em; }
+    .brand span { font-size:11px; color:var(--muted); letter-spacing:.1em; }
+    nav a { color:var(--muted); text-decoration:none; font-size:12px; letter-spacing:.08em; margin-left:24px; transition:color .2s; }
+    nav a:hover, nav a.active { color:var(--gold); }
+    .hero { background:linear-gradient(180deg,#0a0a12 0%,#070709 100%); border-bottom:1px solid var(--border); padding:24px 32px 18px; }
+    .hero-eyebrow { font-size:10px; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+    .hero h2 { font-family:'Cinzel',serif; font-size:20px; color:var(--text); margin-bottom:4px; }
+    .hero h2 span { color:var(--gold); }
+    .hero-sub { font-size:12px; color:var(--muted); }
+    .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border-bottom:1px solid var(--border); }
+    .kpi { background:var(--card); padding:20px 24px; }
+    .kpi-label { font-size:10px; letter-spacing:.15em; color:var(--muted); text-transform:uppercase; margin-bottom:8px; }
+    .kpi-val { font-family:'Cinzel',serif; font-size:28px; color:var(--gold); line-height:1; }
+    .kpi-sub { font-size:11px; color:var(--muted); margin-top:4px; }
+    .rbac-strip { display:flex; align-items:center; gap:0; padding:16px 32px; border-bottom:1px solid var(--border); background:#070709; overflow-x:auto; flex-wrap:wrap; gap:8px; }
+    .rbac-pill { display:flex; align-items:center; gap:6px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:5px 14px; font-size:11px; letter-spacing:.06em; }
+    .rbac-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .dash-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); }
+    .dash-cell { background:var(--card); padding:24px; }
+    .dash-cell.full { grid-column:1/-1; }
+    .cell-title { font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+    canvas { max-height:260px; }
+    .no-data { text-align:center; padding:80px 32px; font-family:'Cinzel',serif; color:var(--muted); }
+    .no-data p { margin-top:12px; font-family:'Rajdhani'; font-size:13px; }
+    .no-data code { background:var(--card); padding:4px 10px; border-radius:4px; color:var(--gold); font-size:12px; }
+    .dash-footer { text-align:center; padding:20px; font-size:11px; color:var(--muted); border-top:1px solid var(--border); }
+    @media(max-width:800px){ .kpis{grid-template-columns:1fr 1fr;} .dash-grid{grid-template-columns:1fr;} .dash-cell.full{grid-column:1;} }
+  </style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="brand">
+    <h1>Wayne Enterprises</h1>
+    <span>Wayne Manor — RRHH · RBAC</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'manor:dashboard' %}" class="active">Dashboard</a>
+    <a href="{% url 'manor:list' %}">Empleados</a>
+    <a href="{% url 'manor:export' %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+{% if sin_datos %}
+<div class="no-data">
+  <div style="font-size:48px;margin-bottom:16px;">📂</div>
+  <h2>Sin datos cargados</h2>
+  <p>Ejecuta el siguiente comando en la terminal para cargar los empleados:</p>
+  <br>
+  <code>python manage.py load_empleados</code>
+</div>
+{% else %}
+
+<div class="hero">
+  <p class="hero-eyebrow">Wayne Manor — Sistema de Recursos Humanos</p>
+  <h2>RRHH <span>Dashboard</span> · Control RBAC</h2>
+  <p class="hero-sub">Role-Based Access Control · 9 niveles · 8 divisiones · FY2025</p>
+</div>
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="kpi-label">Total Empleados</div>
+    <div class="kpi-val">{{ total }}</div>
+    <div class="kpi-sub">En todas las divisiones</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Empleados Activos</div>
+    <div class="kpi-val">{{ activos }}</div>
+    <div class="kpi-sub">Estado activo</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Salario Promedio</div>
+    <div class="kpi-val">${{ avg_sal_k }}K</div>
+    <div class="kpi-sub">USD por año</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Experiencia Promedio</div>
+    <div class="kpi-val">{{ avg_exp }} años</div>
+    <div class="kpi-sub">Antigüedad media</div>
+  </div>
+</div>
+
+<div class="rbac-strip">
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#f87171"></span>Administrador</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#f59e0b"></span>Ejecutivo C-Suite</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#a78bfa"></span>Director de División</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#4a9eff"></span>Gerente de Tecnología</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#22d3ee"></span>Analista de Seguridad</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#3ecf8e"></span>Analista FinOps</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#C9A84C"></span>Gerente PMO</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#ec4899"></span>Gerente de RRHH</div>
+  <div class="rbac-pill"><span class="rbac-dot" style="background:#888899"></span>Usuario</div>
+</div>
+
+<div class="dash-grid">
+  <div class="dash-cell">
+    <div class="cell-title">Distribución por Rol RBAC</div>
+    <canvas id="rolChart"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Empleados por División</div>
+    <canvas id="divisionChart"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Top 12 Departamentos</div>
+    <canvas id="deptoChart"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Estado de Empleados</div>
+    <canvas id="estadoChart"></canvas>
+  </div>
+  <div class="dash-cell full">
+    <div class="cell-title">Salario Promedio por Nivel RBAC (USD)</div>
+    <canvas id="salRolChart"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Tipo de Contrato</div>
+    <canvas id="contratoChart"></canvas>
+  </div>
+  <div class="dash-cell">
+    <div class="cell-title">Distribución por Género</div>
+    <canvas id="generoChart"></canvas>
+  </div>
+  <div class="dash-cell full">
+    <div class="cell-title">Top 8 Formaciones Académicas</div>
+    <canvas id="formacionChart"></canvas>
+  </div>
+</div>
+
+<div class="dash-footer">
+  © Wayne Enterprises · Wayne Manor HR System · RBAC v2.0 ·
+  <a href="{% url 'manor:list' %}" style="color:var(--gold);text-decoration:none;">Ver tabla completa</a>
+</div>
+
+{% endif %}
+
+<script>
+const GOLD='#C9A84C', BLUE='#4a9eff', GREEN='#3ecf8e', PURPLE='#a78bfa',
+      ORANGE='#f59e0b', RED='#f87171', CYAN='#22d3ee', PINK='#ec4899';
+const RBAC_COLORS = {
+  'admin': RED, 'executive': ORANGE, 'division_manager': PURPLE,
+  'tech_manager': BLUE, 'security_analyst': CYAN, 'finops_analyst': GREEN,
+  'pmo_manager': GOLD, 'hr_manager': PINK, 'usuario': '#888899'
+};
+const RBAC_LABELS = {
+  'admin':'Administrador','executive':'Ejecutivo C-Suite','division_manager':'Director División',
+  'tech_manager':'Gerente Tech','security_analyst':'Analista Seguridad','finops_analyst':'Analista FinOps',
+  'pmo_manager':'Gerente PMO','hr_manager':'Gerente RRHH','usuario':'Usuario'
+};
+const DIV_LABELS = {
+  'tech':'Wayne Technologies','industries':'Wayne Industries','healthcare':'Wayne Healthcare',
+  'realestate':'Wayne Real Estate','capital':'Wayne Capital','foundation':'Wayne Foundation',
+  'ventures':'Wayne Ventures','manor':'Wayne Manor'
+};
+const ESTADO_LABELS = {'activo':'Activo','inactivo':'Inactivo','permiso':'En Permiso','desvinculado':'Desvinculado'};
+const CONTRATO_LABELS = {'full_time':'Tiempo Completo','part_time':'Medio Tiempo','contractor':'Contratista','temporal':'Temporal'};
+const GENERO_LABELS = {'M':'Masculino','F':'Femenino','N':'No especificado'};
+const COLORS = [BLUE,GREEN,PURPLE,ORANGE,RED,CYAN,GOLD,PINK,'#14b8a6','#8b5cf6','#f97316','#06b6d4','#84cc16','#e11d48','#0ea5e9'];
+
+Chart.defaults.color='#888899';
+Chart.defaults.borderColor='rgba(201,168,76,0.1)';
+Chart.defaults.font.family="'Rajdhani',sans-serif";
+
+function donut(id, data, labelKey, valueKey, colorMap) {
+  const items = data.map(d => ({ label: (colorMap && colorMap[d[labelKey]]) ? d[labelKey] : d[labelKey], val: d[valueKey] }));
+  new Chart(document.getElementById(id), {
+    type:'doughnut',
+    data:{
+      labels: items.map(x => (labelMap => labelMap ? labelMap[x.label] || x.label : x.label)(
+        colorMap === RBAC_COLORS ? RBAC_LABELS : colorMap === DIV_LABELS ? DIV_LABELS :
+        colorMap === ESTADO_LABELS ? ESTADO_LABELS : colorMap === CONTRATO_LABELS ? CONTRATO_LABELS :
+        colorMap === GENERO_LABELS ? GENERO_LABELS : null
+      )),
+      datasets:[{ data: items.map(x=>x.val),
+        backgroundColor: colorMap ? items.map(x=>colorMap[x.label]||GOLD) : COLORS,
+        borderWidth:0, hoverOffset:8
+      }]
+    },
+    options:{ responsive:true, plugins:{ legend:{ position:'right', labels:{ color:'#c8c8d8', font:{size:11} } } } }
+  });
+}
+
+function hbar(id, data, labelKey, valueKey, colorsFn) {
+  const labels = data.map(d => d[labelKey]);
+  const values = data.map(d => d[valueKey]);
+  new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{ data:values, backgroundColor: colorsFn ? colorsFn(labels) : COLORS.slice(0,labels.length), borderWidth:0 }]
+    },
+    options:{
+      indexAxis:'y', responsive:true,
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{ grid:{color:'rgba(201,168,76,0.08)'}, ticks:{color:'#888899'} },
+        y:{ grid:{display:false}, ticks:{color:'#c8c8d8', font:{size:11}} }
+      }
+    }
+  });
+}
+
+{% if not sin_datos %}
+const rolData      = {{ by_rol_json|safe }};
+const divisionData = {{ by_division_json|safe }};
+const deptoData    = {{ by_depto_json|safe }};
+const estadoData   = {{ by_estado_json|safe }};
+const salRolData   = {{ sal_por_rol_json|safe }};
+const contratoData = {{ by_contrato_json|safe }};
+const generoData   = {{ by_genero_json|safe }};
+const formData     = {{ by_formacion_json|safe }};
+
+donut('rolChart',      rolData,      'nivel_rbac',    'count', RBAC_COLORS);
+donut('divisionChart', divisionData, 'division',      'count', null);
+hbar( 'deptoChart',    deptoData,    'departamento',  'count', null);
+donut('estadoChart',   estadoData,   'estado',        'count', ESTADO_LABELS);
+hbar( 'salRolChart',   salRolData,   'nivel_rbac',    'avg',
+  labels => labels.map(l => RBAC_COLORS[l] || GOLD));
+donut('contratoChart', contratoData, 'tipo_contrato', 'count', null);
+donut('generoChart',   generoData,   'genero',        'count', null);
+hbar( 'formacionChart', formData,    'formacion',     'count', null);
+{% endif %}
+</script>
+</body>
+</html>
