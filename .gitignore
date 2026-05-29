@@ -1,24 +1,70 @@
-# Base de datos local
-db.sqlite3
+# ── Entornos virtuales ──────────────────────────────
+venv/
+env/
+.env/
+.venv/
 
-# Python genera estas carpetas automáticamente al ejecutar
+# ── Python / Django ──────────────────────────────────
 __pycache__/
-*.pyc
-
-# Django genera esta carpeta con "collectstatic"
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.log
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
 staticfiles/
-
-# Carpeta de imágenes subidas
+mediafiles/
 media/
 
-# Archivos de log
-*.log
+# ── Variables de entorno y secretos ─────────────────
+.env
+.env.local
+.env.production
+*.secret
 
-# Windows
-Thumbs.db
+# ── IDEs y editores ──────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
 
-# Mac
+# ── Sistema operativo ────────────────────────────────
 .DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*.tmp
+*.bak
+*.orig
+*.cache
 
-#Entorno virtual
-venv/
+# ── Tests y cobertura ────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+*.pot
+
+# ── Archivos de datos / Datasets ─────────────────────
+# Los CSV y Excel van en apps/[app]/data/ y NO se suben a git
+# (pueden ser grandes y cada quien los genera localmente)
+apps/*/data/*.csv
+apps/*/data/*.xlsx
+apps/*/data/*.xls
+apps/*/data/*.json
+apps/*/data/*.xml
+
+# Excepción: mantener la carpeta data/ vacía con .gitkeep
+!apps/*/data/.gitkeep
+
+# ── Claude Code ──────────────────────────────────────
+CLAUDE.md

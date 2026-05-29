@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contratos de Defensa — Wayne Enterprises</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.12);
+      --bg: #050507; --card: #0d0d12; --border: rgba(201,168,76,0.2);
+      --text: #e8e8f0; --muted: #888899; --green: #3ecf8e; --blue: #4a9eff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar nav a { color: var(--muted); text-decoration: none; font-size: 12px; letter-spacing: .08em; margin-left: 24px; }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+
+    .filters-bar {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 16px 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .filters-bar form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; width: 100%; }
+    select, input[type="text"] {
+      background: #0a0a10; border: 1px solid var(--border); color: var(--text);
+      padding: 7px 12px; border-radius: 6px; font-family: 'Rajdhani'; font-size: 13px;
+      outline: none;
+    }
+    select:focus, input:focus { border-color: var(--gold); }
+    .btn {
+      background: var(--gold-dim); border: 1px solid var(--border); color: var(--gold);
+      padding: 7px 18px; border-radius: 6px; cursor: pointer;
+      font-family: 'Rajdhani'; font-size: 13px; font-weight: 600; letter-spacing: .06em;
+      text-decoration: none; transition: background .2s;
+    }
+    .btn:hover { background: rgba(201,168,76,0.25); }
+    .btn-green { background: rgba(62,207,142,0.1); border-color: rgba(62,207,142,0.3); color: var(--green); }
+    .btn-green:hover { background: rgba(62,207,142,0.2); }
+
+    .count-bar {
+      padding: 10px 32px; font-size: 12px; color: var(--muted);
+      border-bottom: 1px solid var(--border); background: #070709;
+    }
+    .count-bar span { color: var(--gold); font-weight: 600; }
+
+    .table-wrap { overflow-x: auto; padding: 0 32px 32px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    thead tr { border-bottom: 2px solid var(--border); }
+    th {
+      text-align: left; padding: 10px 12px;
+      font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid rgba(201,168,76,0.06); transition: background .15s; }
+    tbody tr:hover { background: var(--gold-dim); }
+    td { padding: 10px 12px; font-size: 13px; }
+    td a { color: var(--gold); text-decoration: none; }
+    td a:hover { text-decoration: underline; }
+    .amount { font-family: 'Cinzel', serif; font-size: 12px; color: var(--green); }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px;
+      letter-spacing: .05em; white-space: nowrap;
+    }
+    .badge-active    { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.25); }
+    .badge-completed { background: rgba(74,158,255,0.12); color: var(--blue);  border: 1px solid rgba(74,158,255,0.25); }
+    .badge-terminated{ background: rgba(248,113,113,0.12); color: #f87171;    border: 1px solid rgba(248,113,113,0.25); }
+    .badge-option    { background: rgba(167,139,250,0.12); color: #a78bfa;    border: 1px solid rgba(167,139,250,0.25); }
+    .badge-pending   { background: rgba(245,158,11,0.12);  color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+    .badge-default   { background: rgba(136,136,153,0.12); color: var(--muted);border: 1px solid rgba(136,136,153,0.2); }
+
+    .pagination { display: flex; gap: 8px; justify-content: center; padding: 24px 32px; }
+    .pagination a, .pagination span {
+      padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+      font-size: 12px; text-decoration: none; color: var(--muted);
+    }
+    .pagination a:hover { color: var(--gold); border-color: var(--gold); }
+    .pagination .current { background: var(--gold-dim); color: var(--gold); border-color: var(--border); }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>Wayne Enterprises — Defense Contracts</h1>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'contracts_dashboard' %}">Dashboard</a>
+    <a href="{% url 'contracts_list' %}" class="active">Tabla</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<div class="filters-bar">
+  <form method="get">
+    <select name="agency">
+      <option value="">Todas las agencias</option>
+      {% for a in agencies %}
+        <option value="{{ a }}" {% if a == current_agency %}selected{% endif %}>{{ a }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="year">
+      <option value="">Todos los años</option>
+      {% for y in years %}
+        <option value="{{ y }}" {% if y|stringformat:"s" == current_year %}selected{% endif %}>FY{{ y }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="status">
+      <option value="">Todos los estados</option>
+      {% for s in statuses %}
+        <option value="{{ s }}" {% if s == current_status %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="text" name="search" placeholder="Buscar contratista o número..." value="{{ current_search }}">
+
+    <button type="submit" class="btn">Filtrar</button>
+    <a href="{% url 'contracts_list' %}" class="btn">Limpiar</a>
+    <a href="{% url 'contracts_export' %}?agency={{ current_agency }}&year={{ current_year }}" class="btn btn-green">↓ Exportar CSV</a>
+  </form>
+</div>
+
+<div class="count-bar">
+  Mostrando <span>{{ total_filtrado }}</span> contratos
+  {% if current_agency %} · Agencia: <span>{{ current_agency }}</span>{% endif %}
+  {% if current_year %}  · Año: <span>FY{{ current_year }}</span>{% endif %}
+  {% if current_status %} · Estado: <span>{{ current_status }}</span>{% endif %}
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Contrato</th>
+        <th>Agencia</th>
+        <th>Contratista</th>
+        <th>Monto obligado</th>
+        <th>Año fiscal</th>
+        <th>Estado</th>
+        <th>Fuente ETL</th>
+        <th>Clasificación</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in page_obj %}
+      <tr>
+        <td style="color:var(--muted); font-size:11px;">{{ forloop.counter0|add:page_obj.start_index }}</td>
+        <td><a href="{% url 'contract_detail' c.pk %}">{{ c.contract_number }}</a></td>
+        <td>{{ c.agency }}</td>
+        <td>{{ c.contractor_name }}</td>
+        <td class="amount">${{ c.obligated_amount_usd|floatformat:"0" }}</td>
+        <td>{% if c.fiscal_year %}FY{{ c.fiscal_year }}{% else %}—{% endif %}</td>
+        <td>
+          {% with s=c.performance_status %}
+          {% if s == "Active" %}<span class="badge badge-active">{{ s }}</span>
+          {% elif s == "Completed" %}<span class="badge badge-completed">{{ s }}</span>
+          {% elif s == "Terminated" %}<span class="badge badge-terminated">{{ s }}</span>
+          {% elif "Option" in s %}<span class="badge badge-option">{{ s }}</span>
+          {% elif "Pending" in s %}<span class="badge badge-pending">{{ s }}</span>
+          {% else %}<span class="badge badge-default">{{ s }}</span>{% endif %}
+          {% endwith %}
+        </td>
+        <td style="font-size:12px; color:var(--muted);">{{ c.etl_source_system }}</td>
+        <td style="font-size:12px; color:var(--muted);">{{ c.security_classification }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="9" style="text-align:center; padding:40px; color:var(--muted);">No hay contratos con estos filtros.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="pagination">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}&agency={{ current_agency }}&year={{ current_year }}&status={{ current_status }}&search={{ current_search }}">← Anterior</a>
+  {% endif %}
+  <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}&agency={{ current_agency }}&year={{ current_year }}&status={{ current_status }}&search={{ current_search }}">Siguiente →</a>
+  {% endif %}
+</div>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propiedades — Wayne Real Estate · Gotham City</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦇</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C; --bg: #050507; --card: #0d0d12; --card2: #111118;
+      --border: rgba(201,168,76,0.2); --text: #e8e8f0; --muted: #888899;
+      --green: #3ecf8e; --blue: #4a9eff; --orange: #f59e0b; --red: #f87171; --purple: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 14px; }
+
+    .top-bar {
+      background: linear-gradient(90deg, #0a0a10, #0d0d15);
+      border-bottom: 1px solid var(--border); padding: 12px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .top-bar .brand h1 { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: .15em; }
+    .top-bar .brand span { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
+    .top-bar nav a {
+      color: var(--muted); text-decoration: none; font-size: 12px;
+      letter-spacing: .08em; margin-left: 24px; transition: color .2s;
+    }
+    .top-bar nav a:hover, .top-bar nav a.active { color: var(--gold); }
+
+    .filters-bar {
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 16px 32px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    }
+    .filters-bar form { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; width: 100%; }
+    .filters-bar select, .filters-bar input {
+      background: var(--card2); border: 1px solid var(--border); color: var(--text);
+      padding: 7px 12px; border-radius: 6px; font-family: 'Rajdhani', sans-serif;
+      font-size: 12px; letter-spacing: .05em; min-width: 140px;
+    }
+    .filters-bar select:focus, .filters-bar input:focus { outline: none; border-color: var(--gold); }
+    .btn-filter {
+      background: var(--gold-dim, rgba(201,168,76,.15)); border: 1px solid var(--gold);
+      color: var(--gold); padding: 7px 18px; border-radius: 6px; cursor: pointer;
+      font-family: 'Rajdhani', sans-serif; font-size: 12px; letter-spacing: .1em;
+      text-transform: uppercase; transition: background .2s;
+    }
+    .btn-filter:hover { background: rgba(201,168,76,.25); }
+    .btn-clear { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 11px; text-decoration: none; }
+    .btn-clear:hover { color: var(--text); border-color: var(--muted); }
+    .result-count { font-size: 11px; color: var(--muted); margin-left: auto; letter-spacing: .08em; }
+
+    .table-wrap { padding: 24px 32px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--border);
+      text-align: left; white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid rgba(201,168,76,0.07); transition: background .15s; cursor: pointer; }
+    tbody tr:hover { background: rgba(201,168,76,0.05); }
+    tbody td { padding: 12px 12px; font-size: 13px; vertical-align: middle; }
+    .td-name { font-weight: 600; color: var(--text); max-width: 220px; }
+    .td-name small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+    .td-value { font-family: 'Cinzel', serif; color: var(--gold); font-size: 13px; }
+    .td-occ { font-weight: 600; }
+    .td-occ.high { color: var(--green); }
+    .td-occ.mid  { color: var(--orange); }
+    .td-occ.low  { color: var(--red); }
+    .td-occ.zero { color: var(--muted); }
+
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600;
+    }
+    .badge-residential { background: rgba(74,158,255,.15); color: var(--blue); }
+    .badge-commercial   { background: rgba(201,168,76,.15); color: var(--gold); }
+    .badge-industrial   { background: rgba(245,158,11,.15); color: var(--orange); }
+    .badge-mixed        { background: rgba(167,139,250,.15); color: var(--purple); }
+
+    .badge-completed         { background: rgba(62,207,142,.15); color: var(--green); }
+    .badge-active            { background: rgba(74,158,255,.15); color: var(--blue); }
+    .badge-under_construction{ background: rgba(245,158,11,.15); color: var(--orange); }
+    .badge-planned           { background: rgba(136,136,153,.15); color: var(--muted); }
+
+    .icon-yes { color: var(--green); font-size: 13px; }
+    .icon-no  { color: var(--muted); font-size: 13px; }
+
+    .pagination {
+      display: flex; gap: 6px; align-items: center;
+      padding: 16px 32px 28px; justify-content: center;
+    }
+    .pagination a, .pagination span {
+      padding: 6px 12px; border-radius: 5px; font-size: 12px; text-decoration: none;
+      border: 1px solid var(--border); color: var(--muted); transition: all .15s;
+    }
+    .pagination a:hover { color: var(--gold); border-color: var(--gold); }
+    .pagination .current { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 700; }
+
+    .no-results { text-align: center; padding: 60px 32px; color: var(--muted); font-family: 'Cinzel', serif; }
+    .no-results p { font-family: 'Rajdhani'; font-size: 13px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <h1>Wayne Real Estate</h1>
+    <span>Propiedades · Gotham City</span>
+  </div>
+  <nav>
+    <a href="{% url 'home' %}">Portal</a>
+    <a href="{% url 'realestate:home' %}">División</a>
+    <a href="{% url 'realestate:dashboard' %}">Dashboard</a>
+    <a href="{% url 'realestate:list' %}" class="active">Propiedades</a>
+    <a href="{% url 'realestate:export' %}{% if request.GET.urlencode %}?{{ request.GET.urlencode }}{% endif %}">Exportar CSV</a>
+    <a href="{% url 'accounts:logout' %}">Salir</a>
+  </nav>
+</div>
+
+<!-- Filtros -->
+<div class="filters-bar">
+  <form method="get">
+    <select name="type">
+      <option value="">Todos los tipos</option>
+      <option value="residential" {% if current_type == 'residential' %}selected{% endif %}>Residencial</option>
+      <option value="commercial"  {% if current_type == 'commercial'  %}selected{% endif %}>Comercial</option>
+      <option value="industrial"  {% if current_type == 'industrial'  %}selected{% endif %}>Industrial</option>
+      <option value="mixed"       {% if current_type == 'mixed'       %}selected{% endif %}>Uso Mixto</option>
+    </select>
+
+    <select name="district">
+      <option value="">Todos los distritos</option>
+      {% for d in districts %}
+        <option value="{{ d }}" {% if d == current_district %}selected{% endif %}>{{ d }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="status">
+      <option value="">Todos los estados</option>
+      {% for s in statuses %}
+        <option value="{{ s }}" {% if s == current_status %}selected{% endif %}>{{ s|title }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="available">
+      <option value="">Disponibilidad</option>
+      <option value="1" {% if current_available == '1' %}selected{% endif %}>Disponible</option>
+      <option value="0" {% if current_available == '0' %}selected{% endif %}>No disponible</option>
+    </select>
+
+    <input type="text" name="search" placeholder="Buscar nombre, ubicación..." value="{{ current_search }}">
+
+    <button type="submit" class="btn-filter">Filtrar</button>
+    <a href="{% url 'realestate:list' %}" class="btn-clear">Limpiar</a>
+
+    <span class="result-count">{{ total_filtrado }} propiedad{{ total_filtrado|pluralize:"es" }} encontrada{{ total_filtrado|pluralize:"s" }}</span>
+  </form>
+</div>
+
+<!-- Tabla -->
+<div class="table-wrap">
+  {% if page_obj %}
+  <table>
+    <thead>
+      <tr>
+        <th>Proyecto</th>
+        <th>Tipo</th>
+        <th>Distrito</th>
+        <th>Desarrollador</th>
+        <th>Área (sqft)</th>
+        <th>Valor Mercado</th>
+        <th>Ocupación</th>
+        <th>Estado</th>
+        <th>Verde</th>
+        <th>Smart</th>
+        <th>Año</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for prop in page_obj %}
+      <tr onclick="window.location='{% url 'realestate:detail' prop.pk %}'">
+        <td class="td-name">
+          {{ prop.name }}
+          <small>{{ prop.location }}</small>
+        </td>
+        <td><span class="badge badge-{{ prop.property_type }}">
+          {% if prop.property_type == 'residential' %}Residencial
+          {% elif prop.property_type == 'commercial' %}Comercial
+          {% elif prop.property_type == 'industrial' %}Industrial
+          {% else %}Mixto{% endif %}
+        </span></td>
+        <td>{{ prop.district }}</td>
+        <td style="font-size:12px; color: var(--muted);">{{ prop.developer }}</td>
+        <td style="color: var(--muted); font-size: 12px;">
+          {% if prop.area_sqft %}{{ prop.area_sqft|floatformat:"0" }}{% else %}—{% endif %}
+        </td>
+        <td class="td-value">
+          {% if prop.market_value_usd %}
+            ${% if prop.market_value_usd >= 1000000000 %}{{ prop.market_value_usd|floatformat:"-0" }}{% else %}{{ prop.market_value_usd|floatformat:"-0" }}{% endif %}
+          {% else %}—{% endif %}
+        </td>
+        <td>
+          {% if prop.occupancy_rate is not None %}
+            {% if prop.occupancy_rate >= 85 %}<span class="td-occ high">{{ prop.occupancy_rate }}%</span>
+            {% elif prop.occupancy_rate >= 60 %}<span class="td-occ mid">{{ prop.occupancy_rate }}%</span>
+            {% elif prop.occupancy_rate > 0 %}<span class="td-occ low">{{ prop.occupancy_rate }}%</span>
+            {% else %}<span class="td-occ zero">N/A</span>{% endif %}
+          {% else %}—{% endif %}
+        </td>
+        <td><span class="badge badge-{{ prop.project_status }}">
+          {% if prop.project_status == 'completed' %}Completado
+          {% elif prop.project_status == 'active' %}Activo
+          {% elif prop.project_status == 'under_construction' %}En Construcción
+          {% elif prop.project_status == 'planned' %}Planificado
+          {% else %}{{ prop.project_status }}{% endif %}
+        </span></td>
+        <td>{% if prop.green_certified %}<span class="icon-yes">✓</span>{% else %}<span class="icon-no">—</span>{% endif %}</td>
+        <td>{% if prop.smart_building %}<span class="icon-yes">✓</span>{% else %}<span class="icon-no">—</span>{% endif %}</td>
+        <td style="color: var(--muted);">{{ prop.year_built|default:"—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Paginación -->
+  {% if page_obj.has_other_pages %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?{% if current_type %}type={{ current_type }}&{% endif %}{% if current_district %}district={{ current_district }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_search %}search={{ current_search }}&{% endif %}page={{ page_obj.previous_page_number }}">← Anterior</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <span class="current">{{ num }}</span>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?{% if current_type %}type={{ current_type }}&{% endif %}{% if current_district %}district={{ current_district }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_search %}search={{ current_search }}&{% endif %}page={{ num }}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a href="?{% if current_type %}type={{ current_type }}&{% endif %}{% if current_district %}district={{ current_district }}&{% endif %}{% if current_status %}status={{ current_status }}&{% endif %}{% if current_search %}search={{ current_search }}&{% endif %}page={{ page_obj.next_page_number }}">Siguiente →</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div class="no-results">
+    <div style="font-size:42px; margin-bottom:12px;">🏙️</div>
+    <h3>Sin resultados</h3>
+    <p>Ajusta los filtros o <a href="{% url 'realestate:list' %}" style="color:var(--gold);">limpia la búsqueda</a>.</p>
+  </div>
+  {% endif %}
+</div>
+
+</body>
+</html>
